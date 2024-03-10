@@ -85,7 +85,7 @@ export default function UserForm({newUser}) {
 
     return (
         <Container style={{width: "60%"}}>
-            <h3 className="title-page mb-4">{newUser ? "New User" : "Edit User"}</h3>
+            <h3 className="page-title mb-4">{newUser ? "New User" : "Edit User"}</h3>
             <form onSubmit={handleSubmit}>
                 <FloatingLabel controlId='firstName' label='First Name' className='form-label mb-4'>
                     <Form.Control
