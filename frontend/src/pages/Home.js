@@ -3,7 +3,8 @@ import {Container} from 'react-bootstrap';
 const Home = () => {
     return (
         <Container>
-            Home
+            <h3 className="page-title">Home</h3>
+
         </Container>
     );
 };
