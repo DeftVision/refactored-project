@@ -58,7 +58,7 @@ exports.loginUser = async (req, res) => {
     }
 }
 
-exports.newUser = async (req, res) => {
+exports.registerUser = async (req, res) => {
     try {
         const { firstName, lastName, email, password, role, location } = req.body;
         if(!firstName || !lastName || !email || !password || !role || !location) {
@@ -66,15 +66,12 @@ exports.newUser = async (req, res) => {
                 message: "all fields are required.",
             })
         }
-
-
         const existingUser = await userModel.findOne({email});
         if(existingUser) {
             return res.send({
                 message: "user is already registered.",
             })
         }
-
         const hashedPassword = await bcrypt.hash(password, 12);
         const user = new userModel({firstName, lastName, role, location, email, password: hashedPassword})
         await user.save();

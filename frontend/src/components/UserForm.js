@@ -12,18 +12,16 @@ const form_default = {
     email: ""
 }
 
-
 export default function UserForm({newUser}) {
     const [form, setForm] = useState(form_default);
     const [loading, setLoading] = useState(true);
     const { id } = useParams();
-    const [show, setShow] = useState(false);
 
 
-   /* useEffect(() => {
+    useEffect(() => {
 
         async function editUser() {
-            const response = await fetch(`http://localhost:8000/api/user/${id}`, {
+            const response = await fetch(`http://localhost:8000/api/user/user/${id}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json"
@@ -57,11 +55,11 @@ export default function UserForm({newUser}) {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        let url = "http://localhost:8000/api/register";
+        let url = "http://localhost:8000/api/user/register";
         let method = "POST";
 
         if(!newUser) {
-            url = `http://localhost:8000/api/update/${id}`;
+            url = `http://localhost:8000/api/user/update/${id}`;
             method = "PATCH";
         }
 
@@ -83,7 +81,7 @@ export default function UserForm({newUser}) {
         if(response.ok) {
             console.log(_response);
         }
-    }*/
+    }
 
     return (
         <Container style={{width: "60%"}}>
@@ -204,7 +202,6 @@ export default function UserForm({newUser}) {
                     {newUser ? "+ user" : "update"}
                 </Button>
             </form>
-
         </Container>
     )
 }
