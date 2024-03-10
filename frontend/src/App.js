@@ -3,10 +3,9 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Container } from 'react-bootstrap';
 import { Header, Footer } from './layout/_layout_index'
-import { Admin, Loading, Error, Users, Dashboard, Home, Login} from "./pages/_page_index";
+import { Admin, Loading, Error, Users, Dashboard, Home, Login, Evaluations} from "./pages/_page_index";
 import './App.css';
-import UserContext from "./components/UserContext";
-import { UserForm} from "./components/_component_index";
+import { UserForm, UserContext, EvaluationForm } from "./components/_component_index";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -23,6 +22,13 @@ function App() {
                     <Route path="/users" element={<Users />}/>
                     <Route path="/dashboard" element={<Dashboard />}/>
                     <Route path="/admin" element={<Admin />}/>
+
+                    <Route path="/evaluations" element={<Evaluations />} />
+                    <Route path="/user" element={<Users />}/>
+
+                    <Route path="/evaluationform" element={<EvaluationForm newEvaluation />} />
+                    <Route path="/editevaluationform/:id" element={<EvaluationForm />} />
+
                     <Route path="/userform" element={<UserForm newUser />}/>
                     <Route path="/edituser/:id" element={<UserForm />}/>
                   </Route>
