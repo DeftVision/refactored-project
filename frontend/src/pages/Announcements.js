@@ -1,11 +1,10 @@
 import { Container } from 'react-bootstrap';
 
-const Evaluations = () => {
+export default function Announcements () {
     return (
         <Container>
-            Evaluations
+            Announcements
         </Container>
     );
 };
 
-export default Evaluations;

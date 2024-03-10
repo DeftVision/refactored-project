@@ -10,6 +10,7 @@ const Admin = () => {
             <div>Admin</div>
             <Button as={Link} to="/userform" variant={"btn btn-outline-secondary"}>New User</Button>
             <Button as={Link} to="/evaluationform" variant={"btn btn-outline-secondary"}>New Evaluation</Button>
+            <Button as={Link} to="/announcementform" variant={"btn btn-outline-secondary"}>New Announcement</Button>
         </Container>
     );
 };
