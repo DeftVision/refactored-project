@@ -3,7 +3,7 @@ import { Container, Table, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import * as FaIcons from "react-icons/fa";
 
-export default function UserData () {
+export default function DocumentData () {
     const [users, setUsers] = useState([]);
 
     async function getUsers() {
@@ -32,7 +32,7 @@ export default function UserData () {
 
     async function deleteUser(userId) {
         try {
-            await fetch(`http://localhost:8000/api/user/delete/${userId}`, {
+            await fetch(`http://localhost:8000/api/delete/${userId}`, {
                 method: "DELETE"
             });
             getUsers();
@@ -43,7 +43,7 @@ export default function UserData () {
     }
     return(
         <Container className="col-8">
-            <Table responsive hover>
+            <Table hover>
                 <thead>
                 <tr>
                     <th>First</th>

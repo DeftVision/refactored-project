@@ -6,7 +6,7 @@ import { Container } from 'react-bootstrap';
 import { Header, Footer } from './layout/_layout_index'
 import { Admin, Loading, Error, Users, Dashboard, Home, Login, Evaluations, Documents} from "./pages/_page_index";
 import './App.css';
-import { UserContext, PrivateRoutes, UserForm, EvaluationForm, AnnouncementForm } from "./components/_component_index";
+import { UserContext, PrivateRoutes, UserForm, EvaluationForm, AnnouncementForm, DocumentForm } from "./components/_component_index";
 import Announcements from "./pages/Announcements";
 
 function App() {
@@ -56,10 +56,10 @@ function App() {
                     <Route path="/" element={<Home />}/>
                     <Route path="/users" element={<Users />}/>
                     <Route path="/dashboard" element={<Dashboard />}/>
-                    <Route path="/documents" element={<Documents />}/>
                     <Route path="/admin" element={<Admin />}/>
 
                     <Route path="/announcements" element={<Announcements />} />
+                    <Route path="/documents" element={<Documents />} />
                     <Route path="/evaluations" element={<Evaluations />} />
                     <Route path="/user" element={<Users />}/>
 
