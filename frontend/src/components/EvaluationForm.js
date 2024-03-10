@@ -51,14 +51,15 @@ export default function EvaluationForm() {
     }
 
     return (
-        <Container fluid style={{width: "60%"}}>
-            <h3 className="mb-4 title-page">New Evaluation</h3>
+        <Container fluid style={{width: "60%", display: "flex", flexDirection: "column"}} className="user-form">
+            <h3 className="mb-4 page-title">New Evaluation</h3>
 
 
             {/*Visit Date and Time*/}
             <form onSubmit={handleSubmit}>
 
                 <Form.Group controlid="evaluatorName" className="mb-4">
+                    <Form.Label>Evaluator</Form.Label>
                     <Form.Control
                         type="text"
                         placeholder=""
@@ -317,7 +318,7 @@ export default function EvaluationForm() {
                     />
                 </Form.Group>
                 <Button variant={"btn btn-outline-secondary"} type='submit'>
-                    Submit Evaluation
+                    + Evaluation
                 </Button>
             </form>
         </Container>
