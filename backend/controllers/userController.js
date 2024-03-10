@@ -58,7 +58,7 @@ exports.loginUser = async (req, res) => {
     }
 }
 
-exports.registerUser = async (req, res) => {
+exports.newUser = async (req, res) => {
     try {
         const { firstName, lastName, email, password, role, location } = req.body;
         if(!firstName || !lastName || !email || !password || !role || !location) {
