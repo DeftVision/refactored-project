@@ -1,25 +1,41 @@
-import {Container, Button, Navbar, Nav } from 'react-bootstrap';
+import {Container, Navbar, Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import {useContext} from "react";
+import UserContext from '../components/UserContext';
+import cookies from 'js-cookie';
 
-const Header = () => {
+
+export default function Header () {
+    const {user, setUser} = useContext(UserContext);
+
+    function logout() {
+        setUser(null);
+        cookies.remove("userCookie");
+    }
+
     return (
-        <Navbar expand="lg" bg="dark" variant={"dark"} className="mb-5 shadow">
-            <Container>
-            <Navbar.Brand>Deft Vision</Navbar.Brand>
-            <Navbar.Toggle />
-                <Navbar.Collapse>
-                    <Nav className="ms-auto">
-                        <Nav.Link as={Link} to="/">Home</Nav.Link>
-                        <Nav.Link as={Link} to="/dashboard">Dashboard</Nav.Link>
-                        <Nav.Link as={Link} to="/">Announcements</Nav.Link>
-                        <Nav.Link as={Link} to="/evaluations">Evaluations</Nav.Link>
-                        <Nav.Link as={Link} to="/admin">Admin</Nav.Link>
-                    </Nav>
-                </Navbar.Collapse>
+        <>
+            <Navbar expand="lg" bg="dark" variant={"dark"} className="mb-5 shadow">
+                <Container>
 
-            </Container>
-        </Navbar>
+                    <Navbar.Toggle />
+                    <Navbar.Collapse>
+                        <Nav className="ms-auto">
+                            <Nav.Link as={Link} to="/">Home</Nav.Link>
+                            <Nav.Link as={Link} to="/dashboard">Dashboard</Nav.Link>
+                            <Nav.Link as={Link} to="/announcements">Announcements</Nav.Link>
+                            <Nav.Link as={Link} to="/evaluations">Evaluations</Nav.Link>
+
+                            {user && user.role === 'Admin' && (
+                            <Nav.Link as={Link} to="/admin">Admin</Nav.Link>)}
+
+                            {user &&
+                            <Nav.Link onClick={logout}>Logout</Nav.Link> }
+                        </Nav>
+                    </Navbar.Collapse>
+
+                </Container>
+            </Navbar>
+        </>
     );
 };
-
-export default Header;
