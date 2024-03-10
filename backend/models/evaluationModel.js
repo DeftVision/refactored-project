@@ -61,7 +61,7 @@ const evaluationSchema = new schema({
     },
     identifyManager: {
         type: String,
-        required: true,
+        required: false,
     },
     comments: {
         type: String,

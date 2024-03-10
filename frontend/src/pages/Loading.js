@@ -1,9 +1,9 @@
 import { Container } from 'react-bootstrap';
 import { RotatingLines } from "react-loader-spinner";
 
-const Loading = () => {
+export default function Loading () {
     return (
-        <Container>
+        <Container style={{display: "flex", flexDirection: "row", justifyContent: "center"}} className="mt-5">
             <RotatingLines
                 strokeColor="#515151"
                 strokeWidth="3"
@@ -15,4 +15,3 @@ const Loading = () => {
     );
 };
 
-export default Loading;

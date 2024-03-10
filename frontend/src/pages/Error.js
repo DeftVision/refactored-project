@@ -1,11 +1,10 @@
 import { Container } from 'react-bootstrap';
 
-const Error = () => {
+export default function Error () {
     return (
-        <Container>
-            <h5>404: </h5>
+        <Container className="mt-5">
+            <h3 className="page-title">404: Page Not Found</h3>
         </Container>
     );
 };
 
-export default Error;

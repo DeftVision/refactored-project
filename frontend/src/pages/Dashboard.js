@@ -3,7 +3,8 @@ import {Container} from 'react-bootstrap';
 const Dashboard = () => {
     return (
         <Container>
-            Dashboard
+            <h3 className="page-title">Dashboard</h3>
+
         </Container>
     );
 };

@@ -3,7 +3,8 @@ import { Container } from 'react-bootstrap';
 const Evaluations = () => {
     return (
         <Container>
-            Evaluations
+            <h3 className="page-title">Evaluations</h3>
+
         </Container>
     );
 };
