@@ -41,7 +41,7 @@ export default function EvaluationData () {
 
     return (
         <Container>
-            <Table hover responsive>
+            <Table hover responsive="sm">
                 <thead>
                 <tr>
                     <th>Date</th>
