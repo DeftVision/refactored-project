@@ -59,7 +59,7 @@ export default function UserData () {
                     <td>{user.email}</td>
                     <td>
                         {<Button as={Link} to={`/edituser/${user._id}`} variant={"btn"}><FaIcons.FaEdit style={{color: "dodgerblue"}} /></Button>}
-                        {<Button as={Link} onClick={() => deleteUser(user._id)}  variant={"btn"}><FaIcons.FaTrash style={{color: "dimgray"}} /></Button>}</td>
+                        {<Button as={Link} onClick={() => deleteUser(user._id)} variant={"btn"}><FaIcons.FaTrash style={{color: "dimgray"}} /></Button>}</td>
                 </tr>)}
                 </tbody>
             </Table>

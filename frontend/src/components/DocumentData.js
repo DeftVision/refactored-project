@@ -43,7 +43,7 @@ export default function DocumentData () {
     }
     return(
         <Container className="col-8">
-            <Table responsive hover>
+            <Table responsive="sm" hover>
                 <thead>
                 <tr>
                     <th>First</th>

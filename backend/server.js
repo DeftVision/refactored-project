@@ -5,6 +5,7 @@ const connectDB = require("./config/db.js");
 const userRoute = require("./routes/userRoute");
 const evaluationRoute = require("./routes/evaluationRoute");
 const announcementRoute = require("./routes/announcementRoute");
+const documentRoute = require("./routes/documentRoute");
 
 const port = process.env.PORT;
 connectDB();
@@ -16,6 +17,7 @@ app.use(cors());
 app.use("/api/user", userRoute);
 app.use("/api/eval", evaluationRoute);
 app.use("/api/announce", announcementRoute);
+app.use("/api/docs", documentRoute);
 
 app.listen(port, () => {
     console.log(`Using port: ${port}`);

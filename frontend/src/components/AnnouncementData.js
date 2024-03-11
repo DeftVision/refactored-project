@@ -40,7 +40,7 @@ export default function AnnouncementData () {
     }
     return (
         <Container>
-            <Table responsive hover>
+            <Table responsive="sm" hover>
                 <thead>
                 <tr>
                     <th></th>

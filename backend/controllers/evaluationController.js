@@ -76,14 +76,14 @@ exports.updateEvaluation = async (req, res) => {
         const evaluation = await evaluationModel.findByIdAndUpdate(id, req.body, {new: true});
         if(evaluation) {
             return res.send({
-                message: "an evaluation was deleted successfully.",
+                message: "an evaluation was updated successfully.",
                 evaluation,
             })
         }
     } catch (error) {
         console.log(error);
         return res.send({
-            message: "deleting an evaluation callback error.",
+            message: "updating an evaluation callback error.",
             error,
         })
     }
