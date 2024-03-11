@@ -31,7 +31,7 @@ export default function Login() {
 
         if(response.ok && _response.user) {
             const userId = _response.user._id;
-            cookies.set("user_cookie", userId);
+            cookies.set("userCookie", userId);
             setUser(_response.user);
         } else {
             console.log(_response.error);

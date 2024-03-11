@@ -6,28 +6,30 @@ import * as FaIcons from "react-icons/fa";
 export default function UserData () {
     const [users, setUsers] = useState([]);
 
-    async function getUsers() {
-        try {
-            const response = await fetch("http://localhost:8000/api/user/users", {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                }
-            });
-            const _response = await response.json();
 
-            if (response.ok && _response.users) {
-                setUsers(_response.users);
-            } else {
-                console.log(_response.error);
-            }
-        } catch (error) {
-            console.error(error);
-        }
-    }
 
     useEffect(() => {
+        async function getUsers() {
+            try {
+                const response = await fetch("http://localhost:8000/api/user/users", {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                    }
+                });
+                const _response = await response.json();
+
+                if (response.ok && _response.users) {
+                    setUsers(_response.users);
+                } else {
+                    console.log(_response.error);
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        }
         getUsers();
+
     }, []);
 
     async function deleteUser(userId) {
@@ -35,7 +37,6 @@ export default function UserData () {
             await fetch(`http://localhost:8000/api/user/delete/${userId}`, {
                 method: "DELETE"
             });
-            getUsers();
         }
         catch (error) {
             console.log("Error deleting user:", error);
@@ -67,4 +68,21 @@ export default function UserData () {
     );
 }
 
-;
+/*
+*        {announcements.filter(announcement => announcement.display === true).map((announcement) =>
+                <Card key={announcements._id} className="mt-5 shadow"
+                      style={{display: "flex", flexDirection: "column"}}>
+                    <Card.Body>
+                        <Card.Title>
+                            <Card.Subtitle>
+                                <IoIcons.IoIosMegaphone style={{color: priorityColors[announcement.priority]}}/>
+                                {" "}Priority: {announcement.priority}
+                            </Card.Subtitle><br/>
+                            <Card.Subtitle>Subject: {announcement.subject}</Card.Subtitle>
+                        </Card.Title>
+                            <Card.Text>
+                                <p className="text-truncate">{announcement.content}</p>
+                            </Card.Text>
+                    </Card.Body>
+                </Card>)}
+* */
