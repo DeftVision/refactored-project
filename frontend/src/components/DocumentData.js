@@ -4,11 +4,11 @@ import { Link } from 'react-router-dom';
 import * as FaIcons from "react-icons/fa";
 
 export default function DocumentData () {
-    const [users, setUsers] = useState([]);
+    const [documents, setDocuments] = useState([]);
 
-    async function getUsers() {
+    async function getDocuments() {
         try {
-            const response = await fetch("http://localhost:8000/api/user/users", {
+            const response = await fetch("http://localhost:8000/api/docs/documents", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -16,8 +16,8 @@ export default function DocumentData () {
             });
             const _response = await response.json();
 
-            if (response.ok && _response.users) {
-                setUsers(_response.users);
+            if (response.ok && _response.documents) {
+                setDocuments(_response.documents);
             } else {
                 console.log(_response.error);
             }
@@ -27,18 +27,18 @@ export default function DocumentData () {
     }
 
     useEffect(() => {
-        getUsers();
+        getDocuments();
     }, []);
 
-    async function deleteUser(userId) {
+    async function deleteDocument(documentId) {
         try {
-            await fetch(`http://localhost:8000/api/delete/${userId}`, {
+            await fetch(`http://localhost:8000/api/docs/delete/${documentId}`, {
                 method: "DELETE"
             });
-            getUsers();
+            getDocuments();
         }
         catch (error) {
-            console.log("Error deleting user:", error);
+            console.log("Error deleting documents:", error);
         }
     }
     return(
@@ -46,20 +46,18 @@ export default function DocumentData () {
             <Table responsive="sm" hover>
                 <thead>
                 <tr>
-                    <th>First</th>
-                    <th>Last</th>
-                    <th>Email</th>
+                    <th>Name</th>
+                    <th>Category</th>
                     <th></th>
                 </tr>
                 </thead>
                 <tbody>
-                {users.map((user) => <tr key={user._id}>
-                    <td>{user.firstName}</td>
-                    <td>{user.lastName}</td>
-                    <td>{user.email}</td>
+                {documents.map((document) => <tr key={document._id}>
+                    <td>{documents.docName}</td>
+                    <td>{documents.category}</td>
                     <td>
-                        {<Button as={Link} to={`/edituser/${user._id}`} variant={"btn"}><FaIcons.FaEdit style={{color: "dodgerblue"}} /></Button>}
-                        {<Button as={Link} onClick={() => deleteUser(user._id)}  variant={"btn"}><FaIcons.FaTrash style={{color: "dimgray"}} /></Button>}</td>
+                        {<Button as={Link} to={`/editdocument/${document._id}`} variant={"btn"}><FaIcons.FaEdit style={{color: "dodgerblue"}} /></Button>}
+                        {<Button as={Link} onClick={() => deleteDocument(document._id)}  variant={"btn"}><FaIcons.FaTrash style={{color: "dimgray"}} /></Button>}</td>
                 </tr>)}
                 </tbody>
             </Table>

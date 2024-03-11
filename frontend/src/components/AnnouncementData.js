@@ -54,7 +54,6 @@ export default function AnnouncementData () {
                 {announcements.map((announcement) => <tr key={announcement._id}>
                     <td>{announcement.display ?  <FaIcons.FaGlasses style={{color: "#0b8c2f"}}/> : <FaIcons.FaGlasses style={{color: "#cfcccc"}}/>}</td>
                     <td>{announcement.title}</td>
-                    <td>{announcement.subject}</td>
                     <td>{announcement.audience}</td>
                     <td>
                         <Button as={Link} to={`/editannouncement/${announcement._id}`} variant={"btn"}>

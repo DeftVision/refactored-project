@@ -17,7 +17,7 @@ const Admin = () => {
                 <ListGroup.Item as={Link} onClick={() => setComponentShow("document")} variant={"btn"}>Documents</ListGroup.Item>
             </ListGroup>
                 <Col>
-                    {componentShow === 'default' && <img src="/linechart%20clipart.png" alt="Line Chart"  />}
+                    {componentShow === 'default' && <h4>Select Data Source</h4>}
                     {componentShow === 'user' && <UserData  />}
                     {componentShow === 'evaluation' && <EvaluationData/>}
                     {componentShow === 'announcement' && <AnnouncementData/>}

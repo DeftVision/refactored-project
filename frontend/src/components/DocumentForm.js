@@ -1,12 +1,142 @@
-import { Container, Button, Form, FloatingLabel } from 'react-bootstrap';
-import { useEffect, useState } from "react";
+import { useState, useEffect } from 'react';
+import { Container, Form, Button, FormText } from 'react-bootstrap';
+import { useParams } from 'react-router-dom';
+import Loading from '../pages/Loading';
 
 
-export default function DocumentForm () {
+const form_default = {
+    audience: "",
+    subject: "",
+    title: "",
+    content: "",
+    display: false,
+    priority: "",
+}
+
+
+export default function DocumentForm({newDocument}) {
+    const [form, setForm] = useState(form_default);
+    const [loading, setLoading] = useState(true);
+    const { id } = useParams();
+
+
+
+    useEffect(() => {
+        async function editDocument() {
+            const response = await fetch(`http://localhost:8000/api/docs/document/${id}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+
+            const _response = await response.json();
+
+            if (!response.ok) {
+                console.log(_response.error);
+            }
+            if (response.ok) {
+                const {title, subject, content, audience, priority, display} = _response.announcement;
+                setForm({title, subject, content, audience, priority, display});
+            }
+
+        }
+        if(newDocument) {
+            setLoading(true);
+        }
+        if(!newDocument) {
+            editDocument();
+        }
+        setLoading(false);
+    }, []);
+
+    if(loading) {
+        <Loading />
+    }
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        let url = "http://localhost:8000/api/docs/newDocument";
+        let method = "POST";
+
+        if(!newDocument) {
+            url = `http://localhost:8000/api/docs/update/${id}`;
+            method = "PATCH";
+        }
+
+        const response = await fetch( url, {
+            method: method,
+            body: JSON.stringify(form),
+            headers: {
+                "Content-Type": "application/json",
+            }
+        });
+
+        const _response = await response.json();
+
+        if(response.ok) {
+            console.log(_response);
+        } else {
+            console.log(_response.error);
+        }
+    }
+
     return (
-        <Container>
-            <h3 className="page-title">Document Form</h3>
+        <Container style={{width: "60%"}}>
+
+            <div className="mb-5"><h3 className="page-title">{newDocument ? "New Document" : "Edit Document"}</h3></div>
+
+            <form onSubmit={handleSubmit}>
+                <Form.Group className="mb-4">
+                    <Form.Label>Document Name</Form.Label>
+                    <Form.Control
+                        type="text"
+                        controlid="doc-name"
+                        autocomplete="docname"
+                        value={form.docName}
+                        placeholder=''
+                        onChange={(e) => {
+                            setForm({
+                                ...form,
+                                docName: e.target.value,
+                            });
+                        }}
+                    />
+                </Form.Group>
+                <Form.Group className="mb-4">
+                    <Form.Label>Category</Form.Label>
+                    <Form.Control
+                        type="text"
+                        controlid="category"
+                        autocomplete="category"
+                        value={form.category}
+                        placeholder=''
+                        onChange={(e) => {
+                            setForm({
+                                ...form,
+                                category: e.target.value,
+                            });
+                        }}
+                    />
+                </Form.Group>
+                <Form.Group controlid="image" className="mb-4">
+                    <Form.Label>Document Upload</Form.Label>
+                    <Form.Control
+                        type="file"
+                        onChange={(e) => {
+                            setForm({
+                                ...form,
+                                docUpload: e.target.value,
+                            })
+                        }}
+                    />
+                </Form.Group>
+
+                <Button variant={"btn btn-outline-secondary"} type="submit">
+                    {newDocument ? "+ Document" : "update"}
+                </Button>
+            </form>
+
         </Container>
     );
-};
-
+}
