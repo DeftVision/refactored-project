@@ -30,8 +30,8 @@ function App() {
         setUser(_response.user);
       }
       setLoading(false);
-
     }
+
     if(userCookie) {
       getUser();
     } else {
@@ -65,6 +65,9 @@ function App() {
 
                     <Route path="/announcementform" element={<AnnouncementForm newAnnouncement />} />
                     <Route path="/editannouncementform/:id" element={<AnnouncementForm />} />
+
+                    <Route path="/documentform" element={<DocumentForm newDocument />} />
+                    <Route path="/editdocumentform/:id" element={<DocumentForm />} />
 
                     <Route path="/evaluationform" element={<EvaluationForm newEvaluation />} />
                     <Route path="/editevaluationform/:id" element={<EvaluationForm />} />

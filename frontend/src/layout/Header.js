@@ -17,9 +17,9 @@ export default function Header () {
         <>
             <Navbar expand="lg" bg="dark" variant={"dark"} className="mb-5 shadow">
                 <Container>
-
                     <Navbar.Toggle />
                     <Navbar.Collapse>
+                        <Navbar.Text>Hello</Navbar.Text>
                         <Nav className="ms-auto">
                             <Nav.Link as={Link} to="/">Home</Nav.Link>
                             <Nav.Link as={Link} to="/dashboard">Dashboard</Nav.Link>
