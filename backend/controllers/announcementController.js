@@ -85,7 +85,7 @@ exports.updateAnnouncement = async (req, res) => {
             })
         }
         return res.send({
-            message: `${announcement.name} updated successfully`,
+            message: `${announcement.title} updated successfully`,
             announcement,
         })
 

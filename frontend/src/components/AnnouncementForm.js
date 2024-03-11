@@ -56,7 +56,7 @@ export default function AnnouncementForm({newAnnouncement}) {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        let url = "http://localhost:8000/api/announce/newAnnouncement";
+        let url = "http://localhost:8000/api/announce/new";
         let method = "POST";
 
         if(!newAnnouncement) {
@@ -88,17 +88,17 @@ export default function AnnouncementForm({newAnnouncement}) {
 
             <form onSubmit={handleSubmit}>
                 <Form.Group className="mb-4">
-                    <Form.Label>Name</Form.Label>
+                    <Form.Label>Title</Form.Label>
                     <Form.Control
                         type="text"
-                        controlid="name"
-                        autocomplete="name"
-                        value={form.name}
+                        controlid="title"
+                        autocomplete="title"
+                        value={form.title}
                         placeholder=''
                         onChange={(e) => {
                             setForm({
                                 ...form,
-                                name: e.target.value,
+                                title: e.target.value,
                             });
                         }}
                     />

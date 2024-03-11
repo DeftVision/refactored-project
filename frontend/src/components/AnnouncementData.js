@@ -52,7 +52,7 @@ export default function AnnouncementData () {
                 </tr>
                 </thead>
                 <tbody>
-                {announcements.filter(announcement => announcement.display === true).map((announcement) => <tr key={announcement._id}>
+                {announcements.map((announcement) => <tr key={announcement._id}>
                     <td>{announcement.display ?  <FaIcons.FaGlasses style={{color: "#0b8c2f"}}/> : <FaIcons.FaGlasses style={{color: "#cfcccc"}}/>}</td>
                     <td>{announcement.title}</td>
                     <td>{announcement.audience}</td>
