@@ -6,7 +6,7 @@ import * as FaIcons from 'react-icons/fa';
 export default function AnnouncementData () {
     const [announcements, setAnnouncements] = useState([])
 
-
+/*should this be in the useEffect*/
 
     useEffect(() => {
         async function getAnnouncements() {
