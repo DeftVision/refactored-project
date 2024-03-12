@@ -4,8 +4,7 @@ const schema = mongoose.Schema;
 const evaluationSchema = new schema({
     visitDateTime: {
         type: Date,
-        required: true,
-        default: Date.now(),
+        required: true
     },
     evaluator: {
         type: String,

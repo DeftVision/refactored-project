@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Container, Form, Button, FormText } from 'react-bootstrap';
+import { Container, Form, Button } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import Loading from '../pages/Loading';
 
@@ -36,8 +36,8 @@ export default function DocumentForm({newDocument}) {
                 console.log(_response.error);
             }
             if (response.ok) {
-                const {title, subject, content, audience, priority, display} = _response.document;
-                setForm({title, subject, content, audience, priority, display});
+                const {docName, category, docUpload} = _response.document;
+                setForm({docName, category, docUpload});
             }
 
         }

@@ -9,10 +9,12 @@ exports.getEvaluations = async (req, res) => {
                 message: "no evaluations were found."
             })
         }
-        return res.send({
-            evaluationCount: evaluations.length,
-            evaluations,
-        })
+        if(evaluations) {
+            return res.send({
+                evaluationCount: evaluations.length,
+                evaluations,
+            })
+        }
 
     } catch (error){
         console.log(error);
@@ -80,6 +82,11 @@ exports.updateEvaluation = async (req, res) => {
                 evaluation,
             })
         }
+        if(!evaluation) {
+            return res.send({
+                message: "Evaluation not found",
+            })
+        }
     } catch (error) {
         console.log(error);
         return res.send({
@@ -94,6 +101,11 @@ exports.deleteEvaluation = async (req, res) => {
     try {
         const {id} = req.params;
         const evaluation = await evaluationModel.findByIdAndDelete(id);
+        if(!evaluation) {
+            return res.send({
+                message: "Evaluation not found"
+            })
+        }
         if(evaluation) {
             return res.send({
                 message: "an evaluation was deleted successfully.",

@@ -43,41 +43,8 @@ export default function EvaluationForm({newEvaluation}) {
                 console.log(_response.error);
             }
             if (response.ok) {
-                const {
-                    visitDateTime,
-                    evaluator,
-                    location,
-                    cashier,
-                    greeting,
-                    repeatOrder,
-                    upsell,
-                    patio,
-                    wait,
-                    foodScore,
-                    cleanScore,
-                    serviceScore,
-                    score,
-                    image,
-                    identifyManager,
-                    comments,
-                } = _response.evaluation;
-                setForm({
-                    visitDateTime,
-                    evaluator,
-                    location,
-                    cashier,
-                    greeting,
-                    repeatOrder,
-                    upsell,
-                    patio,
-                    wait,
-                    foodScore,
-                    cleanScore,
-                    serviceScore,
-                    score,
-                    image,
-                    identifyManager,
-                    comments,});
+                const {visitDateTime,evaluator,location,cashier,greeting,repeatOrder,upsell,patio,wait,foodScore,cleanScore,serviceScore,score,image,identifyManager,comments} = _response.evaluation;
+                setForm({visitDateTime,evaluator,location,cashier,greeting,repeatOrder,upsell,patio,wait,foodScore,cleanScore,serviceScore,score,image,identifyManager,comments});
             }
 
         }
