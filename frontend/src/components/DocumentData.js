@@ -53,11 +53,16 @@ export default function DocumentData () {
                 </thead>
                 <tbody>
                 {documents.map((document) => <tr key={document._id}>
-                    <td>{documents.docName}</td>
-                    <td>{documents.category}</td>
+                    <td>{document.docName}</td>
+                    <td>{document.category}</td>
                     <td>
-                        {<Button as={Link} to={`/editdocument/${document._id}`} variant={"btn"}><FaIcons.FaEdit style={{color: "dodgerblue"}} /></Button>}
-                        {<Button as={Link} onClick={() => deleteDocument(document._id)}  variant={"btn"}><FaIcons.FaTrash style={{color: "dimgray"}} /></Button>}</td>
+                        {<Button as={Link} to={`/editdocument/${document._id}`} variant={"btn"}>
+                            <FaIcons.FaEdit style={{color: "dodgerblue"}} />
+                        </Button>}
+
+                        {<Button as={Link} onClick={() => deleteDocument(document._id)}  variant={"btn"}>
+                            <FaIcons.FaTrash style={{color: "dimgray"}} />
+                        </Button>}</td>
                 </tr>)}
                 </tbody>
             </Table>
