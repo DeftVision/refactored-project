@@ -1,7 +1,6 @@
 import { Container, Button, Form } from 'react-bootstrap';
-import { useState } from 'react';
-import UserContext from '../components/UserContext';
-import { useContext } from 'react';
+import { useState, useEffect } from 'react';
+import Loading from '../pages/Loading';
 import { useParams } from "react-router-dom";
 
 const form_default = {
@@ -24,34 +23,108 @@ const form_default = {
 }
 
 
-export default function EvaluationForm() {
-    const { user, setUser } = useContext(UserContext);
+export default function EvaluationForm({newEvaluation}) {
+    const [loading, setLoading] = useState(true);
     const [form, setForm] = useState(form_default);
     const {id} = useParams();
+
+    useEffect(() => {
+        async function editEvaluation() {
+            const response = await fetch(`http://localhost:8000/api/eval/evaluation/${id}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+
+            const _response = await response.json();
+
+            if (!response.ok) {
+                console.log(_response.error);
+            }
+            if (response.ok) {
+                const {
+                    visitDateTime,
+                    evaluator,
+                    location,
+                    cashier,
+                    greeting,
+                    repeatOrder,
+                    upsell,
+                    patio,
+                    wait,
+                    foodScore,
+                    cleanScore,
+                    serviceScore,
+                    score,
+                    image,
+                    identifyManager,
+                    comments,
+                } = _response.evaluation;
+                setForm({
+                    visitDateTime,
+                    evaluator,
+                    location,
+                    cashier,
+                    greeting,
+                    repeatOrder,
+                    upsell,
+                    patio,
+                    wait,
+                    foodScore,
+                    cleanScore,
+                    serviceScore,
+                    score,
+                    image,
+                    identifyManager,
+                    comments,});
+            }
+
+        }
+        if(newEvaluation) {
+            setLoading(true);
+        }
+        if(!newEvaluation) {
+            editEvaluation();
+        }
+        setLoading(false);
+    }, []);
+
+    if(loading) {
+        <Loading />
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const response = await fetch("http://localhost:8000/api/eval/newEvaluation", {
-            method: "POST",
+        let url = "http://localhost:8000/api/eval/newEvaluation";
+        let method = "POST";
+
+        if(!newEvaluation) {
+            url = `http://localhost:8000/api/eval/update/${id}`;
+            method = "PATCH";
+        }
+
+        const response = await fetch( url, {
+            method: method,
             body: JSON.stringify(form),
             headers: {
-                "Content-Type" : "application/json",
+                "Content-Type": "application/json",
             }
-        })
+        });
 
         const _response = await response.json();
-        if(!response.ok) {
-            console.log(_response.error)
-        }
+
         if(response.ok) {
             console.log(_response);
+        } else {
+            console.log(_response.error);
         }
     }
 
     return (
         <Container fluid style={{width: "60%", display: "flex", flexDirection: "column"}} className="user-form">
-            <h3 className="mb-4 page-title">New Evaluation</h3>
+            <div className="mb-5">{newEvaluation ? "New Evaluation" : "Edit Evaluation"}</div>
 
 
             {/*Visit Date and Time*/}
@@ -161,7 +234,7 @@ export default function EvaluationForm() {
                                 ...form,
                                 upsell: e.target.checked,
                             })
-                        }} />
+                        }}/>
                 </Form.Group>
 
                 {/* Order was Repeated */}
@@ -177,7 +250,7 @@ export default function EvaluationForm() {
                                 ...form,
                                 repeatOrder: e.target.checked,
                             })
-                        }} />
+                        }}/>
                 </Form.Group>
 
                 {/* Time waiting for food in minutes */}
@@ -209,7 +282,7 @@ export default function EvaluationForm() {
                                 ...form,
                                 identifyManager: e.target.checked,
                             })
-                        }} />
+                        }}/>
                 </Form.Group>
 
                 {/* Was the patio clean and organized? */}
@@ -225,7 +298,7 @@ export default function EvaluationForm() {
                                 ...form,
                                 patio: e.target.checked,
                             })
-                        }} />
+                        }}/>
                 </Form.Group>
 
                 {/* Food Score 1-5 [5 is highest]  */}
