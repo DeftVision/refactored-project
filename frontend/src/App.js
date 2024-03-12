@@ -1,13 +1,35 @@
 import { useState, useEffect } from "react";
 import cookies from 'js-cookie';
+import './App.css';
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Container } from 'react-bootstrap';
 import { Header, Footer } from './layout/_layout_index'
-import { Admin, Loading, Error, Users, Dashboard, Home, Login, Evaluations, Documents} from "./pages/_page_index";
-import './App.css';
-import { UserContext, PrivateRoutes, UserForm, EvaluationForm, AnnouncementForm, DocumentForm } from "./components/_component_index";
-import Announcements from "./pages/Announcements";
+import {
+  Admin,
+  Loading,
+  Error,
+  Users,
+  Dashboard,
+  Home,
+  Login,
+  Evaluations,
+  Documents,
+  Announcements
+} from "./pages/_page_index";
+import {
+  UserContext,
+  PrivateRoutes,
+  UserForm,
+  EvaluationForm,
+  AnnouncementForm,
+  DocumentForm,
+  EvaluationData,
+  DocumentData,
+  AnnouncementData,
+  UserData
+} from "./components/_component_index";
+
 
 function App() {
   const [user, setUser] = useState(null);
@@ -43,7 +65,6 @@ function App() {
     return <Loading />;
   }
 
-
   return (
       <UserContext.Provider value={{user, setUser}}>
         <Router>
@@ -64,16 +85,20 @@ function App() {
                     <Route path="/user" element={<Users />}/>
 
                     <Route path="/announcementform" element={<AnnouncementForm newAnnouncement />} />
-                    <Route path="/editannouncementform/:id" element={<AnnouncementForm />} />
+                    <Route path="/editannouncement/:id" element={<AnnouncementForm />} />
+                    <Route path="/announcementdata" element={<AnnouncementData />} />
 
                     <Route path="/documentform" element={<DocumentForm newDocument />} />
-                    <Route path="/editdocumentform/:id" element={<DocumentForm />} />
+                    <Route path="/editdocument/:id" element={<DocumentForm />} />
+                    <Route path="/documentdata" element={<DocumentData />} />
 
                     <Route path="/evaluationform" element={<EvaluationForm newEvaluation />} />
-                    <Route path="/editevaluationform/:id" element={<EvaluationForm />} />
+                    <Route path="/editevaluation/:id" element={<EvaluationForm />} />
+                    <Route path="/evaluationdata" element={<EvaluationData />} />
 
                     <Route path="/userform" element={<UserForm newUser />}/>
                     <Route path="/edituser/:id" element={<UserForm />}/>
+                    <Route path="/userdata" element={<UserData />}/>
                   </Route>
                   <Route path="/login" element={user ? <Navigate to="/"/>  : <Login />}/>
                   <Route path="*" element={<Error />}/>

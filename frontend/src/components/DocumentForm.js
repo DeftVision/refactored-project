@@ -36,7 +36,7 @@ export default function DocumentForm({newDocument}) {
                 console.log(_response.error);
             }
             if (response.ok) {
-                const {title, subject, content, audience, priority, display} = _response.announcement;
+                const {title, subject, content, audience, priority, display} = _response.document;
                 setForm({title, subject, content, audience, priority, display});
             }
 

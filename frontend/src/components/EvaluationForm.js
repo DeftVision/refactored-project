@@ -27,7 +27,6 @@ const form_default = {
 export default function EvaluationForm() {
     const { user, setUser } = useContext(UserContext);
     const [form, setForm] = useState(form_default);
-    const [switchState, setSwitchState] = useState(false)
     const {id} = useParams();
 
     const handleSubmit = async (e) => {
