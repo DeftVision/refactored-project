@@ -390,7 +390,7 @@ export default function EvaluationForm({newEvaluation}) {
                     />
                 </Form.Group>
                 <Button variant={"btn btn-outline-secondary"} type='submit'>
-                    + Evaluation
+                    {newEvaluation ? "+ evaluation" : "update"}
                 </Button>
             </form>
         </Container>
