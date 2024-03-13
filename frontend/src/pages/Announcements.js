@@ -31,7 +31,7 @@ export default function Announcements() {
     const priorityColors = {
         "High": "darkred",
         "Medium": "darkorange",
-        "Low": "#333"
+        "Low": "#178178178"
     };
 
 
