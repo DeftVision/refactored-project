@@ -44,7 +44,7 @@ export default function UserData () {
     }
     return(
         <Container className="col-8">
-            <Table responsive="sm" hover>
+            <Table responsive="sm" hover className="align-middle">
                 <thead>
                 <tr>
                     <th>First</th>

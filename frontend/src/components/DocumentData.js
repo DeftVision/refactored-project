@@ -6,6 +6,7 @@ import * as FaIcons from "react-icons/fa";
 export default function DocumentData () {
     const [documents, setDocuments] = useState([]);
 
+
     async function getDocuments() {
         try {
             const response = await fetch("http://localhost:8000/api/docs/documents", {
@@ -26,24 +27,28 @@ export default function DocumentData () {
         }
     }
 
+
     useEffect(() => {
         getDocuments();
     }, []);
 
     async function deleteDocument(documentId) {
         try {
-            await fetch(`http://localhost:8000/api/docs/delete/${documentId}`, {
-                method: "DELETE"
+            const response = await fetch(`http://localhost:8000/api/docs/delete/${documentId}`, {
+                method: "DELETE",
             });
-            getDocuments();
+
+            if (response.ok) {
+                setDocuments(documents.filter(document => document._id !== documentId));
+            }
         }
         catch (error) {
-            console.log("Error deleting documents:", error);
+            console.log(error);
         }
     }
     return(
         <Container className="col-8">
-            <Table responsive="sm" hover>
+            <Table responsive="sm" hover className="align-middle">
                 <thead>
                 <tr>
                     <th>Name</th>
@@ -52,7 +57,7 @@ export default function DocumentData () {
                 </tr>
                 </thead>
                 <tbody>
-                {documents.map((document) => <tr key={document._id}>
+                {documents.filter(document => document._id !== documents.length).map((document) => <tr key={document._id}>
                     <td>{document.docName}</td>
                     <td>{document.category}</td>
                     <td>
@@ -60,7 +65,7 @@ export default function DocumentData () {
                             <FaIcons.FaEdit style={{color: "dodgerblue"}} />
                         </Button>}
 
-                        {<Button as={Link} onClick={() => deleteDocument(document._id)}  variant={"btn"}>
+                        {<Button variant={"btn"} onClick={() => deleteDocument(document._id)}>
                             <FaIcons.FaTrash style={{color: "dimgray"}} />
                         </Button>}</td>
                 </tr>)}

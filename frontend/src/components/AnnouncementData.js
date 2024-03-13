@@ -25,7 +25,6 @@ export default function AnnouncementData () {
             }
         }
         getAnnouncements();
-
     }, []);
 
     async function deleteAnnouncement(announcementId) {
@@ -41,7 +40,7 @@ export default function AnnouncementData () {
     }
     return (
         <Container>
-            <Table responsive="sm" hover>
+            <Table responsive="sm" hover className="align-middle">
                 <thead>
                 <tr>
                     <th></th>
