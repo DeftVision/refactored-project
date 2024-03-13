@@ -29,10 +29,13 @@ export default function EvaluationData () {
 
     async function deleteEvaluation(evaluationId) {
         try {
-            await fetch(`http://localhost:8000/api/eval/delete/${evaluationId}`, {
+            const response = await fetch(`http://localhost:8000/api/eval/delete/${evaluationId}`, {
                 method: "DELETE",
             });
-            getEvaluations();
+
+            if(response.ok) {
+                setEvaluations(evaluations.filter(evaluation => evaluation._id !== evaluationId));
+            }
         }
         catch (error) {
             console.log(error);

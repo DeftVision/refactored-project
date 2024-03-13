@@ -27,7 +27,6 @@ export default function DocumentData () {
         }
     }
 
-
     useEffect(() => {
         getDocuments();
     }, []);
@@ -57,7 +56,7 @@ export default function DocumentData () {
                 </tr>
                 </thead>
                 <tbody>
-                {documents.filter(document => document._id !== documents.length).map((document) => <tr key={document._id}>
+                {documents.map((document) => <tr key={document._id}>
                     <td>{document.docName}</td>
                     <td>{document.category}</td>
                     <td>
@@ -65,7 +64,7 @@ export default function DocumentData () {
                             <FaIcons.FaEdit style={{color: "dodgerblue"}} />
                         </Button>}
 
-                        {<Button variant={"btn"} onClick={() => deleteDocument(document._id)}>
+                        {<Button variant={"btn"} type="submit" onClick={() => deleteDocument(document._id)}>
                             <FaIcons.FaTrash style={{color: "dimgray"}} />
                         </Button>}</td>
                 </tr>)}
