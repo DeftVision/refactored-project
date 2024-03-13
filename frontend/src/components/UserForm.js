@@ -15,7 +15,7 @@ const form_default = {
 export default function UserForm({newUser}) {
     const [form, setForm] = useState(form_default);
     const [loading, setLoading] = useState(true);
-    const { id } = useParams();
+    const {id} = useParams();
 
 
     useEffect(() => {
@@ -33,11 +33,10 @@ export default function UserForm({newUser}) {
             if (!response.ok) {
                 console.log(_response.error);
             }
-            if (response.ok) {
+            if(response.ok) {
                 const {firstName, lastName, role, email, location} = _response.user;
                 setForm({firstName, lastName, role, email, location});
             }
-
         }
         if(newUser) {
             setLoading(true);

@@ -6,32 +6,35 @@ import * as FaIcons from 'react-icons/fa';
 export default function AnnouncementData () {
     const [announcements, setAnnouncements] = useState([])
 
-/*should this be in the useEffect*/
+    async function getAnnouncements() {
+        const response = await fetch("http://localhost:8000/api/announce/announcements", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        });
+        const _response = await response.json();
+
+        if (response.ok && _response.announcements) {
+            setAnnouncements(_response.announcements);
+        } else {
+            console.log(_response.error);
+        }
+    }
 
     useEffect(() => {
-        async function getAnnouncements() {
-            const response = await fetch("http://localhost:8000/api/announce/announcements", {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                }
-            });
-            const _response = await response.json();
-
-            if (response.ok && _response.announcements) {
-                setAnnouncements(_response.announcements);
-            } else {
-                console.log(_response.error);
-            }
-        }
         getAnnouncements();
     }, []);
 
     async function deleteAnnouncement(announcementId) {
         try {
-            await fetch(`http://localhost:8000/api/announce/delete/${announcementId}`, {
+            const response = await fetch(`http://localhost:8000/api/announce/delete/${announcementId}`, {
                 method: "DELETE",
             });
+
+            if(response.ok) {
+                setAnnouncements(announcements.filter(announcement => announcement._id !== announcementId));
+            }
 
         }
         catch (error) {
