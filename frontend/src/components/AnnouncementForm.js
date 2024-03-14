@@ -35,8 +35,8 @@ export default function AnnouncementForm({newAnnouncement}) {
             if (!response.ok) {
                 console.log(_response.error);
             }
-            if (response.ok && _response.announcements) {
-                const {title, subject, content, audience, priority, display} = _response.announcements;
+            if (response.ok) {
+                const {title, subject, content, audience, priority, display} = _response.announcement;
                 setForm({title, subject, content, audience, priority, display});
             }
 
