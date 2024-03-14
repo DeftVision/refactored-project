@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Container, Table, Button } from 'react-bootstrap';
+import { Container, Table, Button, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import * as FaIcons from "react-icons/fa";
 
@@ -46,7 +46,12 @@ export default function DocumentData () {
         }
     }
     return(
-        <Container className="col-8">
+        <Container className="col-8" style={{display: "flex", flex: "30%", alignItems: "center"}}>
+            <Col>
+            <Row>
+                <Button as={Link} to="/documentform" variant={"btn btn-outline-primary"} className="mb-4">Add New File</Button>
+            </Row>
+            <Row>
             <Table responsive="sm" hover className="align-middle">
                 <thead>
                 <tr>
@@ -70,6 +75,8 @@ export default function DocumentData () {
                 </tr>)}
                 </tbody>
             </Table>
+            </Row>
+            </Col>
         </Container>
     );
 }
