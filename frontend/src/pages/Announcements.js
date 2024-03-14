@@ -2,8 +2,6 @@ import { Container, Card } from "react-bootstrap";
 import { useEffect, useState } from 'react'
 import * as IoIcons from 'react-icons/io';
 
-
-
 export default function Announcements() {
     const [announcements, setAnnouncements] = useState([]);
 
@@ -23,7 +21,6 @@ export default function Announcements() {
     }
 
     useEffect(() => {
-
         getAnnouncements();
     }, []);
 
@@ -38,12 +35,12 @@ export default function Announcements() {
     return(
         <Container className="mt-5">
             <h3 className="page-title">Announcements</h3>
-
-            {announcements.map((announcement) =>
+            {announcements.filter(announcement => announcement.display === true).map((announcement) =>
             <Card key={announcements._id} className="mt-5 shadow" style={{}}>
                 <Card.Body>
                     <Card.Title>
-                        <Card.Subtitle><IoIcons.IoIosMegaphone style={{color: priorityColors[announcement.priority]}} />
+                        <Card.Subtitle>
+                            <IoIcons.IoIosMegaphone style={{color: priorityColors[announcement.priority]}} />
                             {" "}Priority: {announcement.priority}</Card.Subtitle><br/>
                         <Card.Subtitle>Subject: {announcement.subject}</Card.Subtitle>
                     </Card.Title>
@@ -52,9 +49,6 @@ export default function Announcements() {
                     </Card.Text>
                 </Card.Body>
             </Card>)}
-
-
-
         </Container>
     )
 }
