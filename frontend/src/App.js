@@ -78,11 +78,9 @@ function App() {
                     <Route path="/users" element={<Users />}/>
                     <Route path="/dashboard" element={<Dashboard />}/>
                     <Route path="/admin" element={<Admin />}/>
-
                     <Route path="/announcements" element={<Announcements />} />
                     <Route path="/documents" element={<Documents />} />
                     <Route path="/evaluations" element={<Evaluations />} />
-                    <Route path="/user" element={<Users />}/>
 
                     <Route path="/announcementform" element={<AnnouncementForm newAnnouncement />} />
                     <Route path="/editannouncement/:id" element={<AnnouncementForm />} />

@@ -35,7 +35,7 @@ export default function AnnouncementForm({newAnnouncement}) {
             if (!response.ok) {
                 console.log(_response.error);
             }
-            if (response.ok) {
+            if (response.ok && _response.announcements) {
                 const {title, subject, content, audience, priority, display} = _response.announcements;
                 setForm({title, subject, content, audience, priority, display});
             }
@@ -56,7 +56,7 @@ export default function AnnouncementForm({newAnnouncement}) {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        let url = "http://localhost:8000/api/announce/new";
+        let url = "http://localhost:8000/api/announce/newAnnouncement";
         let method = "POST";
 
         if(!newAnnouncement) {
