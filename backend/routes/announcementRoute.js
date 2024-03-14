@@ -6,7 +6,7 @@ const { newAnnouncement, getAnnouncements, getAnnouncement, updateAnnouncement, 
 router.get("/announcements", getAnnouncements);
 router.get("/announcement/:id", getAnnouncement);
 
-router.post("/new", newAnnouncement);
+router.post("/newAnnouncement", newAnnouncement);
 
 router.patch("/update/:id", updateAnnouncement);
 
