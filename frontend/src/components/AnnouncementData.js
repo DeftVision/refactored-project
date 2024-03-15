@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Table, Container, Button } from 'react-bootstrap';
+import { Table, Container, Button, Col, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import * as FaIcons from 'react-icons/fa';
 
@@ -42,7 +42,11 @@ export default function AnnouncementData () {
         }
     }
     return (
-        <Container>
+        <Container className="col-8">
+            <Col>
+                <Row>
+                    <Button as={Link} to="/announcementform" variant={"btn btn-outline-primary"} className="mb-4">Add New Announcement</Button>
+                </Row>
             <Table responsive="sm" hover className="align-middle">
                 <thead>
                 <tr>
@@ -64,12 +68,13 @@ export default function AnnouncementData () {
                             <FaIcons.FaEdit style={{color: "dodgerblue"}} />
                         </Button>
                         <Button variant={"btn"} type="submit" onClick={() => deleteAnnouncement(announcement._id)}>
-                            <FaIcons.FaTrash style={{color: "#aaa"}}  />
+                            <FaIcons.FaTrash style={{color: "dimgray"}}  />
                         </Button>
                     </td>
                 </tr>)}
                 </tbody>
             </Table>
+            </Col>
 
         </Container>
     )

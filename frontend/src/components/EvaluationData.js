@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react';
-import { Table, Container, Button } from 'react-bootstrap';
+import { Table, Container, Button, Col, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import * as FaIcons from 'react-icons/fa';
 
@@ -43,7 +43,12 @@ export default function EvaluationData () {
     }
 
     return (
-        <Container>
+        <Container className="col-8">
+            <Col>
+                <Row>
+                    <Button as={Link} to="/evaluationform" variant={"btn btn-outline-primary"} className="mb-4">Add New Evaluation</Button>
+                </Row>
+                <Row>
             <Table hover responsive="sm" className="align-middle">
                 <thead>
                 <tr>
@@ -70,6 +75,8 @@ export default function EvaluationData () {
                 </tr>)}
                 </tbody>
             </Table>
+                </Row>
+            </Col>
         </Container>
     )
 
