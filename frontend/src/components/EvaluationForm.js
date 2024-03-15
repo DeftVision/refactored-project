@@ -1,6 +1,7 @@
 import { Container, Button, Form } from 'react-bootstrap';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import Loading from '../pages/Loading';
+import UserContext from '../components/UserContext'
 import { useParams } from "react-router-dom";
 
 const form_default = {
@@ -26,6 +27,7 @@ const form_default = {
 export default function EvaluationForm({newEvaluation}) {
     const [loading, setLoading] = useState(true);
     const [form, setForm] = useState(form_default);
+    const { user } = useContext(UserContext);
     const {id} = useParams();
 
     useEffect(() => {
@@ -93,14 +95,14 @@ export default function EvaluationForm({newEvaluation}) {
         <Container style={{width: "60%"}}>
 
             <div className="mb-5"><h3 className="page-title">{newEvaluation ? "New Evaluation" : "Edit Evaluation"}</h3></div>
-            {/*Visit Date and Time*/}
+
             <form onSubmit={handleSubmit}>
 
                 <Form.Group controlid="evaluatorName" className="mb-4">
-                    <Form.Label>Evaluator Name</Form.Label>
                     <Form.Control
+                        disabled
                         type="text"
-                        placeholder=""
+                        placeholder={user.firstName + " " + user.lastName}
                         value={form.user}
                         autoComplete="evaluator-name"
                         onChange={(e) => {
@@ -127,7 +129,6 @@ export default function EvaluationForm({newEvaluation}) {
                     />
                 </Form.Group>
 
-                {/* Location */}
                 <Form.Group controlid="location" className="mb-4">
                     <Form.Label>Location</Form.Label>
                     <Form.Select
@@ -157,7 +158,6 @@ export default function EvaluationForm({newEvaluation}) {
                     </Form.Select>
                 </Form.Group>
 
-                {/* Greeting */}
                 <Form.Group controlid="greeted" className="mb-4">
                     <Form.Check
                         type="switch"
@@ -172,7 +172,6 @@ export default function EvaluationForm({newEvaluation}) {
                         }}/>
                 </Form.Group>
 
-                {/* Cashier Name or Description */}
                 <Form.Group controlid="cashier" className="mb-4">
                     <Form.Label>Cashier / Description</Form.Label>
                     <Form.Control
@@ -188,7 +187,6 @@ export default function EvaluationForm({newEvaluation}) {
                     />
                 </Form.Group>
 
-                {/* Upsell sweet potato fries */}
                 <Form.Group controlid="upsell" className="mb-4">
                     <Form.Check
                         type="switch"
@@ -203,7 +201,6 @@ export default function EvaluationForm({newEvaluation}) {
                         }}/>
                 </Form.Group>
 
-                {/* Order was Repeated */}
                 <Form.Group controlid="repeatOrder" className="mb-4">
                     <Form.Check
                         type="switch"
@@ -219,7 +216,6 @@ export default function EvaluationForm({newEvaluation}) {
                         }}/>
                 </Form.Group>
 
-                {/* Time waiting for food in minutes */}
                 <Form.Group controlid="wait" className="mb-4">
                     <Form.Label>How long did you wait for your food?</Form.Label>
                     <Form.Control
@@ -235,7 +231,6 @@ export default function EvaluationForm({newEvaluation}) {
                     />
                 </Form.Group>
 
-                {/* Was the manager identifiable? */}
                 <Form.Group controlid="identify-manager" className="mb-4">
                     <Form.Check
                         type="switch"
@@ -251,7 +246,6 @@ export default function EvaluationForm({newEvaluation}) {
                         }}/>
                 </Form.Group>
 
-                {/* Was the patio clean and organized? */}
                 <Form.Group controlid="patio" className="mb-4">
                     <Form.Check
                         type="switch"
@@ -267,7 +261,6 @@ export default function EvaluationForm({newEvaluation}) {
                         }}/>
                 </Form.Group>
 
-                {/* Food Score 1-5 [5 is highest]  */}
                 <Form.Group controlid="foodScore" className="mb-4">
                     <Form.Label>Food Score</Form.Label>
                     <Form.Control
@@ -282,7 +275,6 @@ export default function EvaluationForm({newEvaluation}) {
                     />
                 </Form.Group>
 
-                {/* Clean Score 1-5 [5 is highest]  */}
                 <Form.Group controlid="cleanScore" className="mb-4">
                     <Form.Label>Clean Score</Form.Label>
                     <Form.Control
@@ -297,7 +289,6 @@ export default function EvaluationForm({newEvaluation}) {
                     />
                 </Form.Group>
 
-                {/* Service Score 1-5 [5 is highest]  */}
                 <Form.Group controlid="serviceScore" className="mb-4">
                     <Form.Label>Service Score</Form.Label>
                     <Form.Control
@@ -312,7 +303,7 @@ export default function EvaluationForm({newEvaluation}) {
                     />
                 </Form.Group>
 
-                {/* Calculate average score from the 3 scores */}
+
                 <Form.Group controlid="score" className="mb-4">
                     <Form.Label>Final Score</Form.Label>
                     <Form.Control
