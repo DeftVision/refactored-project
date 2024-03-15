@@ -90,15 +90,14 @@ export default function EvaluationForm({newEvaluation}) {
     }
 
     return (
-        <Container fluid style={{width: "60%", display: "flex", flexDirection: "column"}} className="user-form">
-            <div className="mb-5">{newEvaluation ? "New Evaluation" : "Edit Evaluation"}</div>
+        <Container style={{width: "60%"}}>
 
-
+            <div className="mb-5"><h3 className="page-title">{newEvaluation ? "New Evaluation" : "Edit Evaluation"}</h3></div>
             {/*Visit Date and Time*/}
             <form onSubmit={handleSubmit}>
 
                 <Form.Group controlid="evaluatorName" className="mb-4">
-                    <Form.Label>Evaluator</Form.Label>
+                    <Form.Label>Evaluator Name</Form.Label>
                     <Form.Control
                         type="text"
                         placeholder=""

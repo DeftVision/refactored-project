@@ -82,9 +82,11 @@ export default function AnnouncementForm({newAnnouncement}) {
     }
 
     return (
-        <Container style={{width: "60%"}}>
+        <Container fluid style={{width: "60%", display: "flex", flexDirection: "column"}} className="user-form">
 
-            <div className="mb-5"><h3 className="page-title">{newAnnouncement ? "New Announcement" : "Edit Announcement"}</h3></div>
+            <div className="mb-5">
+                <h3 className="page-title">{newAnnouncement ? "New Announcement" : "Edit Announcement"}</h3>
+            </div>
 
             <form onSubmit={handleSubmit}>
                 <Form.Group className="mb-4">

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Container, Table, Button } from 'react-bootstrap';
+import { Container, Table, Button, Col, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import * as FaIcons from "react-icons/fa";
 
@@ -47,6 +47,10 @@ export default function UserData () {
     }
     return(
         <Container className="col-8">
+            <Col>
+            <Row>
+                <Button as={Link} to="/userform" variant={"btn btn-outline-primary"} className="mb-4">Add New User</Button>
+            </Row>
             <Table responsive="sm" hover className="align-middle">
                 <thead>
                 <tr>
@@ -72,6 +76,7 @@ export default function UserData () {
                 </tr>)}
                 </tbody>
             </Table>
+            </Col>
         </Container>
     );
 }
