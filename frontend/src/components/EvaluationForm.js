@@ -3,7 +3,7 @@ import { useState, useEffect, useContext } from 'react';
 import Loading from '../pages/Loading';
 import UserContext from '../components/UserContext'
 import { useParams } from "react-router-dom";
-
+import { Link } from 'react-router-dom';
 const form_default = {
     visitDateTime: "",
     evaluator: "",
@@ -97,8 +97,17 @@ export default function EvaluationForm({newEvaluation}) {
             <div className="mb-5"><h3 className="page-title">{newEvaluation ? "New Evaluation" : "Edit Evaluation"}</h3></div>
 
             <form onSubmit={handleSubmit}>
+                <Form.Text
+                    value={form.user}
+                    onChange={(e) => {
+                        setForm({
+                            ...form,evaluator: e.target.value
+                        })
+                    }}>
+                    <h5 style={{ color: "#aaa"}} className="mb-4">Evaluator:{" "}{user.firstName + " " + user.lastName}</h5>
+                </Form.Text>
 
-                <Form.Group controlid="evaluatorName" className="mb-4">
+                {/*<Form.Group className="mb-4">
                     <Form.Control
                         disabled
                         type="text"
@@ -112,7 +121,7 @@ export default function EvaluationForm({newEvaluation}) {
                             })
                         }}
                     />
-                </Form.Group>
+                </Form.Group>*/}
 
                 <Form.Group controlid="visitDateTime" className="mb-4">
                     <Form.Label>Visit Date | Time</Form.Label>
@@ -346,7 +355,7 @@ export default function EvaluationForm({newEvaluation}) {
                         }}
                     />
                 </Form.Group>
-                <Button variant={"btn btn-outline-secondary"} type='submit'>
+                <Button as={Link} to="/admin" variant={"btn btn-outline-secondary"} type='submit' >
                     {newEvaluation ? "+ evaluation" : "update"}
                 </Button>
             </form>

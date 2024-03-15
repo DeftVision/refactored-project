@@ -27,7 +27,8 @@ import {
   EvaluationData,
   DocumentData,
   AnnouncementData,
-  UserData
+  UserData,
+  AdminDefault
 } from "./components/_component_index";
 
 
@@ -78,6 +79,7 @@ function App() {
                     <Route path="/users" element={<Users />}/>
                     <Route path="/dashboard" element={<Dashboard />}/>
                     <Route path="/admin" element={<Admin />}/>
+                    <Route path="/admindefault" element={<AdminDefault />}/>
                     <Route path="/announcements" element={<Announcements />} />
                     <Route path="/documents" element={<Documents />} />
                     <Route path="/evaluations" element={<Evaluations />} />
