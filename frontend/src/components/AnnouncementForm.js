@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Container, Form, Button, FormText } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import Loading from '../pages/Loading';
-
+import { Link } from 'react-router-dom'
 
 const form_default = {
     audience: "",
@@ -197,7 +197,7 @@ export default function AnnouncementForm({newAnnouncement}) {
                     />
                 </Form.Group>
 
-                <Button variant={"btn btn-outline-secondary"} type="submit">
+                <Button as={Link} to="/admin" variant={"btn btn-outline-secondary"} type="submit">
                     {newAnnouncement ? "+ Announcement" : "update"}
                 </Button>
             </form>

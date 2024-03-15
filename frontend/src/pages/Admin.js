@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import {Container, Button, Col, ListGroup, Row} from 'react-bootstrap';
+import { Container, Col, ListGroup } from 'react-bootstrap';
 import { Link } from 'react-router-dom'
 import UserData from '../components/UserData';
 import EvaluationData from '../components/EvaluationData';
 import AnnouncementData from '../components/AnnouncementData';
 import DocumentData from '../components/DocumentData';
+import AdminDefault from '../components/AdminDefault';
 const Admin = () => {
     const [componentShow, setComponentShow] = useState('default');
 
@@ -20,6 +21,7 @@ const Admin = () => {
                 </ListGroup>
             </Col>
             <Col>
+                {componentShow === 'default' && <AdminDefault  />}
                 {componentShow === 'user' && <UserData  />}
                 {componentShow === 'evaluation' && <EvaluationData/>}
                 {componentShow === 'announcement' && <AnnouncementData/>}
