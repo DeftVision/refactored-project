@@ -2,6 +2,8 @@ import {useState, useEffect} from 'react';
 import { Table, Container, Button, Col, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import * as FaIcons from 'react-icons/fa';
+import { format } from 'date-fns';
+
 
 export default function EvaluationData () {
     const [evaluations, setEvaluations] = useState([]);
@@ -59,7 +61,8 @@ export default function EvaluationData () {
                 </tr>
                 </thead>
                 <tbody>
-                {evaluations.map((evaluation) => <tr key={evaluation._id}>
+                {evaluations.map((evaluation) =>
+                 <tr key={evaluation._id}>
                     <td>{evaluation.visitDateTime}</td>
                     <td>{evaluation.location}</td>
                     <td>{evaluation.score}</td>
@@ -72,13 +75,11 @@ export default function EvaluationData () {
                             <FaIcons.FaTrash style={{color: "#cfcccc"}} />
                         </Button>
                     </td>
-                </tr>)}
+                </tr>) }
                 </tbody>
             </Table>
                 </Row>
             </Col>
-        </Container>
-    )
-
+        </Container>)
 }
 
