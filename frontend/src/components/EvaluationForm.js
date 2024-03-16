@@ -3,9 +3,9 @@ import { useState, useEffect, useContext } from 'react';
 import Loading from '../pages/Loading';
 import UserContext from '../components/UserContext'
 import { useParams } from "react-router-dom";
-import { Link } from 'react-router-dom';
+import { format } from 'date-fns';
 const form_default = {
-    visitDateTime: "",
+    visitDateTime: format(new Date(), "yyyy-MM-dd"),
     evaluator: "",
     location: "",
     cashier: "",
@@ -23,12 +23,12 @@ const form_default = {
     comments: "",
 }
 
-
 export default function EvaluationForm({newEvaluation}) {
     const [loading, setLoading] = useState(true);
     const [form, setForm] = useState(form_default);
     const { user } = useContext(UserContext);
     const {id} = useParams();
+
 
     useEffect(() => {
         async function editEvaluation() {
@@ -46,7 +46,10 @@ export default function EvaluationForm({newEvaluation}) {
             }
             if (response.ok) {
                 const {visitDateTime,evaluator,location,cashier,greeting,repeatOrder,upsell,patio,wait,foodScore,cleanScore,serviceScore,score,image,identifyManager,comments} = _response.evaluation;
-                setForm({visitDateTime,evaluator,location,cashier,greeting,repeatOrder,upsell,patio,wait,foodScore,cleanScore,serviceScore,score,image,identifyManager,comments});
+
+                const visitDate = new Date(visitDateTime);
+                const formattedVisitDateTime = visitDate.toISOString().substring(0,16);
+                setForm({evaluator,location,cashier,greeting,repeatOrder,upsell,patio,wait,foodScore,cleanScore,serviceScore,score,image,identifyManager,comments});
             }
 
         }
@@ -104,21 +107,11 @@ export default function EvaluationForm({newEvaluation}) {
             <div className="mb-5"><h3 className="page-title">{newEvaluation ? "New Evaluation" : "Edit Evaluation"}</h3></div>
 
             <form onSubmit={handleSubmit}>
-                <Form.Text
-                    value={form.user}
-                    onChange={(e) => {
-                        setForm({
-                            ...form,evaluator: e.target.value
-                        })
-                    }}>
-                    <h5 style={{ color: "#aaa"}} className="mb-4">Evaluator:{" "}{user.firstName + " " + user.lastName}</h5>
-                </Form.Text>
-
+                <h6 style={{color: "#aaa"}} className="mb-4">{user.firstName + " " + user.lastName}</h6>
                 <Form.Group controlid="visitDateTime" className="mb-4">
                     <Form.Label>Visit Date | Time</Form.Label>
                     <Form.Control
-
-                        type="Date"
+                        type="datetime-local"
                         autoComplete="visit-date-time"
                         value={form.visitDateTime}
                         onChange={(e) => {
@@ -347,7 +340,7 @@ export default function EvaluationForm({newEvaluation}) {
                         }}
                     />
                 </Form.Group>
-                <Button variant={"btn btn-outline-secondary"} type='submit' >
+                <Button variant={"btn btn-outline-secondary"} type='submit'>
                     {newEvaluation ? "add new" : "update"}
                 </Button>
             </form>
