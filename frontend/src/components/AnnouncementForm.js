@@ -196,8 +196,7 @@ export default function AnnouncementForm({newAnnouncement}) {
 
                     />
                 </Form.Group>
-
-                <Button as={Link} to="/admin" variant={"btn btn-outline-secondary"} type="submit">
+                <Button variant={"btn btn-outline-secondary"}  type="submit">
                     {newAnnouncement ? "+ Announcement" : "update"}
                 </Button>
             </form>

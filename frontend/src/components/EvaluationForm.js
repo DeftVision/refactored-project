@@ -59,6 +59,13 @@ export default function EvaluationForm({newEvaluation}) {
         setLoading(false);
     }, []);
 
+
+    useEffect(() => {
+        function getFinalScore() {
+
+        }
+    }, [])
+
     if(loading) {
         <Loading />
     }
@@ -107,25 +114,10 @@ export default function EvaluationForm({newEvaluation}) {
                     <h5 style={{ color: "#aaa"}} className="mb-4">Evaluator:{" "}{user.firstName + " " + user.lastName}</h5>
                 </Form.Text>
 
-                {/*<Form.Group className="mb-4">
-                    <Form.Control
-                        disabled
-                        type="text"
-                        placeholder={user.firstName + " " + user.lastName}
-                        value={form.user}
-                        autoComplete="evaluator-name"
-                        onChange={(e) => {
-                            setForm({
-                                ...form,
-                                evaluator: e.target.value
-                            })
-                        }}
-                    />
-                </Form.Group>*/}
-
                 <Form.Group controlid="visitDateTime" className="mb-4">
                     <Form.Label>Visit Date | Time</Form.Label>
                     <Form.Control
+
                         type="Date"
                         autoComplete="visit-date-time"
                         value={form.visitDateTime}
@@ -355,8 +347,8 @@ export default function EvaluationForm({newEvaluation}) {
                         }}
                     />
                 </Form.Group>
-                <Button as={Link} to="/admin" variant={"btn btn-outline-secondary"} type='submit' >
-                    {newEvaluation ? "+ evaluation" : "update"}
+                <Button variant={"btn btn-outline-secondary"} type='submit' >
+                    {newEvaluation ? "add new" : "update"}
                 </Button>
             </form>
         </Container>
