@@ -62,20 +62,21 @@ export default function EvaluationData () {
                 </thead>
                 <tbody>
                 {evaluations.map((evaluation) =>
-                 <tr key={evaluation._id}>
-                    <td>{evaluation.visitDateTime}</td>
-                    <td>{evaluation.location}</td>
-                    <td>{evaluation.score}</td>
-                    <td>
-                        <Button as={Link} to={`/editevaluation/${evaluation._id}`} variant={"btn"}>
-                            <FaIcons.FaEdit style={{color: "dodgerblue"}} />
-                        </Button>
 
-                        <Button variant={"btn"} type="submit" onClick={() => deleteEvaluation(evaluation._id)}>
-                            <FaIcons.FaTrash style={{color: "#cfcccc"}} />
-                        </Button>
-                    </td>
-                </tr>) }
+                    <tr key={evaluation._id}>
+                        <td>{format(new Date(evaluation.visitDateTime), "EEE, MMMM dd yyyy")}</td>
+                        <td>{evaluation.location}</td>
+                        <td>{evaluation.score}</td>
+                        <td>
+                            <Button as={Link} to={`/editevaluation/${evaluation._id}`} variant={"btn"}>
+                                <FaIcons.FaEdit style={{color: "dodgerblue"}}/>
+                            </Button>
+
+                            <Button variant={"btn"} type="submit" onClick={() => deleteEvaluation(evaluation._id)}>
+                                <FaIcons.FaTrash style={{color: "#cfcccc"}}/>
+                            </Button>
+                        </td>
+                    </tr>)}
                 </tbody>
             </Table>
                 </Row>
