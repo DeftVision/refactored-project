@@ -66,7 +66,3 @@ const Evaluations = () => {
     )}
 
 export default Evaluations;
-
-
-/*
-          */
