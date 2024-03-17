@@ -21,7 +21,6 @@ export default function DocumentForm({newDocument}) {
     const { id } = useParams();
 
 
-
     useEffect(() => {
         async function editDocument() {
             const response = await fetch(`http://localhost:8000/api/docs/document/${id}`, {
