@@ -27,13 +27,13 @@ exports.getEvaluations = async (req, res) => {
 
 exports.newEvaluation = async (req, res) => {
     try {
-        const { visitDateTime, evaluator, location, cashier, greeting, repeatOrder, upsell, patio, wait, foodScore, cleanScore, serviceScore, score, image, identifyManager, comments } = req.body;
+        const { visitDateTime, location, cashier, greeting, repeatOrder, upsell, patio, wait, foodScore, cleanScore, serviceScore, score, image, identifyManager, comments } = req.body;
         if(!visitDateTime || !location || !wait || !foodScore || !cleanScore || !serviceScore || !comments) {
             return res.send({
                 message: "all fields are required.",
             })
         }
-        const evaluation = new evaluationModel({visitDateTime, evaluator, location, cashier, greeting, repeatOrder, upsell, patio, wait, foodScore, cleanScore, serviceScore, score, image, identifyManager, comments })
+        const evaluation = new evaluationModel({visitDateTime, location, cashier, greeting, repeatOrder, upsell, patio, wait, foodScore, cleanScore, serviceScore, score, image, identifyManager, comments })
         await evaluation.save();
         return res.send({
             message: "a new evaluation was submitted successfully.",
@@ -74,7 +74,7 @@ exports.getEvaluation = async (req, res) => {
 exports.updateEvaluation = async (req, res) => {
     try {
         const {id} = req.params;
-        const {visitDateTime, evaluator, location, cashier, greeting, repeatOrder, upsell, patio, wait, foodScore, cleanScore, serviceScore, score, image, identifyManager, comments} = req.body;
+        const {visitDateTime, location, cashier, greeting, repeatOrder, upsell, patio, wait, foodScore, cleanScore, serviceScore, score, image, identifyManager, comments} = req.body;
         const evaluation = await evaluationModel.findByIdAndUpdate(id, req.body, {new: true});
         if(evaluation) {
             return res.send({

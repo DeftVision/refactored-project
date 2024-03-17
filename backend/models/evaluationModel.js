@@ -6,10 +6,6 @@ const evaluationSchema = new schema({
         type: Date,
         required: true
     },
-    evaluator: {
-        type: String,
-        required: false,
-    },
     location: {
         type: String,
         required: true,

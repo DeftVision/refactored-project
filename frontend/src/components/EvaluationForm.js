@@ -5,8 +5,7 @@ import UserContext from '../components/UserContext'
 import { useParams } from "react-router-dom";
 import { format } from 'date-fns';
 const form_default = {
-    visitDateTime: format(new Date(), "yyyy-MM-dd"),
-    evaluator: "",
+    visitDateTime: format(new Date(), "dd/MM/yy"),
     location: "",
     cashier: "",
     greeting: false,
@@ -46,10 +45,7 @@ export default function EvaluationForm({newEvaluation}) {
             }
             if (response.ok) {
                 const {visitDateTime,evaluator,location,cashier,greeting,repeatOrder,upsell,patio,wait,foodScore,cleanScore,serviceScore,score,image,identifyManager,comments} = _response.evaluation;
-
-                const visitDate = new Date(visitDateTime);
-                const formattedVisitDateTime = visitDate.toISOString().substring(0,16);
-                setForm({evaluator,location,cashier,greeting,repeatOrder,upsell,patio,wait,foodScore,cleanScore,serviceScore,score,image,identifyManager,comments});
+                setForm({visitDateTime, evaluator,location,cashier,greeting,repeatOrder,upsell,patio,wait,foodScore,cleanScore,serviceScore,score,image,identifyManager,comments});
             }
 
         }
