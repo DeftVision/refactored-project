@@ -43,15 +43,21 @@ const Evaluations = () => {
         <Container className="mt-5" style={{maxWidth: "100vw"}}>
             <h3 className="page-title mb-5">Evaluations</h3>
             {evaluations.map((evaluation) =>
-            <Card key={evaluation._id} className="shadow mt-5" style={{maxWidth: "250px", backgroundColor: getScoreColors(evaluation.score)}}>
+            <Card key={evaluation._id} className="shadow mt-5" style={{maxWidth: "250px", backgroundColor: getScoreColors(evaluation.foodScore)}}>
                 <Card.Body>
 
                     <Card.Subtitle>
                         {format(new Date(evaluation.visitDateTime), 'EEE, dd MMMM yyyy')}
                     </Card.Subtitle>
 
-                    <Card.Subtitle style={{marginTop: "10px"}}>Score:
-                        <span>{" "}{evaluation.score}</span>
+                    <Card.Subtitle style={{marginTop: "10px"}}>Food:
+                        <span>{" "}{evaluation.foodScore}</span>
+                    </Card.Subtitle>
+                    <Card.Subtitle style={{marginTop: "10px"}}>Clean:
+                        <span>{" "}{evaluation.cleanScore}</span>
+                    </Card.Subtitle>
+                    <Card.Subtitle style={{marginTop: "10px"}}>service:
+                        <span>{" "}{evaluation.serviceScore}</span>
                     </Card.Subtitle>
                 </Card.Body>
             </Card>)}

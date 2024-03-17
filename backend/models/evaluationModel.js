@@ -46,10 +46,6 @@ const evaluationSchema = new schema({
         type: Number,
         required: true,
     },
-    score: {
-        type: Number,
-        required: false,
-    },
     image: {
         type: String,
         required: true,

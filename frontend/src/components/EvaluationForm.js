@@ -5,7 +5,7 @@ import UserContext from '../components/UserContext'
 import { useParams } from "react-router-dom";
 import { format } from 'date-fns';
 const form_default = {
-    visitDateTime: format(new Date(), "dd/MM/yy"),
+    visitDateTime: new Date(),
     location: "",
     cashier: "",
     greeting: false,
@@ -16,7 +16,6 @@ const form_default = {
     foodScore: "",
     cleanScore: "",
     serviceScore: "",
-    score: "",
     image: "",
     identifyManager: false,
     comments: "",
@@ -26,6 +25,8 @@ export default function EvaluationForm({newEvaluation}) {
     const [loading, setLoading] = useState(true);
     const [form, setForm] = useState(form_default);
     const { user } = useContext(UserContext);
+    const [currentInputValue, setCurrentInputValue] = useState(form.visitDateTime);
+
     const {id} = useParams();
 
 
@@ -42,10 +43,14 @@ export default function EvaluationForm({newEvaluation}) {
 
             if (!response.ok) {
                 console.log(_response.error);
+
             }
             if (response.ok) {
-                const {visitDateTime,evaluator,location,cashier,greeting,repeatOrder,upsell,patio,wait,foodScore,cleanScore,serviceScore,score,image,identifyManager,comments} = _response.evaluation;
-                setForm({visitDateTime, evaluator,location,cashier,greeting,repeatOrder,upsell,patio,wait,foodScore,cleanScore,serviceScore,score,image,identifyManager,comments});
+                const {visitDateTime,evaluator,location,cashier,greeting,repeatOrder,upsell,patio,wait,foodScore,cleanScore,serviceScore, image,identifyManager,comments} = _response.evaluation;
+                setForm({visitDateTime, evaluator,location,cashier,greeting,repeatOrder,upsell,patio,wait,foodScore,cleanScore,serviceScore,image,identifyManager,comments});
+                setCurrentInputValue(_response.evaluation.visitDateTime);
+
+
             }
 
         }
@@ -59,11 +64,10 @@ export default function EvaluationForm({newEvaluation}) {
     }, []);
 
 
-    useEffect(() => {
-        function getFinalScore() {
+    function calculateScore() {
+       return
+    }
 
-        }
-    }, [])
 
     if(loading) {
         <Loading />
@@ -99,9 +103,7 @@ export default function EvaluationForm({newEvaluation}) {
 
     return (
         <Container style={{width: "60%"}}>
-
             <div className="mb-5"><h3 className="page-title">{newEvaluation ? "New Evaluation" : "Edit Evaluation"}</h3></div>
-
             <form onSubmit={handleSubmit}>
                 <h6 style={{color: "#aaa"}} className="mb-4">{user.firstName + " " + user.lastName}</h6>
                 <Form.Group controlid="visitDateTime" className="mb-4">
@@ -109,11 +111,11 @@ export default function EvaluationForm({newEvaluation}) {
                     <Form.Control
                         type="datetime-local"
                         autoComplete="visit-date-time"
-                        value={form.visitDateTime}
+                        value = {form.evaluationData}
                         onChange={(e) => {
                             setForm({
                                 ...form,
-                                visitDateTime: e.target.value,
+                                setCurrentInputValue: (e.target.value),
                             });
                         }}
                     />
@@ -288,22 +290,6 @@ export default function EvaluationForm({newEvaluation}) {
                             setForm({
                                 ...form,
                                 serviceScore: e.target.value,
-                            })
-                        }}
-                    />
-                </Form.Group>
-
-
-                <Form.Group controlid="score" className="mb-4">
-                    <Form.Label>Final Score</Form.Label>
-                    <Form.Control
-                        type="text"
-                        disabled
-                        value={form.score}
-                        onChange={(e) => {
-                            setForm({
-                                ...form,
-                                score: e.target.value,
                             })
                         }}
                     />

@@ -198,7 +198,7 @@ export default function UserForm({newUser}) {
                     </FloatingLabel> }
 
                 <Button variant={"btn btn-outline-secondary"} type='submit'>
-                    {newUser ? "+ user" : "update"}
+                    {newUser ? "+ new" : "update"}
                 </Button>
             </form>
         </Container>
