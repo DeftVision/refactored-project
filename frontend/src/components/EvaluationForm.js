@@ -25,7 +25,7 @@ export default function EvaluationForm({newEvaluation}) {
     const [loading, setLoading] = useState(true);
     const [form, setForm] = useState(form_default);
     const { user } = useContext(UserContext);
-    const [currentInputValue, setCurrentInputValue] = useState(form.visitDateTime);
+
 
     const {id} = useParams();
 
@@ -46,11 +46,11 @@ export default function EvaluationForm({newEvaluation}) {
 
             }
             if (response.ok) {
-                const {visitDateTime,evaluator,location,cashier,greeting,repeatOrder,upsell,patio,wait,foodScore,cleanScore,serviceScore, image,identifyManager,comments} = _response.evaluation;
-                setForm({visitDateTime, evaluator,location,cashier,greeting,repeatOrder,upsell,patio,wait,foodScore,cleanScore,serviceScore,image,identifyManager,comments});
-                setCurrentInputValue(_response.evaluation.visitDateTime);
+                const {visitDateTime,location,cashier,greeting,repeatOrder,upsell,patio,wait,foodScore,cleanScore,serviceScore, image,identifyManager,comments} = _response.evaluation;
+                const visitDate = new Date(visitDateTime);
+                const formattedVisitDateTime = visitDate.toISOString().substring(0, 16);
 
-
+                setForm({visitDateTime: formattedVisitDateTime,location,cashier,greeting,repeatOrder,upsell,patio,wait,foodScore,cleanScore,serviceScore, image,identifyManager,comments })
             }
 
         }
@@ -62,12 +62,6 @@ export default function EvaluationForm({newEvaluation}) {
         }
         setLoading(false);
     }, []);
-
-
-    function calculateScore() {
-       return
-    }
-
 
     if(loading) {
         <Loading />
@@ -111,11 +105,11 @@ export default function EvaluationForm({newEvaluation}) {
                     <Form.Control
                         type="datetime-local"
                         autoComplete="visit-date-time"
-                        value = {form.evaluationData}
+                        value = {form.visitDateTime}
                         onChange={(e) => {
                             setForm({
                                 ...form,
-                                setCurrentInputValue: (e.target.value),
+                                visitDateTime: (e.target.value),
                             });
                         }}
                     />

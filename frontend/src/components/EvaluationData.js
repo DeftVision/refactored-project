@@ -5,6 +5,7 @@ import * as FaIcons from 'react-icons/fa';
 import { format } from 'date-fns';
 
 
+
 export default function EvaluationData () {
     const [evaluations, setEvaluations] = useState([]);
 
@@ -56,7 +57,6 @@ export default function EvaluationData () {
                 <tr>
                     <th>Date</th>
                     <th>Location</th>
-                    <th>Score</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -64,16 +64,15 @@ export default function EvaluationData () {
                 {evaluations.map((evaluation) =>
 
                     <tr key={evaluation._id}>
-                        <td>{format(new Date(evaluation.visitDateTime), "EEE, MMMM dd yyyy")}</td>
+                        <td>{format(new Date(evaluation.visitDateTime), "EEE, MMMM dd yyyy h:mm")}</td>
                         <td>{evaluation.location}</td>
-                        <td>{evaluation.score}</td>
                         <td>
                             <Button as={Link} to={`/editevaluation/${evaluation._id}`} variant={"btn"}>
                                 <FaIcons.FaEdit style={{color: "dodgerblue"}}/>
                             </Button>
 
                             <Button variant={"btn"} type="submit" onClick={() => deleteEvaluation(evaluation._id)}>
-                                <FaIcons.FaTrash style={{color: "#cfcccc"}}/>
+                                <FaIcons.FaTrash style={{color: "#515151"}}/>
                             </Button>
                         </td>
                     </tr>)}
