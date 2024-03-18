@@ -15,7 +15,8 @@ import {
   Login,
   Evaluations,
   Documents,
-  Announcements
+  Announcements,
+  DetailsPage,
 } from "./pages/_page_index";
 import {
   UserContext,
@@ -83,6 +84,7 @@ function App() {
                     <Route path="/announcements" element={<Announcements />} />
                     <Route path="/documents" element={<Documents />} />
                     <Route path="/evaluations" element={<Evaluations />} />
+                    <Route path="/details" element={<DetailsPage />} />
 
                     <Route path="/announcementform" element={<AnnouncementForm newAnnouncement />} />
                     <Route path="/editannouncement/:id" element={<AnnouncementForm />} />
