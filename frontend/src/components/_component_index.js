@@ -9,3 +9,4 @@ export { default as AnnouncementForm } from './AnnouncementForm'
 export { default as DocumentData } from './DocumentData'
 export { default as DocumentForm } from './DocumentForm'
 export { default as AdminDefault } from './AdminDefault';
+export { default as EvaluationDetails } from './EvaluationDetails';

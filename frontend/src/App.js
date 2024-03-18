@@ -29,7 +29,8 @@ import {
   DocumentData,
   AnnouncementData,
   UserData,
-  AdminDefault
+  AdminDefault,
+  EvaluationDetails,
 } from "./components/_component_index";
 
 
@@ -97,6 +98,7 @@ function App() {
                     <Route path="/evaluationform" element={<EvaluationForm newEvaluation />} />
                     <Route path="/editevaluation/:id" element={<EvaluationForm />} />
                     <Route path="/evaluationdata" element={<EvaluationData />} />
+                    <Route path="/evaluationdetails/:id" element={<EvaluationDetails />} />
 
                     <Route path="/userform" element={<UserForm newUser />}/>
                     <Route path="/edituser/:id" element={<UserForm />}/>

@@ -51,6 +51,29 @@ exports.getAnnouncements = async (req, res) => {
 }
 
 
+exports.getQueryAnnouncements = async (req, res) => {
+    try {
+        const announcements = await announcementModel.find({display: true});
+        if(!announcements) {
+            return res.send({
+                message: "no announcements were found.",
+            })
+        }
+        return res.send({
+            announcementCount: announcements.length,
+            announcements,
+        })
+    }
+    catch (error) {
+        console.log(error);
+        return res.send({
+            message: "getting all announcements callback error.",
+            error,
+        })
+    }
+}
+
+
 exports.getAnnouncement = async (req, res) => {
     try {
         const { id } = req.params;

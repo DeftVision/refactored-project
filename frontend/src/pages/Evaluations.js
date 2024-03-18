@@ -59,20 +59,17 @@ const Evaluations = () => {
                 <tbody>
                 {evaluations.map((evaluation) =>
                     <tr key={evaluation._id}>
-                        <td><Button as={Link} to="/" variant={"btn"}></Button></td>
+                        <td><Button as={Link} to="/details" variant={"btn"}></Button></td>
                         <td>{format(new Date(evaluation.visitDateTime), "MMM dd yy")}</td>
                         <td>{evaluation.location}</td>
                         <td>{evaluation.foodScore}</td>
                         <td>{evaluation.serviceScore}</td>
                         <td>{evaluation.cleanScore}</td>
                     </tr>
-
                 )}
                 </tbody>
 
             </Table>
-
-
         </Container>
     )}
 

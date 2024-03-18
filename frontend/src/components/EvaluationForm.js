@@ -3,7 +3,6 @@ import { useState, useEffect, useContext } from 'react';
 import Loading from '../pages/Loading';
 import UserContext from '../components/UserContext'
 import { useParams } from "react-router-dom";
-import { format } from 'date-fns';
 const form_default = {
     visitDateTime: new Date(),
     location: "",

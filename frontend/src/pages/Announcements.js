@@ -9,7 +9,7 @@ export default function Announcements() {
     const { id } = useParams();
 
     async function getAnnouncements() {
-        const response = await fetch('http://localhost:8000/api/announce/announcements', {
+        const response = await fetch('http://localhost:8000/api/announce/resultsAnnouncements', {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -28,7 +28,7 @@ export default function Announcements() {
     }, []);
 
 
-    const handleClose = () => setShow(false);
+
 
     const priorityColors = {
         "High": "darkred",
@@ -41,7 +41,7 @@ export default function Announcements() {
         <>
             <Container className="mt-5">
                 <h3 className="page-title">Announcements</h3>
-                {announcements.filter(announcement => announcement.display === true).map((announcement) =>
+                {announcements.map((announcement) =>
                 <Card key={announcements._id} className="mt-5 shadow">
                     <Card.Body>
                         <Card.Title>
@@ -56,8 +56,6 @@ export default function Announcements() {
                     </Card.Body>
                 </Card>)}
             </Container>
-
-
-            </>
+        </>
     )
 }
