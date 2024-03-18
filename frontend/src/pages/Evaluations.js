@@ -1,6 +1,9 @@
-import {Container, Card } from 'react-bootstrap';
+import {Container, Table, Button } from 'react-bootstrap';
 import {useState, useEffect} from "react";
+import { Link } from 'react-router-dom';
 import {format} from 'date-fns';
+import * as IoIcons from 'react-icons/io';
+import * as FaIcons from 'react-icons/fa';
 
 
 const Evaluations = () => {
@@ -42,25 +45,33 @@ const Evaluations = () => {
     return (
         <Container className="mt-5" style={{maxWidth: "100vw"}}>
             <h3 className="page-title mb-5">Evaluations</h3>
-            {evaluations.map((evaluation) =>
-            <Card key={evaluation._id} className="shadow mt-5" style={{maxWidth: "250px", backgroundColor: getScoreColors(evaluation.foodScore)}}>
-                <Card.Body>
+            <Table hover responsive className="align-middle">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>Date</th>
+                    <th>Location</th>
+                    <th>Food</th>
+                    <th>Service</th>
+                    <th>Clean</th>
+                </tr>
+                </thead>
+                <tbody>
+                {evaluations.map((evaluation) =>
+                    <tr key={evaluation._id}>
+                        <td><Button as={Link} to="/" variant={"btn"}></Button></td>
+                        <td>{format(new Date(evaluation.visitDateTime), "MMM dd yy")}</td>
+                        <td>{evaluation.location}</td>
+                        <td>{evaluation.foodScore}</td>
+                        <td>{evaluation.serviceScore}</td>
+                        <td>{evaluation.cleanScore}</td>
+                    </tr>
 
-                    <Card.Subtitle>
-                        {format(new Date(evaluation.visitDateTime), 'EEE, dd MMMM yyyy')}
-                    </Card.Subtitle>
+                )}
+                </tbody>
 
-                    <Card.Subtitle style={{marginTop: "10px"}}>Food:
-                        <span>{" "}{evaluation.foodScore}</span>
-                    </Card.Subtitle>
-                    <Card.Subtitle style={{marginTop: "10px"}}>Clean:
-                        <span>{" "}{evaluation.cleanScore}</span>
-                    </Card.Subtitle>
-                    <Card.Subtitle style={{marginTop: "10px"}}>service:
-                        <span>{" "}{evaluation.serviceScore}</span>
-                    </Card.Subtitle>
-                </Card.Body>
-            </Card>)}
+            </Table>
+
 
         </Container>
     )}
