@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Container, Form, FloatingLabel, Button } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
+import {Link, useNavigate, useParams} from 'react-router-dom';
 import Loading from '../pages/Loading';
 
 
@@ -46,6 +46,11 @@ export default function UserForm({newUser}) {
         }
         setLoading(false);
     }, [])
+
+    const navigate = useNavigate();
+    const redirectToAdmin =() => {
+        navigate(`/admin`)
+    }
 
     if(loading) {
         return <Loading />;
@@ -197,9 +202,10 @@ export default function UserForm({newUser}) {
                         />
                     </FloatingLabel> }
 
-                <Button variant={"btn btn-outline-secondary"} type='submit'>
+                <Button variant={"btn btn-outline-success"} type='submit'>
                     {newUser ? "+ new" : "update"}
                 </Button>
+                <Button onClick={redirectToAdmin} variant={"btn btn-outline-secondary"} style={{marginLeft: "15px"}} type="submit">Cancel</Button>
             </form>
         </Container>
     )

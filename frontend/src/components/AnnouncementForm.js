@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Container, Form, Button, FormText } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import Loading from '../pages/Loading';
-import { Link } from 'react-router-dom'
+
 
 const form_default = {
     audience: "",
@@ -49,6 +49,11 @@ export default function AnnouncementForm({newAnnouncement}) {
         }
         setLoading(false);
     }, []);
+
+    const navigate = useNavigate();
+    const redirectToAdmin = () => {
+        navigate(`/admin`);
+    }
 
     if(loading) {
         <Loading />
@@ -196,9 +201,10 @@ export default function AnnouncementForm({newAnnouncement}) {
 
                     />
                 </Form.Group>
-                <Button variant={"btn btn-outline-secondary"}  type="submit">
-                    {newAnnouncement ? "+ Announcement" : "update"}
+                <Button variant={"btn btn-outline-success"}  type="submit">
+                    {newAnnouncement ? "+ new" : "update"}
                 </Button>
+                <Button onClick={redirectToAdmin} variant={"btn btn-outline-secondary"} style={{marginLeft: "15px"}} type="submit">Cancel</Button>
             </form>
 
         </Container>

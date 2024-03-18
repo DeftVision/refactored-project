@@ -2,7 +2,7 @@ import { Container, Button, Form } from 'react-bootstrap';
 import { useState, useEffect, useContext } from 'react';
 import Loading from '../pages/Loading';
 import UserContext from '../components/UserContext'
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams} from "react-router-dom";
 const form_default = {
     visitDateTime: new Date(),
     location: "",
@@ -92,6 +92,10 @@ export default function EvaluationForm({newEvaluation}) {
         } else {
             console.log(_response.error);
         }
+    }
+    const navigate = useNavigate();
+    const redirectToAdmin = () => {
+        navigate(`/admin`);
     }
 
     return (
@@ -315,9 +319,10 @@ export default function EvaluationForm({newEvaluation}) {
                         }}
                     />
                 </Form.Group>
-                <Button variant={"btn btn-outline-secondary"} type='submit'>
-                    {newEvaluation ? "add new" : "update"}
+                <Button variant={"btn btn-outline-success"} type='submit'>
+                    {newEvaluation ? "+ new" : "update"}
                 </Button>
+                <Button onClick={redirectToAdmin} variant={"btn btn-outline-secondary"} style={{marginLeft: "15px"}} type="submit">Cancel</Button>
             </form>
         </Container>
 

@@ -1,4 +1,4 @@
-import { Container, Card, Modal, CloseButton } from "react-bootstrap";
+import { Container, Card } from "react-bootstrap";
 import { useEffect, useState } from 'react'
 import * as IoIcons from 'react-icons/io';
 import { useParams } from "react-router-dom";
@@ -6,7 +6,6 @@ import { useParams } from "react-router-dom";
 export default function Announcements() {
     const [announcements, setAnnouncements] = useState([]);
     const [show, setShow] = useState(false)
-    const { id } = useParams();
 
     async function getAnnouncements() {
         const response = await fetch('http://localhost:8000/api/announce/resultsAnnouncements', {

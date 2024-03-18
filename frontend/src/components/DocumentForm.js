@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Container, Form, Button } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import Loading from '../pages/Loading';
-import { Link } from 'react-router-dom';
+
 
 
 const form_default = {
@@ -81,6 +81,11 @@ export default function DocumentForm({newDocument}) {
         }
     }
 
+    const navigate = useNavigate();
+    const redirectToAdmin = () => {
+        navigate(`/admin`);
+    }
+
     return (
         <Container style={{width: "60%"}}>
 
@@ -132,9 +137,10 @@ export default function DocumentForm({newDocument}) {
                     />
                 </Form.Group>
 
-                <Button as={Link} to="/admin" variant={"btn btn-outline-secondary"} type="submit">
-                    {newDocument ? "+ Document" : "update"}
+                <Button variant={"btn btn-outline-success"} type='submit'>
+                    {newDocument ? "+ new" : "update"}
                 </Button>
+                <Button onClick={redirectToAdmin} variant={"btn btn-outline-secondary"} style={{marginLeft: "15px"}} type="submit">Cancel</Button>
             </form>
 
         </Container>
