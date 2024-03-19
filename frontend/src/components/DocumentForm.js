@@ -76,6 +76,8 @@ export default function DocumentForm({newDocument}) {
 
         if(response.ok) {
             console.log(_response);
+            redirectToAdmin();
+
         } else {
             console.log(_response.error);
         }
@@ -137,7 +139,7 @@ export default function DocumentForm({newDocument}) {
                     />
                 </Form.Group>
 
-                <Button variant={"btn btn-outline-success"} type='submit'>
+                <Button variant={"btn btn-outline-success"} type='submit' onClick={handleSubmit}>
                     {newDocument ? "+ new" : "update"}
                 </Button>
                 <Button onClick={redirectToAdmin} variant={"btn btn-outline-secondary"} style={{marginLeft: "15px"}} type="submit">Cancel</Button>
