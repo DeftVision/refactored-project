@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 
 export default function Announcements() {
     const [announcements, setAnnouncements] = useState([]);
-    const [show, setShow] = useState(false)
+
 
     async function getAnnouncements() {
         const response = await fetch('http://localhost:8000/api/announce/resultsAnnouncements', {

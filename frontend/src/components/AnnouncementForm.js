@@ -159,9 +159,8 @@ export default function AnnouncementForm({newAnnouncement}) {
                         }}
                     >
                         <option></option>
-                        <option value="All">All</option>
-                        <option value="Employees">Employees</option>
-                        <option value="Shoppers">Shoppers</option>
+                        <option value="Manager">Manager</option>
+                        <option value="Shopper">Shopper</option>
                     </Form.Select>
                 </Form.Group>
 

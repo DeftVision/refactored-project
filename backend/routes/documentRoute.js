@@ -1,13 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const {
-    deleteDocument,
-    getDocument,
-    updateDocument,
-    getDocuments,
-    newDocument
-} = require("../controllers/documentController")
+const {getDocuments, getDocument, deleteDocument, updateDocument, newDocument} = require("../controllers/documentController")
 
 
 router.get("/documents", getDocuments)

@@ -102,7 +102,9 @@ export default function EvaluationForm({newEvaluation}) {
         <Container style={{width: "60%"}}>
             <div className="mb-5"><h3 className="page-title">{newEvaluation ? "New Evaluation" : "Edit Evaluation"}</h3></div>
             <form onSubmit={handleSubmit}>
+
                 <h6 style={{color: "#aaa"}} className="mb-4">{user.firstName + " " + user.lastName}</h6>
+
                 <Form.Group controlid="visitDateTime" className="mb-4">
                     <Form.Label>Visit Date | Time</Form.Label>
                     <Form.Control
@@ -265,7 +267,7 @@ export default function EvaluationForm({newEvaluation}) {
                 </Form.Group>
 
                 <Form.Group controlid="cleanScore" className="mb-4">
-                    <Form.Label>Clean Score</Form.Label>
+                    <Form.Label>Utility Score</Form.Label>
                     <Form.Control
                         type="text"
                         value={form.cleanScore}

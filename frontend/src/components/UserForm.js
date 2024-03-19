@@ -131,7 +131,6 @@ export default function UserForm({newUser}) {
                         }}
                     >
                         <option></option>
-                        <option value="User">User</option>
                         <option value="Shopper">Shopper</option>
                         <option value="Manager">Manager</option>
                         <option value="Admin">Admin</option>
