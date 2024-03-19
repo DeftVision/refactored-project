@@ -54,7 +54,9 @@ exports.getAnnouncements = async (req, res) => {
 
 exports.getQueryAnnouncements = async (req, res) => {
     try {
-        const announcements = await announcementModel.find({display: true});
+        const {id} = req.params;
+        const user = await userModel.findById(id)
+        const announcements = await announcementModel.find({display: true && audience === user.role} );
         if(!announcements) {
             return res.send({
                 message: "no announcements were found.",
