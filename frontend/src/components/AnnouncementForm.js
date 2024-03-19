@@ -81,6 +81,8 @@ export default function AnnouncementForm({newAnnouncement}) {
 
         if(response.ok) {
             console.log(_response);
+            redirectToAdmin();
+
         } else {
             console.log(_response.error);
         }
@@ -200,7 +202,7 @@ export default function AnnouncementForm({newAnnouncement}) {
 
                     />
                 </Form.Group>
-                <Button variant={"btn btn-outline-success"}  type="submit">
+                <Button variant={"btn btn-outline-success"}  type="submit" onClick={handleSubmit}>
                     {newAnnouncement ? "+ new" : "update"}
                 </Button>
                 <Button onClick={redirectToAdmin} variant={"btn btn-outline-secondary"} style={{marginLeft: "15px"}} type="submit">Cancel</Button>

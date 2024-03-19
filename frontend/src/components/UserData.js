@@ -80,22 +80,3 @@ export default function UserData () {
         </Container>
     );
 }
-
-/*
-*        {announcements.filter(announcement => announcement.display === true).map((announcement) =>
-                <Card key={announcements._id} className="mt-5 shadow"
-                      style={{display: "flex", flexDirection: "column"}}>
-                    <Card.Body>
-                        <Card.Title>
-                            <Card.Subtitle>
-                                <IoIcons.IoIosMegaphone style={{color: priorityColors[announcement.priority]}}/>
-                                {" "}Priority: {announcement.priority}
-                            </Card.Subtitle><br/>
-                            <Card.Subtitle>Subject: {announcement.subject}</Card.Subtitle>
-                        </Card.Title>
-                            <Card.Text>
-                                <p className="text-truncate">{announcement.content}</p>
-                            </Card.Text>
-                    </Card.Body>
-                </Card>)}
-* */

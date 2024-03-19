@@ -65,6 +65,10 @@ export default function EvaluationForm({newEvaluation}) {
     if(loading) {
         <Loading />
     }
+    const navigate = useNavigate();
+    const redirectToAdmin = () => {
+        navigate(`/admin`);
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -89,14 +93,13 @@ export default function EvaluationForm({newEvaluation}) {
 
         if(response.ok) {
             console.log(_response);
+            redirectToAdmin();
+
         } else {
             console.log(_response.error);
         }
     }
-    const navigate = useNavigate();
-    const redirectToAdmin = () => {
-        navigate(`/admin`);
-    }
+
 
     return (
         <Container style={{width: "60%"}}>
@@ -321,7 +324,7 @@ export default function EvaluationForm({newEvaluation}) {
                         }}
                     />
                 </Form.Group>
-                <Button variant={"btn btn-outline-success"} type='submit'>
+                <Button variant={"btn btn-outline-success"} type='submit' onClick={handleSubmit}>
                     {newEvaluation ? "+ new" : "update"}
                 </Button>
                 <Button onClick={redirectToAdmin} variant={"btn btn-outline-secondary"} style={{marginLeft: "15px"}} type="submit">Cancel</Button>
