@@ -1,4 +1,5 @@
 const evaluationModel = require("../models/evaluationModel");
+const userModel = require("../models/userModel");
 
 
 exports.getEvaluations = async (req, res) => {
@@ -7,6 +8,42 @@ exports.getEvaluations = async (req, res) => {
         if(!evaluations) {
             return res.send({
                 message: "no evaluations were found."
+            })
+        }
+        if(evaluations) {
+            return res.send({
+                evaluationCount: evaluations.length,
+                evaluations,
+            })
+        }
+
+    } catch (error){
+        console.log(error);
+        return res.send({
+            message: "getting an evaluation callback error.",
+            error,
+        })
+    }
+}
+
+exports.getQueryEvaluations = async (req, res) => {
+    try {
+        const {id} = req.params;
+        const user = await userModel.findById(id);
+        if(!user) {
+            return res.send({
+                message: "User not found"
+            })
+        }
+        if(user) {
+            return res.send({
+                user,
+            })
+        }
+        const evaluations = await evaluationModel.find({location: user.location});
+        if(!evaluations) {
+            return res.send({
+                message: "No evaluations were found."
             })
         }
         if(evaluations) {
