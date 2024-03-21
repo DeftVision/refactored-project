@@ -5,6 +5,7 @@ import UserContext from '../components/UserContext'
 import { useNavigate, useParams} from "react-router-dom";
 
 const form_default = {
+    evaluator: "",
     visitDateTime: new Date(),
     location: "",
     cashier: "",
@@ -24,11 +25,9 @@ const form_default = {
 export default function EvaluationForm({newEvaluation}){
     const [loading, setLoading] = useState(true);
     const [form, setForm] = useState(form_default);
-    const [evaluator, setEvaluator] = useState(null);
+    /*const [originalEvaluator, setOriginalEvaluator] = useState("");*/
     const { user } = useContext(UserContext)
     const {id} = useParams();
-
-
 
 
     useEffect(() => {
@@ -48,7 +47,7 @@ export default function EvaluationForm({newEvaluation}){
             }
             if (response.ok) {
 
-                const {visitDateTime, location, cashier, greeting, repeatOrder, upsell, patio, wait, foodScore, cleanScore, serviceScore, image, identifyManager, comments, evaluator: evalName} = _response.evaluation;
+                const {visitDateTime, location, cashier, greeting, repeatOrder, upsell, patio, wait, foodScore, cleanScore, serviceScore, image, identifyManager, comments, evaluator} = _response.evaluation;
                 const visitDate = new Date(visitDateTime);
                 const formattedVisitDateTime = visitDate.toISOString().substring(0, 16);
 
@@ -56,11 +55,7 @@ export default function EvaluationForm({newEvaluation}){
             }
 
         }
-        const evalName = user.firstName + " " + user.lastName;
-        if(newEvaluation) {
-            setLoading(true);
-            setEvaluator(evalName)
-        }
+
         if(!newEvaluation) {
             editEvaluation();
         }
@@ -81,13 +76,12 @@ export default function EvaluationForm({newEvaluation}){
         let url = "http://localhost:8000/api/eval/newEvaluation";
         let method = "POST";
 
-
         if(!newEvaluation) {
             url = `http://localhost:8000/api/eval/update/${id}`;
             method = "PATCH";
         }
 
-
+        console.log(form);
         const response = await fetch( url, {
             method: method,
             body: JSON.stringify(form),
@@ -99,31 +93,35 @@ export default function EvaluationForm({newEvaluation}){
         const _response = await response.json();
 
         if(response.ok) {
-            console.log(_response);
             redirectToAdmin();
 
         } else {
             console.log(_response.error);
         }
     }
+
+
+
     return (
         <Container style={{width: "60%"}}>
             <div className="mb-5"><h3 className="page-title">{newEvaluation ? "New Evaluation" : "Edit Evaluation"}</h3></div>
             <form onSubmit={handleSubmit}>
-                <Form.Group controlid="evaluator-name" className="mb-4">
-                    <Form.Label>Evaluator</Form.Label>
-                        <Form.Control
-                            type="text"
-                            value={form.evaluator = user.firstName + " " + user.lastName}
-                            on
-                            onChange={(e) => {
-                                setForm({
-                                    ...form,
-                                    evaluator: e.target.value,
-                                })
-                            }}
-                        />
+
+                <Form.Group controlid="evaluator" className="mb-4">
+                    <Form.Control
+                        type="text"
+                        value={form.evaluator}
+                        onChange={(e) => {
+                            setForm({
+                                ...form,
+                                evaluator: e.target.value,
+                            })
+                        }}
+                        readOnly
+                    />
                 </Form.Group>
+
+
                 <Form.Group controlid="visitDateTime" className="mb-4">
                     <Form.Label>Visit Date | Time</Form.Label>
                     <Form.Control
@@ -343,7 +341,8 @@ export default function EvaluationForm({newEvaluation}){
                 <Button variant={"btn btn-outline-success"} type='submit' onClick={handleSubmit}>
                     {newEvaluation ? "+ new" : "update"}
                 </Button>
-                <Button onClick={redirectToAdmin} variant={"btn btn-outline-secondary"} style={{marginLeft: "15px"}} type="submit">Cancel</Button>
+                <Button onClick={redirectToAdmin} variant={"btn btn-outline-secondary"} style={{marginLeft: "15px"}}
+                        type="submit">Cancel</Button>
             </form>
         </Container>
 
