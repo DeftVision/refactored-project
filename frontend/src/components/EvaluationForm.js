@@ -25,7 +25,9 @@ const form_default = {
 export default function EvaluationForm({newEvaluation}){
     const [loading, setLoading] = useState(true);
     const [form, setForm] = useState(form_default);
-    /*const [originalEvaluator, setOriginalEvaluator] = useState("");*/
+    const [foodSlider, setFoodSlider] = useState(0)
+    const [serviceSlider, setServiceSlider] = useState(0)
+    const [cleanSlider, setCleanSlider] = useState(0)
     const { user } = useContext(UserContext)
     const {id} = useParams();
 
@@ -270,42 +272,51 @@ export default function EvaluationForm({newEvaluation}){
                 </Form.Group>
 
                 <Form.Group controlid="foodScore" className="mb-4">
-                    <Form.Label>Food Score</Form.Label>
-                    <Form.Control
-                        type="text"
-                        value={form.foodScore}
+                    <Form.Label>Food Score: {foodSlider}</Form.Label>
+                    <Form.Range
+                        min={0}
+                        max={5}
+                        value={foodSlider}
                         onChange={(e) => {
+                            const newValue = e.target.value;
+                            setFoodSlider(newValue)
                             setForm({
                                 ...form,
-                                foodScore: e.target.value,
+                                foodScore: newValue
                             })
                         }}
                     />
                 </Form.Group>
 
                 <Form.Group controlid="cleanScore" className="mb-4">
-                    <Form.Label>Utility Score</Form.Label>
-                    <Form.Control
-                        type="text"
-                        value={form.cleanScore}
+                    <Form.Label>Appearance Score: {cleanSlider}</Form.Label>
+                    <Form.Range
+                        min={0}
+                        max={5}
+                        value={cleanSlider}
                         onChange={(e) => {
+                            const newValue = e.target.value;
+                            setCleanSlider(newValue)
                             setForm({
                                 ...form,
-                                cleanScore: e.target.value,
+                                cleanScore: newValue
                             })
                         }}
                     />
                 </Form.Group>
 
                 <Form.Group controlid="serviceScore" className="mb-4">
-                    <Form.Label>Service Score</Form.Label>
-                    <Form.Control
-                        type="text"
-                        value={form.serviceScore}
+                    <Form.Label>Service Score: {serviceSlider}</Form.Label>
+                    <Form.Range
+                        min={0}
+                        max={5}
+                        value={serviceSlider}
                         onChange={(e) => {
+                            const newValue = e.target.value;
+                            setServiceSlider(newValue)
                             setForm({
                                 ...form,
-                                serviceScore: e.target.value,
+                                serviceScore: newValue
                             })
                         }}
                     />
