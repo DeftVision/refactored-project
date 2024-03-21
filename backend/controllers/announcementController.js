@@ -1,8 +1,6 @@
 const announcementModel = require("../models/announcementModel");
 const userModel = require("../models/userModel");
 
-
-
 exports.newAnnouncement = async (req, res) => {
     try {
         const { audience, subject, title, content, display, priority } = req.body;
@@ -54,23 +52,29 @@ exports.getAnnouncements = async (req, res) => {
 
 exports.getQueryAnnouncements = async (req, res) => {
     try {
+
         const {id} = req.params;
-        const user = await userModel.findById(id)
-        const announcements = await announcementModel.find({display: true && audience === user.role} );
-        if(!announcements) {
+        const user = await userModel.findById(id);
+        console.log('User Id: ', id);
+        if(!user) {
             return res.send({
-                message: "no announcements were found.",
+                message: "User not found."
+            })
+        }
+        const announcements = await announcementModel.find({display: true, audience: user.role});
+        if(!announcements.length) {
+            return res.send({
+                message: "No announcements were found for this user.",
             })
         }
         return res.send({
-            announcementCount: announcements.length,
             announcements,
         })
     }
     catch (error) {
         console.log(error);
         return res.send({
-            message: "getting all announcements callback error.",
+            message: "getting all announcements callback error",
             error,
         })
     }

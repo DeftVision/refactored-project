@@ -3,6 +3,7 @@ import { useState, useEffect, useContext } from 'react';
 import Loading from '../pages/Loading';
 import UserContext from '../components/UserContext'
 import { useNavigate, useParams} from "react-router-dom";
+
 const form_default = {
     visitDateTime: new Date(),
     location: "",
@@ -20,13 +21,14 @@ const form_default = {
     comments: "",
 }
 
-export default function EvaluationForm({newEvaluation}) {
+export default function EvaluationForm({newEvaluation}){
     const [loading, setLoading] = useState(true);
     const [form, setForm] = useState(form_default);
-    const { user } = useContext(UserContext);
-
-
+    const [evaluator, setEvaluator] = useState(null);
+    const { user } = useContext(UserContext)
     const {id} = useParams();
+
+
 
 
     useEffect(() => {
@@ -45,16 +47,19 @@ export default function EvaluationForm({newEvaluation}) {
 
             }
             if (response.ok) {
-                const {visitDateTime,location,cashier,greeting,repeatOrder,upsell,patio,wait,foodScore,cleanScore,serviceScore, image,identifyManager,comments} = _response.evaluation;
+
+                const {visitDateTime, location, cashier, greeting, repeatOrder, upsell, patio, wait, foodScore, cleanScore, serviceScore, image, identifyManager, comments, evaluator: evalName} = _response.evaluation;
                 const visitDate = new Date(visitDateTime);
                 const formattedVisitDateTime = visitDate.toISOString().substring(0, 16);
 
-                setForm({visitDateTime: formattedVisitDateTime,location,cashier,greeting,repeatOrder,upsell,patio,wait,foodScore,cleanScore,serviceScore, image,identifyManager,comments })
+                setForm({visitDateTime: formattedVisitDateTime,location,cashier,greeting,repeatOrder,upsell,patio,wait,foodScore,cleanScore,serviceScore, image,identifyManager,comments, evaluator})
             }
 
         }
+        const evalName = user.firstName + " " + user.lastName;
         if(newEvaluation) {
             setLoading(true);
+            setEvaluator(evalName)
         }
         if(!newEvaluation) {
             editEvaluation();
@@ -76,10 +81,12 @@ export default function EvaluationForm({newEvaluation}) {
         let url = "http://localhost:8000/api/eval/newEvaluation";
         let method = "POST";
 
+
         if(!newEvaluation) {
             url = `http://localhost:8000/api/eval/update/${id}`;
             method = "PATCH";
         }
+
 
         const response = await fetch( url, {
             method: method,
@@ -99,21 +106,30 @@ export default function EvaluationForm({newEvaluation}) {
             console.log(_response.error);
         }
     }
-
-
     return (
         <Container style={{width: "60%"}}>
             <div className="mb-5"><h3 className="page-title">{newEvaluation ? "New Evaluation" : "Edit Evaluation"}</h3></div>
             <form onSubmit={handleSubmit}>
-
-                <h6 style={{color: "#aaa"}} className="mb-4">{user.firstName + " " + user.lastName}</h6>
-
+                <Form.Group controlid="evaluator-name" className="mb-4">
+                    <Form.Label>Evaluator</Form.Label>
+                        <Form.Control
+                            type="text"
+                            value={form.evaluator = user.firstName + " " + user.lastName}
+                            on
+                            onChange={(e) => {
+                                setForm({
+                                    ...form,
+                                    evaluator: e.target.value,
+                                })
+                            }}
+                        />
+                </Form.Group>
                 <Form.Group controlid="visitDateTime" className="mb-4">
                     <Form.Label>Visit Date | Time</Form.Label>
                     <Form.Control
                         type="datetime-local"
                         autoComplete="visit-date-time"
-                        value = {form.visitDateTime}
+                        value={form.visitDateTime}
                         onChange={(e) => {
                             setForm({
                                 ...form,
@@ -143,7 +159,7 @@ export default function EvaluationForm({newEvaluation}) {
                         <option value="Lehi">Lehi</option>
                         <option value="Logan">Logan</option>
                         <option value="Mesa">Mesa</option>
-                        <option value="Murray">Murray 2</option>
+                        <option value="Murray">Murray</option>
                         <option value="Orem">Orem</option>
                         <option value="Riverdale">Riverdale</option>
                         <option value="Sandy">Sandy</option>
@@ -166,7 +182,7 @@ export default function EvaluationForm({newEvaluation}) {
                         }}/>
                 </Form.Group>
 
-                <Form.Group controlid="cashier" className="mb-4">
+                <Form.Group controlid="cashier-name" className="mb-4">
                     <Form.Label>Cashier / Description</Form.Label>
                     <Form.Control
                         type="text"
