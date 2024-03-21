@@ -11,6 +11,10 @@ const evaluationSchema = new schema({
         type: String,
         required: true,
     },
+    evaluator: {
+        type: String,
+        required: true,
+    },
     cashier: {
         type: String,
         required: true,

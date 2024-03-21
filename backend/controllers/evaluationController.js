@@ -64,16 +64,16 @@ exports.getQueryEvaluations = async (req, res) => {
 
 exports.newEvaluation = async (req, res) => {
     try {
-        const { visitDateTime, location, cashier, greeting, repeatOrder, upsell, patio, wait, foodScore, cleanScore, serviceScore, image, identifyManager, comments } = req.body;
+        const { visitDateTime, evaluator, location, cashier, greeting, repeatOrder, upsell, patio, wait, foodScore, cleanScore, serviceScore, image, identifyManager, comments } = req.body;
         if(!visitDateTime || !location || !wait || !foodScore || !cleanScore || !serviceScore || !comments) {
             return res.send({
-                message: "all fields are required.",
+                message: "All fields are required.",
             })
         }
-        const evaluation = new evaluationModel({visitDateTime, location, cashier, greeting, repeatOrder, upsell, patio, wait, foodScore, cleanScore, serviceScore, image, identifyManager, comments })
+        const evaluation = new evaluationModel({visitDateTime, evaluator, location, cashier, greeting, repeatOrder, upsell, patio, wait, foodScore, cleanScore, serviceScore, image, identifyManager, comments })
         await evaluation.save();
         return res.send({
-            message: "a new evaluation was submitted successfully.",
+            message: "Evaluation submitted successfully.",
             evaluation,
         })
     } catch (error) {
@@ -111,7 +111,7 @@ exports.getEvaluation = async (req, res) => {
 exports.updateEvaluation = async (req, res) => {
     try {
         const {id} = req.params;
-        const {visitDateTime, location, cashier, greeting, repeatOrder, upsell, patio, wait, foodScore, cleanScore, serviceScore, image, identifyManager, comments} = req.body;
+        const {visitDateTime, evaluator, location, cashier, greeting, repeatOrder, upsell, patio, wait, foodScore, cleanScore, serviceScore, image, identifyManager, comments} = req.body;
         const evaluation = await evaluationModel.findByIdAndUpdate(id, req.body, {new: true});
         if(evaluation) {
             return res.send({
