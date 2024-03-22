@@ -61,7 +61,7 @@ const Evaluations = () => {
                 {evaluations.map((evaluation) =>
                     <tr key={evaluation._id}>
                         <td><Button as={Link} to="/details" variant={"btn"}></Button></td>
-                        <td>{format(new Date(evaluation.visitDateTime), "MMM dd yy")}</td>
+                        <td>{format(new Date(evaluation.visitDateTime), "MM-dd-yyy")}</td>
                         <td>{evaluation.location}</td>
                         <td>{evaluation.foodScore}</td>
                         <td>{evaluation.serviceScore}</td>
