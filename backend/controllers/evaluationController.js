@@ -5,22 +5,22 @@ const userModel = require("../models/userModel");
 exports.getEvaluations = async (req, res) => {
     try {
         const evaluations = await evaluationModel.find({});
-        if(!evaluations) {
+        if (!evaluations) {
             return res.send({
-                message: "no evaluations were found."
+                message: "evaluations not found."
             })
         }
-        if(evaluations) {
+        if (evaluations) {
             return res.send({
                 evaluationCount: evaluations.length,
                 evaluations,
             })
         }
 
-    } catch (error){
+    } catch (error) {
         console.log(error);
         return res.send({
-            message: "getting an evaluation callback error.",
+            message: "evaluation callback error.",
             error,
         })
     }
@@ -30,33 +30,33 @@ exports.getQueryEvaluations = async (req, res) => {
     try {
         const {id} = req.params;
         const user = await userModel.findById(id);
-        if(!user) {
+        if (!user) {
             return res.send({
-                message: "User not found"
+                message: "user not found"
             })
         }
-        if(user) {
+        if (user) {
             return res.send({
                 user,
             })
         }
         const evaluations = await evaluationModel.find({location: user.location});
-        if(!evaluations) {
+        if (!evaluations) {
             return res.send({
-                message: "No evaluations were found."
+                message: "evaluations not found."
             })
         }
-        if(evaluations) {
+        if (evaluations) {
             return res.send({
                 evaluationCount: evaluations.length,
                 evaluations,
             })
         }
 
-    } catch (error){
+    } catch (error) {
         console.log(error);
         return res.send({
-            message: "getting an evaluation callback error.",
+            message: "evaluation callback error.",
             error,
         })
     }
@@ -64,22 +64,54 @@ exports.getQueryEvaluations = async (req, res) => {
 
 exports.newEvaluation = async (req, res) => {
     try {
-        const { visitDateTime, evaluator, location, cashier, greeting, repeatOrder, upsell, patio, wait, foodScore, cleanScore, serviceScore, image, identifyManager, comments } = req.body;
-        if(!visitDateTime || !location || !wait || !foodScore || !cleanScore || !serviceScore || !comments) {
+        const {
+            visitDateTime,
+            evaluator,
+            location,
+            cashier,
+            greeting,
+            repeatOrder,
+            upsell,
+            patio,
+            wait,
+            foodScore,
+            cleanScore,
+            serviceScore,
+            image,
+            identifyManager,
+            comments
+        } = req.body;
+        if (!visitDateTime || !location || !wait || !foodScore || !cleanScore || !serviceScore || !comments) {
             return res.send({
-                message: "All fields are required.",
+                message: "complete required fields",
             })
         }
-        const evaluation = new evaluationModel({visitDateTime, evaluator, location, cashier, greeting, repeatOrder, upsell, patio, wait, foodScore, cleanScore, serviceScore, image, identifyManager, comments })
+        const evaluation = new evaluationModel({
+            visitDateTime,
+            evaluator,
+            location,
+            cashier,
+            greeting,
+            repeatOrder,
+            upsell,
+            patio,
+            wait,
+            foodScore,
+            cleanScore,
+            serviceScore,
+            image,
+            identifyManager,
+            comments
+        })
         await evaluation.save();
         return res.send({
-            message: "Evaluation submitted successfully.",
+            message: "evaluation submitted successfully.",
             evaluation,
         })
     } catch (error) {
         console.log(error);
         return res.send({
-            message: "submitting a new evaluation callback error.",
+            message: "submitting callback error.",
             error,
         })
     }
@@ -87,11 +119,11 @@ exports.newEvaluation = async (req, res) => {
 
 exports.getEvaluation = async (req, res) => {
     try {
-        const { id } = req.params;
+        const {id} = req.params;
         const evaluation = await evaluationModel.findById(id);
         if (!evaluation) {
             return res.send({
-                message: "an evaluation was not found.",
+                message: "evaluation not found.",
             });
         }
 
@@ -102,7 +134,7 @@ exports.getEvaluation = async (req, res) => {
         }
     } catch (error) {
         return res.send({
-            message: "searching for an evaluation callback error.",
+            message: "evaluation callback error.",
             error,
         });
     }
@@ -111,23 +143,39 @@ exports.getEvaluation = async (req, res) => {
 exports.updateEvaluation = async (req, res) => {
     try {
         const {id} = req.params;
-        const {visitDateTime, evaluator, location, cashier, greeting, repeatOrder, upsell, patio, wait, foodScore, cleanScore, serviceScore, image, identifyManager, comments} = req.body;
+        const {
+            visitDateTime,
+            evaluator,
+            location,
+            cashier,
+            greeting,
+            repeatOrder,
+            upsell,
+            patio,
+            wait,
+            foodScore,
+            cleanScore,
+            serviceScore,
+            image,
+            identifyManager,
+            comments
+        } = req.body;
         const evaluation = await evaluationModel.findByIdAndUpdate(id, req.body, {new: true});
-        if(evaluation) {
+        if (evaluation) {
             return res.send({
-                message: "an evaluation was updated successfully.",
+                message: "evaluation updated successfully.",
                 evaluation,
             })
         }
-        if(!evaluation) {
+        if (!evaluation) {
             return res.send({
-                message: "Evaluation not found",
+                message: "evaluation not found",
             })
         }
     } catch (error) {
         console.log(error);
         return res.send({
-            message: "updating an evaluation callback error.",
+            message: "updating callback error.",
             error,
         })
     }
@@ -138,21 +186,21 @@ exports.deleteEvaluation = async (req, res) => {
     try {
         const {id} = req.params;
         const evaluation = await evaluationModel.findByIdAndDelete(id);
-        if(!evaluation) {
+        if (!evaluation) {
             return res.send({
-                message: "Evaluation not found"
+                message: "evaluation not found"
             })
         }
-        if(evaluation) {
+        if (evaluation) {
             return res.send({
-                message: "an evaluation was deleted successfully.",
+                message: "evaluation deleted successfully.",
                 evaluation,
             })
         }
     } catch (error) {
         console.log(error);
         return res.send({
-            message: "deleting an evaluation callback error.",
+            message: "deleting callback error.",
             error,
         })
     }
