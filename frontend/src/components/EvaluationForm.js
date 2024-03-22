@@ -1,4 +1,4 @@
-import {Container, Button, Form, Toast, ToastContainer, InputGroup} from 'react-bootstrap';
+import {Container, Button, Form, Toast, ToastContainer } from 'react-bootstrap';
 import {useState, useEffect, useContext} from 'react';
 import Loading from '../pages/Loading';
 import {Link, useParams} from "react-router-dom";

@@ -1,29 +1,15 @@
 import {Button, Form, Row} from 'react-bootstrap';
 import {useState} from "react";
+/*import * as yup from 'yup';
+import * as formik from "formik";*/
 
+export default function ValidationMobile() {
+    const [message, setMessage] = useState(null);
+    const [form, setForm] = useState(null);
 
-const form_default = {
-    username: "",
-    startDate: "",
-    slider: 0,
-    funFact: "",
-}
-
-export default function Validation() {
-
-    const [form, setForm] = useState(form_default);
-    const [validated, setValidated] = useState(false);
-    /*const {Formik} = formik;*/
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-const form = e.currentTarget;
-        if(form.checkValidity() === false) {
-            e.preventDefault();
-            e.stopPropagation();
-        }
-        setValidated(true);
 
         const response = await fetch(`http://localhost:8000/api/valid/validation`, {
             method: "POST",
@@ -35,25 +21,31 @@ const form = e.currentTarget;
 
         const _response = await response.json();
         if (response.ok) {
-            console.log("loaded fine")
+            console.log(_response.message)
         } else {
-            return (_response.error);
+            setMessage(_response.message);
         }
     }
 
     return (
         <>
-            <h3>Validation Test Page</h3>
-            <h5 style={{color: "red"}}></h5>
+            <h3>Validation Mobile View</h3>
+            <h5 style={{color: "red"}}>{message}</h5>
 
-            <Form noValidate validated={validated} onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit}>
                 <Row className="mb-3">
                     <Form.Group md="4" controlId="username">
                         <Form.Label>username</Form.Label>
+                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                         <Form.Control
                             type="text"
                             name="username"
-                            required
+                            onChange={(e) => {
+                                setForm({
+                                    ...form,
+                                    username: e.target.value,
+                                });
+                            }}
                         />
                     </Form.Group>
                 </Row>
@@ -64,8 +56,14 @@ const form = e.currentTarget;
                         <Form.Control
                             type="text"
                             name="startdate"
-                            required
-                            />
+                            onChange={(e) => {
+                                setForm({
+                                    ...form,
+                                    startDate: e.target.value,
+                                });
+                            }}
+                        />
+                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                     </Form.Group>
                 </Row>
 
@@ -77,7 +75,14 @@ const form = e.currentTarget;
                             max={10}
                             type="number"
                             name="startdate"
+                            onChange={(e) => {
+                                setForm({
+                                    ...form,
+                                    slider: e.target.value,
+                                });
+                            }}
                         />
+                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                     </Form.Group>
                 </Row>
 
@@ -87,11 +92,17 @@ const form = e.currentTarget;
                         <Form.Control
                             type="text"
                             name="funfact"
-                            required
-                            />
+                            onChange={(e) => {
+                                setForm({
+                                    ...form,
+                                    funFact: e.target.value,
+                                });
+                            }}
+                        />
+                        <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                     </Form.Group>
+                    <Button type="submit" className="mt-5" variant={"btn btn-outline-primary"}>Submit form</Button>
                 </Row>
-                <Button onClick={handleSubmit} type="submit" className="mt-5" variant={"btn btn-outline-primary"}>Submit form</Button>
 
             </Form>
 
