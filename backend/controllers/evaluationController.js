@@ -20,7 +20,7 @@ exports.getEvaluations = async (req, res) => {
     } catch (error) {
         console.log(error);
         return res.send({
-            message: "evaluation callback error.",
+            message: "evaluation callback error",
             error,
         })
     }
@@ -43,7 +43,7 @@ exports.getQueryEvaluations = async (req, res) => {
         const evaluations = await evaluationModel.find({location: user.location});
         if (!evaluations) {
             return res.send({
-                message: "evaluations not found."
+                message: "evaluations not found"
             })
         }
         if (evaluations) {
@@ -56,7 +56,7 @@ exports.getQueryEvaluations = async (req, res) => {
     } catch (error) {
         console.log(error);
         return res.send({
-            message: "evaluation callback error.",
+            message: "evaluation callback error",
             error,
         })
     }
@@ -64,54 +64,22 @@ exports.getQueryEvaluations = async (req, res) => {
 
 exports.newEvaluation = async (req, res) => {
     try {
-        const {
-            visitDateTime,
-            evaluator,
-            location,
-            cashier,
-            greeting,
-            repeatOrder,
-            upsell,
-            patio,
-            wait,
-            foodScore,
-            cleanScore,
-            serviceScore,
-            image,
-            identifyManager,
-            comments
-        } = req.body;
-        if (!visitDateTime || !location || !wait || !foodScore || !cleanScore || !serviceScore || !comments) {
+        const {visitDateTime, evaluator, location, cashier, greeting, repeatOrder, upsell, patio, wait, foodScore, cleanScore, serviceScore, image, identifyManager, comments} = req.body;
+        if (!visitDateTime || !location || !wait || !foodScore || !cleanScore || !serviceScore || !comments || !evaluator) {
             return res.send({
                 message: "complete required fields",
             })
         }
-        const evaluation = new evaluationModel({
-            visitDateTime,
-            evaluator,
-            location,
-            cashier,
-            greeting,
-            repeatOrder,
-            upsell,
-            patio,
-            wait,
-            foodScore,
-            cleanScore,
-            serviceScore,
-            image,
-            identifyManager,
-            comments
-        })
+        const evaluation = new evaluationModel({visitDateTime, evaluator, location, cashier, greeting, repeatOrder, upsell, patio, wait, foodScore, cleanScore, serviceScore, image, identifyManager, comments})
         await evaluation.save();
         return res.send({
-            message: "evaluation submitted successfully.",
+            message: "evaluation saved successfully",
             evaluation,
         })
     } catch (error) {
         console.log(error);
         return res.send({
-            message: "submitting callback error.",
+            message: "callback error: saving new eval",
             error,
         })
     }
@@ -123,7 +91,7 @@ exports.getEvaluation = async (req, res) => {
         const evaluation = await evaluationModel.findById(id);
         if (!evaluation) {
             return res.send({
-                message: "evaluation not found.",
+                message: "eval not found",
             });
         }
 
@@ -134,7 +102,7 @@ exports.getEvaluation = async (req, res) => {
         }
     } catch (error) {
         return res.send({
-            message: "evaluation callback error.",
+            message: "evaluation callback error",
             error,
         });
     }
@@ -143,27 +111,11 @@ exports.getEvaluation = async (req, res) => {
 exports.updateEvaluation = async (req, res) => {
     try {
         const {id} = req.params;
-        const {
-            visitDateTime,
-            evaluator,
-            location,
-            cashier,
-            greeting,
-            repeatOrder,
-            upsell,
-            patio,
-            wait,
-            foodScore,
-            cleanScore,
-            serviceScore,
-            image,
-            identifyManager,
-            comments
-        } = req.body;
+        const { visitDateTime, location, cashier, greeting, repeatOrder, upsell, patio, wait, foodScore, cleanScore, serviceScore, image, identifyManager, comments } = req.body;
         const evaluation = await evaluationModel.findByIdAndUpdate(id, req.body, {new: true});
         if (evaluation) {
             return res.send({
-                message: "evaluation updated successfully.",
+                message: "evaluation updated",
                 evaluation,
             })
         }
@@ -175,7 +127,7 @@ exports.updateEvaluation = async (req, res) => {
     } catch (error) {
         console.log(error);
         return res.send({
-            message: "updating callback error.",
+            message: "callback error: updating evaluation",
             error,
         })
     }
@@ -193,14 +145,14 @@ exports.deleteEvaluation = async (req, res) => {
         }
         if (evaluation) {
             return res.send({
-                message: "evaluation deleted successfully.",
+                message: "evaluation deleted successfully",
                 evaluation,
             })
         }
     } catch (error) {
         console.log(error);
         return res.send({
-            message: "deleting callback error.",
+            message: "deleting callback error",
             error,
         })
     }

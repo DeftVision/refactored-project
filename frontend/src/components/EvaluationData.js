@@ -6,8 +6,10 @@ import { format } from 'date-fns';
 
 
 
+
 export default function EvaluationData () {
     const [evaluations, setEvaluations] = useState([]);
+
 
     async function getEvaluations() {
         try {

@@ -3,8 +3,6 @@ import { Container, Form, FloatingLabel, Button, Card } from "react-bootstrap";
 import UserContext from "../components/UserContext";
 import cookies from "js-cookie";
 
-
-
 const form_default = {
     email: "",
     password: "",
