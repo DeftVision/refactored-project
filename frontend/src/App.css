@@ -8,14 +8,7 @@ h3.page-title {
   text-align: center;
 }
 
-.admin-card {
-  max-width: 350px;
-  margin-bottom: 20px;
-  text-align: center;
-  font-weight: 600;
-  text-decoration: none;
-}
-
+s
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;

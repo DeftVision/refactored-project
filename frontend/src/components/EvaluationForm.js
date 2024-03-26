@@ -1,8 +1,9 @@
-import {Container, Button, Form, Toast, ToastContainer } from 'react-bootstrap';
-import {useState, useEffect, useContext} from 'react';
+import {Button, Container, Form, Toast, ToastContainer} from 'react-bootstrap';
+import {useContext, useEffect, useState} from 'react';
 import Loading from '../pages/Loading';
-import {Link, useParams} from "react-router-dom";
+import {Link, Navigate, useParams} from "react-router-dom";
 import UserContext from "./UserContext";
+
 
 const form_default = {
     evaluator: "",
@@ -19,20 +20,18 @@ const form_default = {
     serviceScore: "",
     image: "",
     identifyManager: false,
-    comments: "",
+    comments: ""
 }
 
 export default function EvaluationForm({newEvaluation}) {
     const [loading, setLoading] = useState(true);
     const [form, setForm] = useState(form_default);
-
     const [showToast, setShowToast] = useState(false);
-    const toggleToast = () => setShowToast(!showToast);
 
+    const toggleToast = () => setShowToast(!showToast);
     const [message, setMessage] = useState('');
     const {user} = useContext(UserContext);
     const {id} = useParams();
-
 
     useEffect(() => {
         async function editEvaluation() {
@@ -45,8 +44,7 @@ export default function EvaluationForm({newEvaluation}) {
 
             const _response = await response.json();
             if (!response.ok) {
-                alert(_response.error, "!response.ok");
-                setMessage(_response.message)
+                setMessage(_response.error)
             }
             if (response.ok) {
                 const {
@@ -68,7 +66,6 @@ export default function EvaluationForm({newEvaluation}) {
                 } = _response.evaluation;
                 const visitDate = new Date(visitDateTime);
                 const formattedVisitDateTime = visitDate.toISOString().substring(0, 16);
-
                 setForm({
                     visitDateTime: formattedVisitDateTime,
                     location,
@@ -93,6 +90,8 @@ export default function EvaluationForm({newEvaluation}) {
         if (!newEvaluation) {
             editEvaluation();
 
+        } else {
+            setForm({...form, evaluator: user.firstName + " " + user.lastName})
         }
         setLoading(false);
     }, []);
@@ -100,10 +99,7 @@ export default function EvaluationForm({newEvaluation}) {
     if (loading) {
         <Loading/>
     }
-    /*const navigate = useNavigate();
-    const redirectToAdmin = () => {
-        navigate(`/admin`);
-    }*/
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setShowToast(true);
@@ -114,6 +110,7 @@ export default function EvaluationForm({newEvaluation}) {
             url = `http://localhost:8000/api/eval/update/${id}`;
             method = "PATCH";
         }
+
 
         const response = await fetch(url, {
             method: method,
@@ -126,15 +123,16 @@ export default function EvaluationForm({newEvaluation}) {
         const _response = await response.json();
 
         if (response.ok) {
-            /*redirectToAdmin();*/
-            console.log(_response.message);
             setMessage(_response.message);
 
 
         } else {
-            console.log(_response.error);
-
+            setMessage(_response.error);
         }
+    }
+
+    function redirectToAdmin() {
+        <Navigate to="/admin"/>
     }
 
     return (
@@ -144,17 +142,11 @@ export default function EvaluationForm({newEvaluation}) {
                     <h3 className="page-title">{newEvaluation ? "New Evaluation" : "Edit Evaluation"}</h3>
                 </div>
                 <form onSubmit={handleSubmit}>
-
                     <Form.Group controlid="evaluator" className="mb-4">
                         <Form.Control
                             type="text"
                             value={form.evaluator}
-                            onChange={(e) => {
-                                setForm({
-                                    ...form,
-                                    evaluator: (e.target.value)
-                                })
-                            }}
+                            readOnly
                         />
                     </Form.Group>
                     <Form.Group controlid="visitDateTime" className="mb-4">
@@ -166,12 +158,11 @@ export default function EvaluationForm({newEvaluation}) {
                             onChange={(e) => {
                                 setForm({
                                     ...form,
-                                    visitDateTime: (e.target.value),
+                                    visitDateTime: e.target.value
                                 });
                             }}
                         />
                     </Form.Group>
-
                     <Form.Group controlid="location" className="mb-4">
                         <Form.Label>Location</Form.Label>
                         <Form.Select
@@ -200,11 +191,10 @@ export default function EvaluationForm({newEvaluation}) {
                             <option value="Spanish Fork">Spanish Fork</option>
                             <option value="St. George">St. George</option>
                         </Form.Select>
-                        <Form.Control.Feedback type="invalid">
+                        <Form.Control.Feedback>
                             select a location
                         </Form.Control.Feedback>
                     </Form.Group>
-
                     <Form.Group controlid="greeted" className="mb-4">
                         <Form.Check
                             type="switch"
@@ -218,7 +208,6 @@ export default function EvaluationForm({newEvaluation}) {
                                 })
                             }}/>
                     </Form.Group>
-
                     <Form.Group controlid="cashier-name" className="mb-4">
                         <Form.Label>Cashier / Description</Form.Label>
                         <Form.Control
@@ -233,8 +222,6 @@ export default function EvaluationForm({newEvaluation}) {
                             }}
                         />
                     </Form.Group>
-
-
                     <Form.Group controlid="upsell" className="mb-4">
                         <Form.Check
                             type="switch"
@@ -248,7 +235,6 @@ export default function EvaluationForm({newEvaluation}) {
                                 })
                             }}/>
                     </Form.Group>
-
                     <Form.Group controlid="repeatOrder" className="mb-4">
                         <Form.Check
                             type="switch"
@@ -263,7 +249,6 @@ export default function EvaluationForm({newEvaluation}) {
                                 })
                             }}/>
                     </Form.Group>
-
                     <Form.Group controlid="wait" className="mb-4">
                         <Form.Label>How long did you wait for your food?</Form.Label>
                         <Form.Control
@@ -278,7 +263,6 @@ export default function EvaluationForm({newEvaluation}) {
                             }}
                         />
                     </Form.Group>
-
                     <Form.Group controlid="identify-manager" className="mb-4">
                         <Form.Check
                             type="switch"
@@ -293,7 +277,6 @@ export default function EvaluationForm({newEvaluation}) {
                                 })
                             }}/>
                     </Form.Group>
-
                     <Form.Group controlid="patio" className="mb-4">
                         <Form.Check
                             type="switch"
@@ -308,7 +291,6 @@ export default function EvaluationForm({newEvaluation}) {
                                 })
                             }}/>
                     </Form.Group>
-
                     <Form.Group controlid="foodScore" className="mb-4">
                         <Form.Label>Food Score</Form.Label>
                         <Form.Control
@@ -322,7 +304,6 @@ export default function EvaluationForm({newEvaluation}) {
                             }}
                         />
                     </Form.Group>
-
                     <Form.Group controlid="cleanScore" className="mb-4">
                         <Form.Label>Appearance Score</Form.Label>
                         <Form.Control
@@ -336,7 +317,6 @@ export default function EvaluationForm({newEvaluation}) {
                             }}
                         />
                     </Form.Group>
-
                     <Form.Group controlid="serviceScore" className="mb-4">
                         <Form.Label>Service Score</Form.Label>
                         <Form.Control
@@ -350,7 +330,6 @@ export default function EvaluationForm({newEvaluation}) {
                             }}
                         />
                     </Form.Group>
-
                     <Form.Group controlid="comments" className="mb-4">
                         <Form.Label>Comments</Form.Label>
                         <Form.Control
@@ -365,7 +344,6 @@ export default function EvaluationForm({newEvaluation}) {
                             }}
                         />
                     </Form.Group>
-
                     <Form.Group controlid="image" className="mb-4">
                         <Form.Label>Image</Form.Label>
                         <Form.Control
@@ -378,23 +356,37 @@ export default function EvaluationForm({newEvaluation}) {
                             }}
                         />
                     </Form.Group>
-                    <Button variant={"btn btn-outline-success"} type='submit' onClick={handleSubmit} show={showToast}>
+                    <Button variant={"btn btn-outline-success"} type='submit' onClick={handleSubmit}>
                         {newEvaluation ? "+ new" : "update"}
                     </Button>
+
                     <Button as={Link} to="/admin" variant={"btn btn-outline-secondary"} style={{marginLeft: "15px"}}
                             type="submit">Cancel
                     </Button>
+
                 </form>
-                <ToastContainer position={"bottom-middle"} className="p-3" animation style={{zIndex: "1"}}>
-                    <Toast show={showToast} onClose={toggleToast} animation autohide delay={4000} style={{
-                        backgroundColor: "#333",
-                        color: "#fff",
-                        borderLeft: "5px solid grey",
-                        width: "300px"
-                    }}>
-                        <Toast.Body>{message}</Toast.Body>
-                    </Toast>
-                </ToastContainer>
+                <div>
+                    <ToastContainer
+                        className="mt-3 me-auto ms-auto"
+                        style={{
+                            zIndex: "10",
+                            width: "250px",
+                            textAlign: "center",
+                        }}>
+                        <Toast
+                            show={showToast} animation autohide onClose={toggleToast} delay={3500}
+                            style={{
+                                zIndex: "10",
+                                width: "250px",
+                                backgroundColor: "#333",
+                                color: "#fff",
+                                textAlign: "center",
+                                borderBottom: "5px solid #03ad28"
+                            }}>
+                            <Toast.Body>{message}</Toast.Body>
+                        </Toast>
+                    </ToastContainer>
+                </div>
             </Container>
         </>
     );

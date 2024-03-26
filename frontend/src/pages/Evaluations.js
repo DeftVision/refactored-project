@@ -54,7 +54,7 @@ const Evaluations = () => {
                     <th>Location</th>
                     <th>Food</th>
                     <th>Service</th>
-                    <th>Utility</th>
+                    <th>Appearance</th>
                 </tr>
                 </thead>
                 <tbody>

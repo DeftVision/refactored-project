@@ -5,35 +5,8 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Container } from 'react-bootstrap';
 import { Header, Footer } from './layout/_layout_index'
-import {
-  Admin,
-  Loading,
-  Error,
-  Users,
-  Dashboard,
-  Home,
-  Login,
-  Evaluations,
-  Documents,
-  Announcements,
-  DetailsPage,
-  Validation
-} from "./pages/_page_index";
-import {
-  UserContext,
-  PrivateRoutes,
-  UserForm,
-  EvaluationForm,
-  AnnouncementForm,
-  DocumentForm,
-  EvaluationData,
-  DocumentData,
-  AnnouncementData,
-  UserData,
-  AdminDefault,
-  EvaluationDetails,
-} from "./components/_component_index";
-
+import { Admin, Loading, Error, Users, Dashboard, Home, Login, Evaluations, Documents, Announcements, DetailsPage, Validation } from "./pages/_page_index";
+import { UserContext, PrivateRoutes, UserForm, EvaluationForm, AnnouncementForm, DocumentForm, EvaluationData, DocumentData, AnnouncementData, UserData, AdminDefault, EvaluationDetails } from "./components/_component_index";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -63,11 +36,19 @@ function App() {
     } else {
       setLoading(false);
     }
+
+
+
   }, []);
+
+
+
 
   if(loading) {
     return <Loading />;
   }
+
+
 
   return (
       <UserContext.Provider value={{user, setUser}}>
