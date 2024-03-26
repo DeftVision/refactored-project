@@ -1,7 +1,7 @@
-import {Button, Container, Form, Toast, ToastContainer} from 'react-bootstrap';
+import {Button, Container, Form} from 'react-bootstrap';
 import {useContext, useEffect, useState} from 'react';
 import Loading from '../pages/Loading';
-import {Link, Navigate, useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import UserContext from "./UserContext";
 
 
@@ -26,12 +26,13 @@ const form_default = {
 export default function EvaluationForm({newEvaluation}) {
     const [loading, setLoading] = useState(true);
     const [form, setForm] = useState(form_default);
-    const [showToast, setShowToast] = useState(false);
-
-    const toggleToast = () => setShowToast(!showToast);
-    const [message, setMessage] = useState('');
     const {user} = useContext(UserContext);
+
     const {id} = useParams();
+    const navigate = useNavigate();
+    const redirectToAdmin = () => {
+        navigate(`/admin`)
+    }
 
     useEffect(() => {
         async function editEvaluation() {
@@ -44,7 +45,7 @@ export default function EvaluationForm({newEvaluation}) {
 
             const _response = await response.json();
             if (!response.ok) {
-                setMessage(_response.error)
+                console.log(_response.message)
             }
             if (response.ok) {
                 const {
@@ -83,7 +84,8 @@ export default function EvaluationForm({newEvaluation}) {
                     comments,
                     evaluator
                 })
-                setMessage(_response.message);
+                console.log(_response.message);
+
             }
         }
 
@@ -102,7 +104,6 @@ export default function EvaluationForm({newEvaluation}) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setShowToast(true);
         let url = "http://localhost:8000/api/eval/newEvaluation";
         let method = "POST";
 
@@ -123,16 +124,13 @@ export default function EvaluationForm({newEvaluation}) {
         const _response = await response.json();
 
         if (response.ok) {
-            setMessage(_response.message);
+            console.log(_response.message);
 
 
         } else {
-            setMessage(_response.error);
-        }
-    }
+            console.log(_response.error);
 
-    function redirectToAdmin() {
-        <Navigate to="/admin"/>
+        }
     }
 
     return (
@@ -360,33 +358,11 @@ export default function EvaluationForm({newEvaluation}) {
                         {newEvaluation ? "+ new" : "update"}
                     </Button>
 
-                    <Button as={Link} to="/admin" variant={"btn btn-outline-secondary"} style={{marginLeft: "15px"}}
+                    <Button onClick={redirectToAdmin} variant={"btn btn-outline-secondary"} style={{marginLeft: "15px"}}
                             type="submit">Cancel
                     </Button>
 
                 </form>
-                <div>
-                    <ToastContainer
-                        className="mt-3 me-auto ms-auto"
-                        style={{
-                            zIndex: "10",
-                            width: "250px",
-                            textAlign: "center",
-                        }}>
-                        <Toast
-                            show={showToast} animation autohide onClose={toggleToast} delay={3500}
-                            style={{
-                                zIndex: "10",
-                                width: "250px",
-                                backgroundColor: "#333",
-                                color: "#fff",
-                                textAlign: "center",
-                                borderBottom: "5px solid #03ad28"
-                            }}>
-                            <Toast.Body>{message}</Toast.Body>
-                        </Toast>
-                    </ToastContainer>
-                </div>
             </Container>
         </>
     );

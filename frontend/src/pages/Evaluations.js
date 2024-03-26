@@ -1,10 +1,7 @@
-import {Container, Table, Button } from 'react-bootstrap';
+import {Container, Table, Button} from 'react-bootstrap';
 import {useState, useEffect} from "react";
-import { Link, useContext } from 'react-router-dom';
-import UserContext from '../components/UserContext';
+import {Link} from 'react-router-dom';
 import {format} from 'date-fns';
-import * as IoIcons from 'react-icons/io';
-import * as FaIcons from 'react-icons/fa';
 
 
 const Evaluations = () => {
@@ -30,7 +27,7 @@ const Evaluations = () => {
     }, [])
 
 
-    function getScoreColors(grade) {
+    /*function getScoreColors(grade) {
         if (grade >= 4.5 && grade <= 5) {
             return "rgba(54, 158, 84, .7)";
         } else if (grade >= 2.5 && grade < 4.5) {
@@ -41,7 +38,7 @@ const Evaluations = () => {
             return "score out of range";
         }
 
-    }
+    }*/
 
     return (
         <Container className="mt-5" style={{maxWidth: "100vw"}}>
@@ -72,6 +69,7 @@ const Evaluations = () => {
 
             </Table>
         </Container>
-    )}
+    )
+}
 
 export default Evaluations;
