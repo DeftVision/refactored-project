@@ -11,4 +11,5 @@ export {default as DocumentForm} from './DocumentForm'
 export {default as AdminDefault} from './AdminDefault';
 export {default as EvaluationDetails} from './EvaluationDetails';
 export {default as Notification} from './Notification';
+export {default as ValidationForm} from './ValidationForm';
 

@@ -2,20 +2,21 @@ const mongoose = require("mongoose");
 const schema = mongoose.Schema;
 
 const validateSchema = new schema({
-    username: {
+    firstName: {
         type: String,
-        required: true,
+        required: false,
     },
     slider: {
         type: Number,
+        required: false,
     },
-    startDate: {
+    selectField: {
         type: String,
-        required: true,
+        required: false,
     },
     funFact: {
         type: String,
-        required: true,
+        required: false,
     },
 })
 
