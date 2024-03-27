@@ -1,5 +1,5 @@
-import { useState, useContext } from "react";
-import { Container, Form, FloatingLabel, Button, Card } from "react-bootstrap";
+import {useState, useContext} from "react";
+import {Container, Form, FloatingLabel, Button, Card} from "react-bootstrap";
 import UserContext from "../components/UserContext";
 import cookies from "js-cookie";
 
@@ -11,7 +11,7 @@ const form_default = {
 export default function Login() {
     const [form, setForm] = useState(form_default);
     const [message, setMessage] = useState(null);
-    const { setUser } = useContext(UserContext);
+    const {setUser} = useContext(UserContext);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -27,7 +27,7 @@ export default function Login() {
 
         const _response = await response.json();
 
-        if(response.ok && _response.user) {
+        if (response.ok && _response.user) {
             const userId = _response.user._id;
             cookies.set("userCookie", userId);
             setUser(_response.user);
@@ -44,7 +44,8 @@ export default function Login() {
                     <Card.Title className="mb-4" style={{textAlign: "center"}}>LOGIN</Card.Title>
                     <Card.Text>
                         <p style={{color: "#ab0a0a", textAlign: "center"}}>{message}</p>
-                        <form noValidate onSubmit={handleSubmit}>
+                        <form onSubmit={handleSubmit}>
+
                             <FloatingLabel controlid='email' label='Email' className='mb-4'>
                                 <Form.Control
                                     type='email'

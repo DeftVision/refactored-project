@@ -32,7 +32,7 @@ import {
     UserData,
     AdminDefault,
     EvaluationDetails,
-    Notification
+    Notification, ValidationForm
 } from "./components/index";
 
 function App() {
@@ -91,7 +91,9 @@ function App() {
                                     <Route path="/documents" element={<Documents/>}/>
                                     <Route path="/evaluations" element={<Evaluations/>}/>
                                     <Route path="/details" element={<DetailsPage/>}/>
+
                                     <Route path="/validation" element={<Validation/>}/>
+                                    <Route path="/ValidationForm" element={<ValidationForm/>}/>
 
                                     <Route path="/announcementform" element={<AnnouncementForm newAnnouncement/>}/>
                                     <Route path="/editannouncement/:id" element={<AnnouncementForm/>}/>

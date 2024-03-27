@@ -2,20 +2,16 @@ const validateModel = require("../models/validationModel");
 
 exports.newValidate = async (req, res) => {
     try {
-        const { username, startDate, slider, funFact } = req.body;
-        if(!username || !startDate || !funFact) {
-            return res.send({
-                message: "required fields were missed."
-            })
-        }
-        const validate = new validateModel({username, startDate, slider, funFact});
-        await validate.save();
+        const {firstName, selectField, slider, funFact} = req.body;
+
+        const validationField = new validateModel({firstName, selectField, slider, funFact});
+        await validationField.save();
         return res.send({
-            validate,
+            message: `success`,
+            validationField,
         })
 
-    }
-    catch (error) {
+    } catch (error) {
         console.log(error);
         return res.send({
             message: "validate callback error",
@@ -26,21 +22,20 @@ exports.newValidate = async (req, res) => {
 
 exports.getValidates = async (req, res) => {
     try {
-        const validates = await validateModel.find({});
-        if(!validates) {
+        const validates = await validateModel.find({firstName});
+        if (!validates) {
             return res.send({
-                message: "no validation forms found"
+                message: "no validation found"
             })
         }
-        if(validates) {
+        if (validates) {
             return res.send({
                 formCount: validates.length,
                 validates,
             })
         }
 
-    }
-    catch (error) {
+    } catch (error) {
         console.log(error);
         return res.send({
             message: "validate callback error",
