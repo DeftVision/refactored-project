@@ -27,6 +27,7 @@ import {
     AnnouncementForm,
     DocumentForm,
     EvaluationData,
+    EvaluationDefault,
     DocumentData,
     AnnouncementData,
     UserData,
@@ -90,6 +91,7 @@ function App() {
                                     <Route path="/announcements" element={<Announcements/>}/>
                                     <Route path="/documents" element={<Documents/>}/>
                                     <Route path="/evaluations" element={<Evaluations/>}/>
+                                    <Route path="/evaluationdefault" element={<EvaluationDefault/>}/>
                                     <Route path="/details" element={<DetailsPage/>}/>
 
                                     <Route path="/validation" element={<Validation/>}/>

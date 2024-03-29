@@ -217,6 +217,7 @@ export default function EvaluationForm({newEvaluation}) {
                     <FloatingLabel label="Cashier | Description" controlid="cashier-name" className="mb-4">
                         <Form.Control
                             type="text"
+                            placeholder=''
                             autoComplete="cashier-name"
                             value={form.cashier}
                             onChange={(e) => {
@@ -344,6 +345,7 @@ export default function EvaluationForm({newEvaluation}) {
                     </Form.Group>
                     <FloatingLabel label="Comments" controlid="comments" className="mb-4">
                         <Form.Control
+                            placeholder=''
                             as="textarea"
                             style={{height: "100px"}}
                             value={form.comments}

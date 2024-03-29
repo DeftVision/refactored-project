@@ -12,4 +12,5 @@ export {default as AdminDefault} from './AdminDefault';
 export {default as EvaluationDetails} from './EvaluationDetails';
 export {default as Notification} from './Notification';
 export {default as ValidationForm} from './ValidationForm';
+export {default as EvaluationDefault} from './EvaluationDefault';
 

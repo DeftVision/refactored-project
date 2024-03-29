@@ -1,11 +1,14 @@
-import {Container, Table, Button} from 'react-bootstrap';
+import {Container, Table, Col, Row, Button} from 'react-bootstrap';
 import {useState, useEffect} from "react";
-import {Link} from 'react-router-dom';
-import {format} from 'date-fns';
+import {EvaluationDetails} from "../components";
+import {format} from "date-fns";
+import {Link} from "react-router-dom";
+import EvaluationDefault from "../components/EvaluationDefault";
 
 
 const Evaluations = () => {
     const [evaluations, setEvaluations] = useState([])
+    const [evaluationShow, setEvaluationShow] = useState('default')
 
     async function getEvaluations() {
         const response = await fetch("http://localhost:8000/api/eval/evaluations", {
@@ -42,31 +45,34 @@ const Evaluations = () => {
 
     return (
         <Container className="mt-5" style={{maxWidth: "100vw"}}>
-            <h3 className="page-title mb-5">Evaluations</h3>
-            <Table hover responsive className="align-middle">
-                <thead>
-                <tr>
-                    <th></th>
-                    <th>Date</th>
-                    <th>Location</th>
-                    <th>Food</th>
-                    <th>Service</th>
-                    <th>Appearance</th>
-                </tr>
-                </thead>
-                <tbody>
-                {evaluations.map((evaluation) =>
-                    <tr key={evaluation._id}>
-                        <td><Button as={Link} to="/details" variant={"btn"}></Button></td>
-                        <td>{format(new Date(evaluation.visitDateTime), "MM-dd-yyy")}</td>
-                        <td>{evaluation.location}</td>
-                        <td>{evaluation.foodScore}</td>
-                        <td>{evaluation.serviceScore}</td>
-                        <td>{evaluation.appearanceScore}</td>
-                    </tr>
-                )}
-                </tbody>
-            </Table>
+
+            <Row>
+                <h3 className="page-title mb-5">Evaluations</h3>
+
+            </Row>
+
+            <Row>
+                <Col className="col-2">
+                    <Table>
+                        <tbody>
+                        {evaluations.map((evaluation) =>
+                            <tr key={evaluation._id}>
+                                <td>
+
+                                    {/*{format(new Date(evaluation.visitDateTime), "M dd yy")}*/}
+
+                                </td>
+                            </tr>
+                        )}
+                        </tbody>
+                    </Table>
+                </Col>
+
+                <Col style={{textAlign: "center"}} className="col-8">
+                    {evaluationShow == 'default' && <EvaluationDefault/>}
+                </Col>
+            </Row>
+
         </Container>
     )
 }
