@@ -1,8 +1,7 @@
-import { useState, useEffect } from 'react';
-import { Container, Form, Button } from 'react-bootstrap';
+import {useState, useEffect} from 'react';
+import {Container, Form, Button} from 'react-bootstrap';
 import {useNavigate, useParams} from 'react-router-dom';
 import Loading from '../pages/Loading';
-
 
 
 const form_default = {
@@ -18,7 +17,8 @@ const form_default = {
 export default function DocumentForm({newDocument}) {
     const [form, setForm] = useState(form_default);
     const [loading, setLoading] = useState(true);
-    const { id } = useParams();
+    const [validated, setValidated] = useState(false)
+    const {id} = useParams();
 
 
     useEffect(() => {
@@ -31,7 +31,7 @@ export default function DocumentForm({newDocument}) {
             });
 
             const _response = await response.json();
-
+            setValidated(true)
             if (!response.ok) {
                 console.log(_response.error);
             }
@@ -41,17 +41,18 @@ export default function DocumentForm({newDocument}) {
             }
 
         }
-        if(newDocument) {
+
+        if (newDocument) {
             setLoading(true);
         }
-        if(!newDocument) {
+        if (!newDocument) {
             editDocument();
         }
         setLoading(false);
     }, []);
 
-    if(loading) {
-        <Loading />
+    if (loading) {
+        <Loading/>
     }
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -59,12 +60,12 @@ export default function DocumentForm({newDocument}) {
         let url = "http://localhost:8000/api/docs/newDocument";
         let method = "POST";
 
-        if(!newDocument) {
+        if (!newDocument) {
             url = `http://localhost:8000/api/docs/update/${id}`;
             method = "PATCH";
         }
 
-        const response = await fetch( url, {
+        const response = await fetch(url, {
             method: method,
             body: JSON.stringify(form),
             headers: {
@@ -74,9 +75,8 @@ export default function DocumentForm({newDocument}) {
 
         const _response = await response.json();
 
-        if(response.ok) {
+        if (response.ok) {
             console.log(_response);
-            redirectToAdmin();
 
         } else {
             console.log(_response.error);
@@ -93,7 +93,7 @@ export default function DocumentForm({newDocument}) {
 
             <div className="mb-5"><h3 className="page-title">{newDocument ? "New Document" : "Edit Document"}</h3></div>
 
-            <form onSubmit={handleSubmit}>
+            <Form noValidate validated={validated} onSubmit={handleSubmit}>
                 <Form.Group className="mb-4">
                     <Form.Label>Document Name</Form.Label>
                     <Form.Control
@@ -108,6 +108,7 @@ export default function DocumentForm({newDocument}) {
                                 docName: e.target.value,
                             });
                         }}
+                        required
                     />
                 </Form.Group>
                 <Form.Group className="mb-4">
@@ -124,6 +125,7 @@ export default function DocumentForm({newDocument}) {
                                 category: e.target.value,
                             });
                         }}
+                        required
                     />
                 </Form.Group>
                 <Form.Group controlid="image" className="mb-4">
@@ -136,14 +138,16 @@ export default function DocumentForm({newDocument}) {
                                 docUpload: e.target.value,
                             })
                         }}
+                        required
                     />
                 </Form.Group>
 
                 <Button variant={"btn btn-outline-success"} type='submit' onClick={handleSubmit}>
                     {newDocument ? "+ new" : "update"}
                 </Button>
-                <Button onClick={redirectToAdmin} variant={"btn btn-outline-secondary"} style={{marginLeft: "15px"}} type="submit">Cancel</Button>
-            </form>
+                <Button onClick={redirectToAdmin} variant={"btn btn-outline-secondary"} style={{marginLeft: "15px"}}
+                        type="submit">Cancel</Button>
+            </Form>
 
         </Container>
     );

@@ -15,6 +15,8 @@ const form_default = {
 export default function UserForm({newUser}) {
     const [form, setForm] = useState(form_default);
     const [loading, setLoading] = useState(true);
+    const [validated, setValidated] = useState(false);
+
     const {id} = useParams();
     const navigate = useNavigate();
     const redirectToAdmin = () => {
@@ -76,14 +78,13 @@ export default function UserForm({newUser}) {
             }
         });
         const _response = await response.json();
-
+        setValidated(true);
         if (!response.ok) {
             console.log(_response.error);
         }
 
         if (response.ok) {
             console.log(_response.message);
-            /*redirectToAdmin();*/
         }
     }
 
@@ -91,7 +92,7 @@ export default function UserForm({newUser}) {
         <>
             <Container style={{width: "60%"}}>
                 <h3 className="page-title mb-4">{newUser ? "New User" : "Edit User"}</h3>
-                <form onSubmit={handleSubmit}>
+                <Form noValaidate validated={validated} onSubmit={handleSubmit}>
                     <FloatingLabel controlId='firstName' label='First Name' className='form-label mb-4'>
                         <Form.Control
                             type='text'
@@ -103,6 +104,7 @@ export default function UserForm({newUser}) {
                                     firstName: e.target.value,
                                 });
                             }}
+                            required
                         />
                     </FloatingLabel>
 
@@ -117,6 +119,7 @@ export default function UserForm({newUser}) {
                                     lastName: e.target.value,
                                 });
                             }}
+                            required
                         />
                     </FloatingLabel>
 
@@ -130,6 +133,7 @@ export default function UserForm({newUser}) {
                                     role: e.target.value,
                                 });
                             }}
+                            required
                         >
                             <option></option>
                             <option value="Shopper">Shopper</option>
@@ -149,6 +153,7 @@ export default function UserForm({newUser}) {
                                     location: e.target.value,
                                 });
                             }}
+                            required
                         >
                             <option></option>
                             <option value="Bountiful">Bountiful</option>
@@ -183,6 +188,7 @@ export default function UserForm({newUser}) {
                                     email: e.target.value,
                                 });
                             }}
+                            required
                         />
                     </FloatingLabel>
 
@@ -199,6 +205,7 @@ export default function UserForm({newUser}) {
                                         password: e.target.value,
                                     });
                                 }}
+                                required
                             />
                         </FloatingLabel>}
 
@@ -207,7 +214,7 @@ export default function UserForm({newUser}) {
                     </Button>
                     <Button onClick={redirectToAdmin} variant={"btn btn-outline-secondary"} style={{marginLeft: "15px"}}
                             type="submit">Cancel</Button>
-                </form>
+                </Form>
             </Container>
         </>
     )

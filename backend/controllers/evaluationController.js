@@ -26,51 +26,47 @@ exports.getEvaluations = async (req, res) => {
     }
 }
 
-exports.getQueryEvaluations = async (req, res) => {
-    try {
-        const {id} = req.params;
-        const user = await userModel.findById(id);
-        if (!user) {
-            return res.send({
-                message: "user not found"
-            })
-        }
-        if (user) {
-            return res.send({
-                user,
-            })
-        }
-        const evaluations = await evaluationModel.find({location: user.location});
-        if (!evaluations) {
-            return res.send({
-                message: "evaluations not found"
-            })
-        }
-        if (evaluations) {
-            return res.send({
-                evaluationCount: evaluations.length,
-                evaluations,
-            })
-        }
-
-    } catch (error) {
-        console.log(error);
-        return res.send({
-            message: "evaluation callback error",
-            error,
-        })
-    }
-}
-
 exports.newEvaluation = async (req, res) => {
     try {
-        const {visitDateTime, evaluator, location, cashier, greeting, repeatOrder, upsell, patio, wait, foodScore, cleanScore, serviceScore, image, identifyManager, comments} = req.body;
-        if (!visitDateTime || !location || !wait || !foodScore || !cleanScore || !serviceScore || !comments || !evaluator) {
+        const {
+            visitDateTime,
+            evaluator,
+            location,
+            cashier,
+            greeting,
+            repeatOrder,
+            upsell,
+            patio,
+            wait,
+            foodScore,
+            appearanceScore,
+            serviceScore,
+            image,
+            identifyManager,
+            comments
+        } = req.body;
+        if (!visitDateTime || !location || !wait || !foodScore || !appearanceScore || !serviceScore || !comments || !evaluator) {
             return res.send({
                 message: "complete required fields",
             })
         }
-        const evaluation = new evaluationModel({visitDateTime, evaluator, location, cashier, greeting, repeatOrder, upsell, patio, wait, foodScore, cleanScore, serviceScore, image, identifyManager, comments})
+        const evaluation = new evaluationModel({
+            visitDateTime,
+            evaluator,
+            location,
+            cashier,
+            greeting,
+            repeatOrder,
+            upsell,
+            patio,
+            wait,
+            foodScore,
+            appearanceScore,
+            serviceScore,
+            image,
+            identifyManager,
+            comments
+        })
         await evaluation.save();
         return res.send({
             message: "evaluation saved successfully",
@@ -111,7 +107,22 @@ exports.getEvaluation = async (req, res) => {
 exports.updateEvaluation = async (req, res) => {
     try {
         const {id} = req.params;
-        const { visitDateTime, location, cashier, greeting, repeatOrder, upsell, patio, wait, foodScore, cleanScore, serviceScore, image, identifyManager, comments } = req.body;
+        const {
+            visitDateTime,
+            location,
+            cashier,
+            greeting,
+            repeatOrder,
+            upsell,
+            patio,
+            wait,
+            foodScore,
+            appearanceScore,
+            serviceScore,
+            image,
+            identifyManager,
+            comments
+        } = req.body;
         const evaluation = await evaluationModel.findByIdAndUpdate(id, req.body, {new: true});
         if (evaluation) {
             return res.send({
@@ -132,7 +143,6 @@ exports.updateEvaluation = async (req, res) => {
         })
     }
 }
-
 
 exports.deleteEvaluation = async (req, res) => {
     try {

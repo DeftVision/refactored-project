@@ -1,4 +1,4 @@
-import {Button, Container, Form} from 'react-bootstrap';
+import {Button, Container, Form, FloatingLabel} from 'react-bootstrap';
 import {useContext, useEffect, useState} from 'react';
 import Loading from '../pages/Loading';
 import {useNavigate, useParams} from "react-router-dom";
@@ -16,7 +16,7 @@ const form_default = {
     patio: false,
     wait: "",
     foodScore: "",
-    cleanScore: "",
+    appearanceScore: "",
     serviceScore: "",
     image: "",
     identifyManager: false,
@@ -27,6 +27,11 @@ export default function EvaluationForm({newEvaluation}) {
     const [loading, setLoading] = useState(true);
     const [form, setForm] = useState(form_default);
     const {user} = useContext(UserContext);
+    const [foodSlider, setFoodSlider] = useState(0);
+    const [serviceSlider, setServiceSlider] = useState(0);
+    const [appearanceSlider, setAppearanceSlider] = useState(0);
+    const [validated, setValidated] = useState(false);
+
 
     const {id} = useParams();
     const navigate = useNavigate();
@@ -58,7 +63,7 @@ export default function EvaluationForm({newEvaluation}) {
                     patio,
                     wait,
                     foodScore,
-                    cleanScore,
+                    appearanceScore,
                     serviceScore,
                     image,
                     identifyManager,
@@ -77,7 +82,7 @@ export default function EvaluationForm({newEvaluation}) {
                     patio,
                     wait,
                     foodScore,
-                    cleanScore,
+                    appearanceScore,
                     serviceScore,
                     image,
                     identifyManager,
@@ -93,7 +98,13 @@ export default function EvaluationForm({newEvaluation}) {
             editEvaluation();
 
         } else {
-            setForm({...form, evaluator: user.firstName + " " + user.lastName})
+            setForm({
+                ...form,
+                evaluator: user.firstName + " " + user.lastName,
+                foodScore: 0,
+                serviceScore: 0,
+                appearanceScore: 0
+            })
         }
         setLoading(false);
     }, []);
@@ -111,8 +122,7 @@ export default function EvaluationForm({newEvaluation}) {
             url = `http://localhost:8000/api/eval/update/${id}`;
             method = "PATCH";
         }
-
-
+        setValidated(true);
         const response = await fetch(url, {
             method: method,
             body: JSON.stringify(form),
@@ -139,16 +149,15 @@ export default function EvaluationForm({newEvaluation}) {
                 <div className="mb-5">
                     <h3 className="page-title">{newEvaluation ? "New Evaluation" : "Edit Evaluation"}</h3>
                 </div>
-                <form onSubmit={handleSubmit}>
-                    <Form.Group controlid="evaluator" className="mb-4">
+                <Form noValidate validated={validated} onSubmit={handleSubmit}>
+                    <FloatingLabel label="Evaluator" controlid="evaluator" className="mb-4">
                         <Form.Control
                             type="text"
                             value={form.evaluator}
                             readOnly
                         />
-                    </Form.Group>
-                    <Form.Group controlid="visitDateTime" className="mb-4">
-                        <Form.Label>Visit Date | Time</Form.Label>
+                    </FloatingLabel>
+                    <FloatingLabel label="Visit Date | Time" controlid="visitDateTime" className="mb-4">
                         <Form.Control
                             type="datetime-local"
                             autoComplete="visit-date-time"
@@ -159,10 +168,10 @@ export default function EvaluationForm({newEvaluation}) {
                                     visitDateTime: e.target.value
                                 });
                             }}
+                            required
                         />
-                    </Form.Group>
-                    <Form.Group controlid="location" className="mb-4">
-                        <Form.Label>Location</Form.Label>
+                    </FloatingLabel>
+                    <FloatingLabel label="Location" controlid="location" className="mb-4">
                         <Form.Select
                             value={form.location}
                             autoComplete="location-name"
@@ -172,6 +181,7 @@ export default function EvaluationForm({newEvaluation}) {
                                     location: e.target.value,
                                 })
                             }}
+                            required
                         >
                             <option></option>
                             <option value="Bountiful">Bountiful</option>
@@ -189,10 +199,8 @@ export default function EvaluationForm({newEvaluation}) {
                             <option value="Spanish Fork">Spanish Fork</option>
                             <option value="St. George">St. George</option>
                         </Form.Select>
-                        <Form.Control.Feedback>
-                            select a location
-                        </Form.Control.Feedback>
-                    </Form.Group>
+
+                    </FloatingLabel>
                     <Form.Group controlid="greeted" className="mb-4">
                         <Form.Check
                             type="switch"
@@ -206,8 +214,7 @@ export default function EvaluationForm({newEvaluation}) {
                                 })
                             }}/>
                     </Form.Group>
-                    <Form.Group controlid="cashier-name" className="mb-4">
-                        <Form.Label>Cashier / Description</Form.Label>
+                    <FloatingLabel label="Cashier | Description" controlid="cashier-name" className="mb-4">
                         <Form.Control
                             type="text"
                             autoComplete="cashier-name"
@@ -218,8 +225,9 @@ export default function EvaluationForm({newEvaluation}) {
                                     cashier: e.target.value,
                                 })
                             }}
+                            required
                         />
-                    </Form.Group>
+                    </FloatingLabel>
                     <Form.Group controlid="upsell" className="mb-4">
                         <Form.Check
                             type="switch"
@@ -247,11 +255,10 @@ export default function EvaluationForm({newEvaluation}) {
                                 })
                             }}/>
                     </Form.Group>
-                    <Form.Group controlid="wait" className="mb-4">
-                        <Form.Label>How long did you wait for your food?</Form.Label>
+                    <FloatingLabel label="Wait Time" controlid="wait" className="mb-4">
                         <Form.Control
-                            type="text"
-                            placeholder="minutes"
+                            type="number"
+                            placeholder=''
                             value={form.wait}
                             onChange={(e) => {
                                 setForm({
@@ -259,8 +266,9 @@ export default function EvaluationForm({newEvaluation}) {
                                     wait: e.target.value,
                                 })
                             }}
+                            required
                         />
-                    </Form.Group>
+                    </FloatingLabel>
                     <Form.Group controlid="identify-manager" className="mb-4">
                         <Form.Check
                             type="switch"
@@ -290,9 +298,11 @@ export default function EvaluationForm({newEvaluation}) {
                             }}/>
                     </Form.Group>
                     <Form.Group controlid="foodScore" className="mb-4">
-                        <Form.Label>Food Score</Form.Label>
-                        <Form.Control
+                        <Form.Label>Food [1 low-10 high]: {foodSlider}</Form.Label>
+                        <Form.Range
                             type="number"
+                            min={0}
+                            max={10}
                             value={form.foodScore}
                             onChange={(e) => {
                                 setForm({
@@ -302,23 +312,27 @@ export default function EvaluationForm({newEvaluation}) {
                             }}
                         />
                     </Form.Group>
-                    <Form.Group controlid="cleanScore" className="mb-4">
-                        <Form.Label>Appearance Score</Form.Label>
-                        <Form.Control
+                    <Form.Group controlid="appearanceScore" className="mb-4">
+                        <Form.Label>Appearance [1 low-10 high]: {appearanceSlider}</Form.Label>
+                        <Form.Range
                             type="number"
-                            value={form.cleanScore}
+                            min={0}
+                            max={10}
+                            value={form.appearanceScore}
                             onChange={(e) => {
                                 setForm({
                                     ...form,
-                                    cleanScore: (e.target.value)
+                                    appearanceScore: e.target.value
                                 })
                             }}
                         />
                     </Form.Group>
                     <Form.Group controlid="serviceScore" className="mb-4">
-                        <Form.Label>Service Score</Form.Label>
-                        <Form.Control
+                        <Form.Label>Service [1 low-10 high]: {serviceSlider}</Form.Label>
+                        <Form.Range
                             type="number"
+                            min={0}
+                            max={10}
                             value={form.serviceScore}
                             onChange={(e) => {
                                 setForm({
@@ -328,8 +342,7 @@ export default function EvaluationForm({newEvaluation}) {
                             }}
                         />
                     </Form.Group>
-                    <Form.Group controlid="comments" className="mb-4">
-                        <Form.Label>Comments</Form.Label>
+                    <FloatingLabel label="Comments" controlid="comments" className="mb-4">
                         <Form.Control
                             as="textarea"
                             style={{height: "100px"}}
@@ -340,10 +353,10 @@ export default function EvaluationForm({newEvaluation}) {
                                     comments: e.target.value,
                                 })
                             }}
+                            required
                         />
-                    </Form.Group>
+                    </FloatingLabel>
                     <Form.Group controlid="image" className="mb-4">
-                        <Form.Label>Image</Form.Label>
                         <Form.Control
                             type="file"
                             onChange={(e) => {
@@ -352,6 +365,7 @@ export default function EvaluationForm({newEvaluation}) {
                                     image: e.target.value,
                                 })
                             }}
+                            required
                         />
                     </Form.Group>
                     <Button variant={"btn btn-outline-success"} type='submit' onClick={handleSubmit}>
@@ -362,7 +376,7 @@ export default function EvaluationForm({newEvaluation}) {
                             type="submit">Cancel
                     </Button>
 
-                </form>
+                </Form>
             </Container>
         </>
     );
