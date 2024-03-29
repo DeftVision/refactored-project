@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import { Container, Form, Button, FormText } from 'react-bootstrap';
-import { useParams, useNavigate } from 'react-router-dom';
+import {useState, useEffect} from 'react';
+import {Container, Form, Button, FormText, FloatingLabel} from 'react-bootstrap';
+import {useParams, useNavigate} from 'react-router-dom';
 import Loading from '../pages/Loading';
 
 
@@ -17,8 +17,8 @@ const form_default = {
 export default function AnnouncementForm({newAnnouncement}) {
     const [form, setForm] = useState(form_default);
     const [loading, setLoading] = useState(true);
-    const { id } = useParams();
-
+    const [validated, setValidated] = useState(false)
+    const {id} = useParams();
 
 
     useEffect(() => {
@@ -41,10 +41,11 @@ export default function AnnouncementForm({newAnnouncement}) {
             }
 
         }
-        if(newAnnouncement) {
+
+        if (newAnnouncement) {
             setLoading(true);
         }
-        if(!newAnnouncement) {
+        if (!newAnnouncement) {
             editAnnouncement();
         }
         setLoading(false);
@@ -55,8 +56,8 @@ export default function AnnouncementForm({newAnnouncement}) {
         navigate(`/admin`);
     }
 
-    if(loading) {
-        <Loading />
+    if (loading) {
+        <Loading/>
     }
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -64,12 +65,12 @@ export default function AnnouncementForm({newAnnouncement}) {
         let url = "http://localhost:8000/api/announce/newAnnouncement";
         let method = "POST";
 
-        if(!newAnnouncement) {
+        if (!newAnnouncement) {
             url = `http://localhost:8000/api/announce/update/${id}`;
             method = "PATCH";
         }
-
-        const response = await fetch( url, {
+        setValidated(true)
+        const response = await fetch(url, {
             method: method,
             body: JSON.stringify(form),
             headers: {
@@ -78,11 +79,9 @@ export default function AnnouncementForm({newAnnouncement}) {
         });
 
         const _response = await response.json();
-
-        if(response.ok) {
+        setValidated(true);
+        if (response.ok) {
             console.log(_response);
-            redirectToAdmin();
-
         } else {
             console.log(_response.error);
         }
@@ -95,9 +94,8 @@ export default function AnnouncementForm({newAnnouncement}) {
                 <h3 className="page-title">{newAnnouncement ? "New Announcement" : "Edit Announcement"}</h3>
             </div>
 
-            <form onSubmit={handleSubmit}>
-                <Form.Group className="mb-4">
-                    <Form.Label>Title</Form.Label>
+            <Form noValidate validated={validated} onSubmit={handleSubmit}>
+                <FloatingLabel label="Title" className="mb-4">
                     <Form.Control
                         type="text"
                         controlid="title"
@@ -110,11 +108,11 @@ export default function AnnouncementForm({newAnnouncement}) {
                                 title: e.target.value,
                             });
                         }}
+                        required
                     />
-                    <FormText>[ not displayed to users ]</FormText>
-                </Form.Group>
-                <Form.Group className="mb-4">
-                    <Form.Label>Subject</Form.Label>
+                </FloatingLabel>
+
+                <FloatingLabel label="Subject" className="mb-4">
                     <Form.Control
                         type="text"
                         controlid="subject"
@@ -127,10 +125,10 @@ export default function AnnouncementForm({newAnnouncement}) {
                                 subject: e.target.value,
                             });
                         }}
+                        required
                     />
-                </Form.Group>
-                <Form.Group className="mb-4">
-                    <Form.Label>Content</Form.Label>
+                </FloatingLabel>
+                <FloatingLabel label="Content" className="mb-4">
                     <Form.Control
                         as="textarea"
                         controlid="content"
@@ -143,10 +141,10 @@ export default function AnnouncementForm({newAnnouncement}) {
                                 content: e.target.value,
                             });
                         }}
+                        required
                     />
-                </Form.Group>
-                <Form.Group className="mb-4">
-                    <Form.Label>Audience</Form.Label>
+                </FloatingLabel>
+                <FloatingLabel label="Audience" className="mb-4">
                     <Form.Select
                         type="text"
                         controlid="audience"
@@ -159,15 +157,15 @@ export default function AnnouncementForm({newAnnouncement}) {
                                 audience: e.target.value,
                             });
                         }}
+                        required
                     >
                         <option></option>
                         <option value="Shopper">Shopper</option>
                         <option value="Manager">Manager</option>
                     </Form.Select>
-                </Form.Group>
+                </FloatingLabel>
 
-                <Form.Group className="mb-4">
-                    <Form.Label>Priority Level</Form.Label>
+                <FloatingLabel label="Priority Level" className="mb-4">
                     <Form.Select
                         type="text"
                         controlid="priority"
@@ -180,13 +178,14 @@ export default function AnnouncementForm({newAnnouncement}) {
                                 priority: e.target.value,
                             });
                         }}
+                        required
                     >
                         <option></option>
                         <option value="High">High</option>
                         <option value="Medium">Medium</option>
                         <option value="Low">Low</option>
                     </Form.Select>
-                </Form.Group>
+                </FloatingLabel>
                 <Form.Group controlid="display-announcement" className="mb-4">
                     <Form.Check
                         type="switch"
@@ -199,14 +198,14 @@ export default function AnnouncementForm({newAnnouncement}) {
                                 display: e.target.checked,
                             })
                         }}
-
                     />
                 </Form.Group>
-                <Button variant={"btn btn-outline-success"}  type="submit" onClick={handleSubmit}>
+                <Button variant={"btn btn-outline-success"} type="submit" onClick={handleSubmit}>
                     {newAnnouncement ? "+ new" : "update"}
                 </Button>
-                <Button onClick={redirectToAdmin} variant={"btn btn-outline-secondary"} style={{marginLeft: "15px"}} type="submit">Cancel</Button>
-            </form>
+                <Button onClick={redirectToAdmin} variant={"btn btn-outline-secondary"} style={{marginLeft: "15px"}}
+                        type="submit">Cancel</Button>
+            </Form>
 
         </Container>
     );

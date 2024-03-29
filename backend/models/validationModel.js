@@ -4,15 +4,15 @@ const schema = mongoose.Schema;
 const validateSchema = new schema({
     firstName: {
         type: String,
-        required: false,
+        required: true,
     },
     slider: {
         type: Number,
-        required: false,
+        required: true,
     },
     selectField: {
         type: String,
-        required: false,
+        required: true,
     },
     funFact: {
         type: String,

@@ -1,5 +1,5 @@
 import {Button, Form, FloatingLabel, Container} from 'react-bootstrap';
-import {useEffect, useState} from "react";
+import {useState} from "react";
 
 
 const form_default = {
@@ -11,7 +11,7 @@ const form_default = {
 
 export default function Validation() {
     const [form, setForm] = useState({form_default});
-
+    const [validated, setValidated] = useState(false);
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -22,7 +22,7 @@ export default function Validation() {
                 "Content-Type": "application/json",
             }
         });
-
+        setValidated(true);
         const _response = await response.json();
         if (response.ok && _response) {
             console.log(_response)
@@ -35,11 +35,10 @@ export default function Validation() {
         <Container style={{width: "60%"}}>
             <h3 className="mt-4">Validation Test Page</h3>
             <h5 style={{color: "red"}}></h5>
-
-            <form onSubmit={handleSubmit}>
-
+            <Form noValidate validated={validated} onSubmit={handleSubmit}>
                 <FloatingLabel className="mb-4" label="first name" controlid="firstName">
                     <Form.Control
+                        required
                         type="text"
                         autoComplete="firstName"
                         value={form.firstName}
@@ -50,7 +49,6 @@ export default function Validation() {
                                 firstName: e.target.value,
                             })
                         }}
-
                     />
                 </FloatingLabel>
 
@@ -61,6 +59,7 @@ export default function Validation() {
                         autoComplete="selectField"
                         aria-placeholder=""
                         value={form.selectField}
+                        placeholder=''
                         onChange={(e) => {
                             setForm({
                                 ...form,
@@ -68,7 +67,7 @@ export default function Validation() {
                             })
                         }}
                     >
-                        <option>options</option>
+                        <option></option>
                         <option value="option 1">option 1</option>
                         <option value="option 2">option 2</option>
                         <option value="option 3">option 3</option>
@@ -81,6 +80,7 @@ export default function Validation() {
                 <Form.Group className="mt-4" controlid="slider">
                     <Form.Label>Slider</Form.Label>
                     <Form.Range
+                        required
                         min={0}
                         max={10}
                         type="number"
@@ -116,8 +116,7 @@ export default function Validation() {
                         variant={"btn btn-outline-primary"}>
                     Submit form
                 </Button>
-
-            </form>
+            </Form>
         </Container>
     )
 }

@@ -3,8 +3,8 @@ const userModel = require("../models/userModel");
 
 exports.newAnnouncement = async (req, res) => {
     try {
-        const { audience, subject, title, content, display, priority } = req.body;
-        if(!audience || !subject || !title || !content || !priority) {
+        const {audience, subject, title, content, display, priority} = req.body;
+        if (!audience || !subject || !title || !content || !priority) {
             return res.send({
                 message: "all fields are required.",
             })
@@ -16,8 +16,7 @@ exports.newAnnouncement = async (req, res) => {
             message: "announcement was created successfully.",
             announcement,
         })
-    }
-    catch (error) {
+    } catch (error) {
         console.log(error);
         return res.send({
             message: "creating an announcement callback error.",
@@ -30,7 +29,7 @@ exports.newAnnouncement = async (req, res) => {
 exports.getAnnouncements = async (req, res) => {
     try {
         const announcements = await announcementModel.find({});
-        if(!announcements) {
+        if (!announcements) {
             return res.send({
                 message: "no announcements were found.",
             })
@@ -39,8 +38,7 @@ exports.getAnnouncements = async (req, res) => {
             announcementCount: announcements.length,
             announcements,
         })
-    }
-    catch (error) {
+    } catch (error) {
         console.log(error);
         return res.send({
             message: "getting all announcements callback error.",
@@ -56,13 +54,13 @@ exports.getQueryAnnouncements = async (req, res) => {
         const {id} = req.params;
         const user = await userModel.findById(id);
         console.log('User Id: ', id);
-        if(!user) {
+        if (!user) {
             return res.send({
                 message: "User not found."
             })
         }
-        const announcements = await announcementModel.find({display: true, audience: user.role});
-        if(!announcements.length) {
+        const announcements = await announcementModel.findBy({display: true});
+        if (!announcements.length) {
             return res.send({
                 message: "No announcements were found for this user.",
             })
@@ -70,8 +68,7 @@ exports.getQueryAnnouncements = async (req, res) => {
         return res.send({
             announcements,
         })
-    }
-    catch (error) {
+    } catch (error) {
         console.log(error);
         return res.send({
             message: "getting all announcements callback error",
@@ -83,9 +80,9 @@ exports.getQueryAnnouncements = async (req, res) => {
 
 exports.getAnnouncement = async (req, res) => {
     try {
-        const { id } = req.params;
+        const {id} = req.params;
         const announcement = await announcementModel.findById(id);
-        if(!announcement) {
+        if (!announcement) {
             return res.send({
                 message: "Announcement not found.",
             });
@@ -93,8 +90,7 @@ exports.getAnnouncement = async (req, res) => {
         return res.send({
             announcement,
         })
-    }
-    catch (error) {
+    } catch (error) {
         console.log(error);
         return res.send({
             message: "getting an announcement callback error",
@@ -106,10 +102,10 @@ exports.getAnnouncement = async (req, res) => {
 
 exports.updateAnnouncement = async (req, res) => {
     try {
-        const { id } = req.params;
-        const { title, subject, content, priority, audience, display } = req.body;
+        const {id} = req.params;
+        const {title, subject, content, priority, audience, display} = req.body;
         const announcement = await announcementModel.findByIdAndUpdate(id, req.body, {new: true});
-        if(!announcement) {
+        if (!announcement) {
             return res.send({
                 message: "Announcement not found",
             })
@@ -131,9 +127,9 @@ exports.updateAnnouncement = async (req, res) => {
 
 exports.deleteAnnouncement = async (req, res) => {
     try {
-        const { id } = req.params;
+        const {id} = req.params;
         const announcement = await announcementModel.findByIdAndDelete(id);
-        if(!announcement) {
+        if (!announcement) {
             return res.send({
                 message: "Announcement not found",
             })

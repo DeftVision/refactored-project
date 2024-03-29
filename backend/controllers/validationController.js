@@ -3,7 +3,11 @@ const validateModel = require("../models/validationModel");
 exports.newValidate = async (req, res) => {
     try {
         const {firstName, selectField, slider, funFact} = req.body;
-
+        if (!firstName || !selectField || !slider) {
+            return res.send({
+                message: "oops something went wrong."
+            })
+        }
         const validationField = new validateModel({firstName, selectField, slider, funFact});
         await validationField.save();
         return res.send({

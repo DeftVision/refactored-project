@@ -43,7 +43,7 @@ const evaluationSchema = new schema({
         type: Number,
         required: true,
     },
-    cleanScore: {
+    appearanceScore: {
         type: Number,
         required: true,
     },

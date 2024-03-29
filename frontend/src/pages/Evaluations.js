@@ -62,11 +62,10 @@ const Evaluations = () => {
                         <td>{evaluation.location}</td>
                         <td>{evaluation.foodScore}</td>
                         <td>{evaluation.serviceScore}</td>
-                        <td>{evaluation.cleanScore}</td>
+                        <td>{evaluation.appearanceScore}</td>
                     </tr>
                 )}
                 </tbody>
-
             </Table>
         </Container>
     )
