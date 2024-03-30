@@ -1,12 +1,11 @@
-import {Col, Container, Row, Table} from 'react-bootstrap';
+import {Col, Container, Table} from 'react-bootstrap';
 import {useState, useEffect} from "react";
 import {useParams} from 'react-router-dom';
 import {format} from 'date-fns';
 
 
-export default function EvaluationDetails() {
+export default function EvaluationDetails({evaluation}) {
     const {id} = useParams();
-    const [evaluations, setEvaluations] = useState('');
 
 
     async function getEvaluations() {
@@ -16,7 +15,7 @@ export default function EvaluationDetails() {
             });
             const _response = await response.json();
             if (response.ok && _response.evaluation) {
-                setEvaluations(_response.evaluation._id);
+
             } else {
                 console.log(_response.error);
             }
@@ -32,21 +31,64 @@ export default function EvaluationDetails() {
     return (
         <Container style={{display: "flex"}}>
             <Col>
-                <Table hover responsive
+                <h4 className="mb-5">{evaluation.location}: {format(new Date(evaluation.visitDateTime), "MMMM dd, yyyy h:mm a")}</h4>
+                <Table responsive
                        style={{
-                           flexWrap: "wrap",
                            alignContent: "middle",
-                           justifyContent: "center"
+                           textAlign: "left"
                        }}>
-                    <thead>
-                    <tr>
-                        <th>Field</th>
-                        <th>Response</th>
-                    </tr>
-                    </thead>
+
                     <tbody>
                     <tr>
+                        <td>Warm Aloha Greeting</td>
+                        <td>{evaluation.greeting ? "Yes" : "No"}</td>
+                    </tr>
+                    <tr>
+                        <td>Repeated back the order</td>
+                        <td>{evaluation.repeatOrder ? "Yes" : "No"}</td>
+                    </tr>
+                    <tr>
+                        <td>Guest offered sweet potato fries</td>
+                        <td>{evaluation.repeatOrder ? "Yes" : "No"}</td>
+                    </tr>
+                    <tr>
+                        <td>Patio was clean and organized</td>
+                        <td>{evaluation.patio ? "Yes" : "No"}</td>
+                    </tr>
+                    <tr>
+                        <td>Waiting for food [in minutes]</td>
+                        <td>{evaluation.wait}</td>
+                    </tr>
+                    <tr>
+                        <td>Manager was identifiable</td>
+                        <td>{evaluation.identifyManager ? "Yes" : "No"}</td>
+                    </tr>
+                    <tr>
+                        <td>Food Score</td>
+                        <td>{evaluation.foodScore}</td>
+                    </tr>
+                    <tr>
+                        <td>Service Score</td>
+                        <td>{evaluation.serviceScore}</td>
+                    </tr>
+                    <tr>
+                        <td>Appearance Score</td>
+                        <td>{evaluation.appearanceScore}</td>
+                    </tr>
+                    <tr>
+                        <td colSpan={2}>
+                            <span className="">Comments</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colSpan={2}>{evaluation.comments}</td>
+                    </tr>
 
+                    <tr>
+                        <td colSpan={2}>
+                            <img alt="image-placeholder" src={"https://fakeimg.pl/600x400?text=Image+of+Food"}
+                                 style={{width: "200px", height: "150px"}}/>
+                        </td>
                     </tr>
                     </tbody>
                 </Table>

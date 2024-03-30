@@ -64,16 +64,10 @@ function App() {
         } else {
             setLoading(false);
         }
-
-
     }, []);
-
-
     if (loading) {
         return <Loading/>;
     }
-
-
     return (
         <UserContext.Provider value={{user, setUser}}>
             <Router>
