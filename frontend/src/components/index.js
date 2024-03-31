@@ -13,4 +13,7 @@ export {default as EvaluationDetails} from './EvaluationDetails';
 export {default as Notification} from './Notification';
 export {default as ValidationForm} from './ValidationForm';
 export {default as EvaluationDefault} from './EvaluationDefault';
+export {default as ResetPassword} from './ResetPassword';
+export {default as ForgotPassword} from './ForgotPassword';
+
 

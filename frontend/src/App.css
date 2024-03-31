@@ -17,6 +17,8 @@ s
 }
 
 
-.no-hover:hover {
-    background-color: inherit;
+.number-input::-webkit-inner-spin-button,
+.number-input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }

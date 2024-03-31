@@ -1,11 +1,11 @@
-import {Container, Navbar, Nav } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import {Container, Navbar, Nav} from 'react-bootstrap';
+import {Link} from 'react-router-dom';
 import {useContext} from "react";
 import UserContext from '../components/UserContext';
 import cookies from 'js-cookie';
 
 
-export default function Header () {
+export default function Header() {
     const {user, setUser} = useContext(UserContext);
 
     function logout() {
@@ -26,12 +26,13 @@ export default function Header () {
                             <Nav.Link as={Link} to="/evaluations">Evaluations</Nav.Link>
                             <Nav.Link as={Link} to="/documents">Documents</Nav.Link>
                             <Nav.Link as={Link} to="/validation">Validation</Nav.Link>
+                            <Nav.Link as={Link} to="/profile">Profile</Nav.Link>
 
                             {user && user.role === 'Admin' && (
-                            <Nav.Link as={Link} to="/admin">Admin</Nav.Link>)}
+                                <Nav.Link as={Link} to="/admin">Admin</Nav.Link>)}
 
                             {user &&
-                            <Nav.Link onClick={logout}>Logout</Nav.Link> }
+                                <Nav.Link onClick={logout}>Logout</Nav.Link>}
                         </Nav>
                     </Navbar.Collapse>
 

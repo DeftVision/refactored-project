@@ -1,9 +1,7 @@
-import {Container, Table, Col, Row, Button} from 'react-bootstrap';
+import {Container, Table, Col, Row} from 'react-bootstrap';
 import {useState, useEffect} from "react";
-import {EvaluationDetails} from "../components";
+import {EvaluationDefault, EvaluationDetails} from "../components";
 import {format} from "date-fns";
-import {Link} from "react-router-dom";
-import EvaluationDefault from "../components/EvaluationDefault";
 
 
 const Evaluations = () => {
@@ -61,7 +59,8 @@ const Evaluations = () => {
                     </Table>
                 </Col>
                 <Col style={{textAlign: "center"}} className="col-8">
-                    {selectedEvaluation && <EvaluationDetails evaluation={selectedEvaluation}/>}
+                    {selectedEvaluation ? <EvaluationDetails evaluation={selectedEvaluation}/> :
+                        <EvaluationDefault/>}
                 </Col>
             </Row>
         </Container>

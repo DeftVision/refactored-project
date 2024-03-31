@@ -1,5 +1,5 @@
 import {Col, Container, Table} from 'react-bootstrap';
-import {useState, useEffect} from "react";
+import {useEffect} from "react";
 import {useParams} from 'react-router-dom';
 import {format} from 'date-fns';
 
@@ -31,7 +31,10 @@ export default function EvaluationDetails({evaluation}) {
     return (
         <Container style={{display: "flex"}}>
             <Col>
-                <h4 className="mb-5">{evaluation.location}: {format(new Date(evaluation.visitDateTime), "MMMM dd, yyyy h:mm a")}</h4>
+                <h4 className="mb-5">
+                    <span
+                        style={{color: "#515151"}}>{evaluation.location}</span>: {format(new Date(evaluation.visitDateTime), "MMMM dd, yyyy h:mm a")}
+                </h4>
                 <Table responsive
                        style={{
                            alignContent: "middle",
@@ -56,12 +59,12 @@ export default function EvaluationDetails({evaluation}) {
                         <td>{evaluation.patio ? "Yes" : "No"}</td>
                     </tr>
                     <tr>
-                        <td>Waiting for food [in minutes]</td>
-                        <td>{evaluation.wait}</td>
-                    </tr>
-                    <tr>
                         <td>Manager was identifiable</td>
                         <td>{evaluation.identifyManager ? "Yes" : "No"}</td>
+                    </tr>
+                    <tr>
+                        <td>Waiting for food [in minutes]</td>
+                        <td>{evaluation.wait}</td>
                     </tr>
                     <tr>
                         <td>Food Score</td>

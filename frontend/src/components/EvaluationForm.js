@@ -267,6 +267,7 @@ export default function EvaluationForm({newEvaluation}) {
                                     wait: e.target.value,
                                 })
                             }}
+                            className="number-input"
                             required
                         />
                     </FloatingLabel>

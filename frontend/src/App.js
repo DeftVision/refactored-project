@@ -17,7 +17,8 @@ import {
     Documents,
     Announcements,
     DetailsPage,
-    Validation
+    Validation,
+    Profile
 } from "./pages/index";
 import {
     UserContext,
@@ -33,8 +34,12 @@ import {
     UserData,
     AdminDefault,
     EvaluationDetails,
-    Notification, ValidationForm
+    Notification,
+    ValidationForm,
+    ResetPassword,
+    ForgotPassword
 } from "./components/index";
+
 
 function App() {
     const [user, setUser] = useState(null);
@@ -107,11 +112,15 @@ function App() {
                                     <Route path="/userform" element={<UserForm newUser/>}/>
                                     <Route path="/edituser/:id" element={<UserForm/>}/>
                                     <Route path="/userdata" element={<UserData/>}/>
+
+                                    <Route path="/resetpassword/:id" element={<ResetPassword/>}/>
+                                    <Route path="/profile" element={<Profile/>}/>
                                 </Route>
                                 <Route path="/login" element={user ? <Navigate to="/"/> : <Login/>}/>
                                 <Route path="*" element={<Error/>}/>
                                 <Route path="/loading" element={<Loading/>}/>
                                 <Route path="/notification" element={<Notification/>}/>
+                                <Route path="/forgotpassword" element={<ForgotPassword/>}/>
 
                             </Routes>
                         </Container>
