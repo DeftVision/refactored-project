@@ -1,4 +1,4 @@
-import {Col, Card, Container, Form, Button, FloatingLabel, Row} from 'react-bootstrap';
+import {Col, Card, Container, Form, Button, FloatingLabel} from 'react-bootstrap';
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 
@@ -36,18 +36,18 @@ export default function ForgotPassword() {
                                 />
                             </FloatingLabel>
 
-                            <Row>
-                                <Button variant={"btn"} onClick={handleSubmit} className="mt-4">
+                            <div>
+                                <Button variant={"btn btn-outline-primary"} onClick={handleSubmit} className="mt-4">
                                     Send Reset Link
                                 </Button>
-                            </Row>
+                            </div>
 
-                            <Row>
-                                <Button variant={"btn"} onClick={redirectToLogin}
+                            <div>
+                                <Button variant={"btn btn-outline-secondary"} onClick={redirectToLogin}
                                         className="mt-4 mb-4">
                                     Back to login
                                 </Button>
-                            </Row>
+                            </div>
 
                         </Form>
                     </Card.Body>

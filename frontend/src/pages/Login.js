@@ -90,12 +90,13 @@ export default function Login() {
                             </FloatingLabel>
 
                             <div>
-                                <Button onClick={handleSubmit} type='submit' className="mb-4">
+                                <Button onClick={handleSubmit} type='submit' variant={"btn btn-outline-primary"}
+                                        className="mb-4">
                                     login
                                 </Button>
                             </div>
                             <div>
-                                <Button as={Link} to="/forgotpassword">
+                                <Button as={Link} to="/forgotpassword" variant={"btn btn-outline-secondary"}>
                                     Need help signing in?
                                 </Button>
                             </div>
