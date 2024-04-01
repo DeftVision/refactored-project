@@ -5,12 +5,11 @@ import {format} from 'date-fns';
 
 
 export default function EvaluationDetails({evaluation}) {
-    const {id} = useParams();
 
 
     async function getEvaluations() {
         try {
-            const response = await fetch(`http://localhost:8000/api/eval/evaluation/${id}`, {
+            const response = await fetch(`http://localhost:8000/api/eval/evaluation`, {
                 method: "GET",
             });
             const _response = await response.json();
@@ -89,7 +88,7 @@ export default function EvaluationDetails({evaluation}) {
 
                     <tr>
                         <td colSpan={2}>
-                            <img alt="image-placeholder" src={"https://fakeimg.pl/600x400?text=Image+of+Food"}
+                            <img alt="image-placeholder" src={"https://fakeimg.pl/600x400?text=image"}
                                  style={{width: "200px", height: "150px"}}/>
                         </td>
                     </tr>

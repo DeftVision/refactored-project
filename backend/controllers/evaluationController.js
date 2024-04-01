@@ -1,9 +1,8 @@
 const evaluationModel = require("../models/evaluationModel");
-const userModel = require("../models/userModel");
-
 
 exports.getEvaluations = async (req, res) => {
     try {
+
         const evaluations = await evaluationModel.find({});
         if (!evaluations) {
             return res.send({
@@ -12,7 +11,6 @@ exports.getEvaluations = async (req, res) => {
         }
         if (evaluations) {
             return res.send({
-                evaluationCount: evaluations.length,
                 evaluations,
             })
         }
@@ -21,7 +19,7 @@ exports.getEvaluations = async (req, res) => {
         console.log(error);
         return res.send({
             message: "evaluation callback error",
-            error,
+            error: error.message,
         })
     }
 }

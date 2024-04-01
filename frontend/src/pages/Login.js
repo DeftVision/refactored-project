@@ -1,5 +1,5 @@
 import {useState, useContext} from "react";
-import {Container, Form, FloatingLabel, Button, Card, Row} from "react-bootstrap";
+import {Container, Form, FloatingLabel, Button, Card, Row, Col} from "react-bootstrap";
 import UserContext from "../components/UserContext";
 import cookies from "js-cookie";
 import {Link} from 'react-router-dom';
@@ -47,8 +47,13 @@ export default function Login() {
                 </Card.Header>
 
                 <Card.Body>
+
                     <Card.Text>
-                        <p style={{color: "#ab0a0a", textAlign: "center"}}>{message}</p>
+                        <p style={{color: "#ab0a0a", textAlign: "center", marginBlockStart: "auto"}}>{message}</p>
+                    </Card.Text>
+
+
+                    <Col>
                         <Form noValidate validated={validated} onSubmit={handleSubmit}>
 
                             <FloatingLabel controlid='email' label='Email' className='mb-4'>
@@ -67,6 +72,7 @@ export default function Login() {
                                 />
                             </FloatingLabel>
 
+
                             <FloatingLabel controlid='password' label='Password' className='mb-4'>
                                 <Form.Control
                                     required
@@ -83,18 +89,18 @@ export default function Login() {
                                 />
                             </FloatingLabel>
 
-                            <Row>
-                                <Button variant={"btn"} type='submit' className="mb-4">
+                            <div>
+                                <Button onClick={handleSubmit} type='submit' className="mb-4">
                                     login
                                 </Button>
-                            </Row>
-                            <Row>
-                                <Button as={Link} to="/forgotpassword" variant={"btn"}>
+                            </div>
+                            <div>
+                                <Button as={Link} to="/forgotpassword">
                                     Need help signing in?
                                 </Button>
-                            </Row>
+                            </div>
                         </Form>
-                    </Card.Text>
+                    </Col>
                 </Card.Body>
             </Card>
         </Container>
