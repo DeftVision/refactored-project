@@ -47,11 +47,11 @@ export default function Login() {
                 </Card.Header>
 
                 <Card.Body>
-
-                    <Card.Text>
-                        <p style={{color: "#ab0a0a", textAlign: "center", marginBlockStart: "auto"}}>{message}</p>
-                    </Card.Text>
-
+                    <Row className="login-message">
+                        <Card.Text>
+                            <p style={{color: "#ab0a0a", textAlign: "center", marginBlockStart: "auto"}}>{message}</p>
+                        </Card.Text>
+                    </Row>
 
                     <Col>
                         <Form noValidate validated={validated} onSubmit={handleSubmit}>

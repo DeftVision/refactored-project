@@ -5,9 +5,17 @@ body {
     sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
 }
 
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+
+@media screen and (min-width: 768px) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: 3rem;
 }

@@ -8,17 +8,72 @@ h3.page-title {
     text-align: center;
 }
 
-s
+.responsive-input {
+    padding: .5rem 1rem; /* This is the padding for 'lg' size */
+    font-size: 1.25rem; /* This is the font-size for 'lg' size */
+}
 
-@media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-        animation: App-logo-spin infinite 20s linear;
+
+/*      PROFILE     */
+@media (max-width: 804px) {
+    .profile-icon-label {
+        display: none;
+    }
+
+    .desktop {
+        display: none;
+    }
+
+    .mobile {
+        display: table-cell;
+    }
+}
+
+@media (min-width: 805px) {
+    .profile-icon-label {
+        width: 60px;
+        text-align: left;
+        font-size: 1rem;
+    }
+
+    .desktop {
+        display: table-cell;
+    }
+
+    .mobile {
+        display: table-cell;
     }
 }
 
 
-.number-input::-webkit-inner-spin-button,
-.number-input::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+.email-icon {
+    color: dodgerblue;
+    margin-right: 10px;
 }
+
+.location-icon {
+    color: red;
+    margin-right: 10px;
+}
+
+.access-icon {
+    color: darkgray;
+    margin-right: 10px;
+}
+
+.text-value-size {
+    font-size: 2.5rem;
+}
+
+/*      USER        */
+.desktop {
+    display: none;
+}
+
+.mobile {
+    display: table-cell;
+}
+
+
+
+

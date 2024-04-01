@@ -1,17 +1,23 @@
-import {useState, useEffect} from 'react';
+import {useState, useContext, useEffect} from 'react';
 import {Table, Container, Button, Col, Row} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import * as FaIcons from 'react-icons/fa';
 import {format} from 'date-fns';
+import UserContext from './UserContext';
 
 
 export default function EvaluationData() {
     const [evaluations, setEvaluations] = useState([]);
+    const {user} = useContext(UserContext)
 
     async function getEvaluations() {
         try {
             const response = await fetch("http://localhost:8000/api/eval/evaluations", {
-                method: "GET",
+                method: "POST",
+                body: JSON.stringify({location: user.location}),
+                headers: {
+                    "Content-Type": "application/json"
+                }
             });
             const _response = await response.json();
             if (response.ok && _response.evaluations) {

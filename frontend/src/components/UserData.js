@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
-import { Container, Table, Button, Col, Row } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import {useState, useEffect} from 'react';
+import {Container, Table, Button, Col, Row} from 'react-bootstrap';
+import {Link} from 'react-router-dom';
 import * as FaIcons from "react-icons/fa";
 
-export default function UserData () {
+export default function UserData() {
     const [users, setUsers] = useState([]);
 
 
@@ -37,45 +37,46 @@ export default function UserData () {
             const response = await fetch(`http://localhost:8000/api/user/delete/${userId}`, {
                 method: "DELETE"
             });
-            if(response.ok) {
+            if (response.ok) {
                 setUsers(users.filter(user => user._id !== userId));
             }
-        }
-        catch (error) {
+        } catch (error) {
             console.log("Error deleting user:", error);
         }
     }
-    return(
+
+    return (
         <Container className="col-8">
             <Col>
-            <Row>
-                <Button as={Link} to="/userform" variant={"btn btn-outline-primary"} className="mb-4">Add New User</Button>
-            </Row>
-            <Table responsive="sm" hover className="align-middle">
-                <thead>
-                <tr>
-                    <th>First</th>
-                    <th>Last</th>
-                    <th>Email</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                {users.map((user) => <tr key={user._id}>
-                    <td>{user.firstName}</td>
-                    <td>{user.lastName}</td>
-                    <td>{user.email}</td>
-                    <td>
-                        {<Button as={Link} to={`/edituser/${user._id}`} variant={"btn"}>
-                            <FaIcons.FaEdit style={{color: "dodgerblue"}} />
-                        </Button>}
+                <Row>
+                    <Button as={Link} to="/userform" variant={"btn btn-outline-primary"} className="mb-4">Add New
+                        User</Button>
+                </Row>
+                <Table responsive="sm" hover className="align-middle">
+                    <thead>
+                    <tr>
+                        <th className="mobile">First</th>
+                        <th className="mobile">Last</th>
+                        <th className="desktop">Email</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {users.map((user) => <tr key={user._id}>
+                        <td className="mobile">{user.firstName}</td>
+                        <td className="mobile">{user.lastName}</td>
+                        <td className="desktop">{user.email}</td>
+                        <td>
+                            {<Button as={Link} to={`/edituser/${user._id}`} variant={"btn"}>
+                                <FaIcons.FaEdit style={{color: "dodgerblue"}}/>
+                            </Button>}
 
-                        {<Button variant={"btn"} type="submit" onClick={() => deleteUser(user._id)}>
-                            <FaIcons.FaTrash style={{color: "dimgray"}} />
-                        </Button>}</td>
-                </tr>)}
-                </tbody>
-            </Table>
+                            {<Button variant={"btn"} type="submit" onClick={() => deleteUser(user._id)}>
+                                <FaIcons.FaTrash style={{color: "dimgray"}}/>
+                            </Button>}</td>
+                    </tr>)}
+                    </tbody>
+                </Table>
             </Col>
         </Container>
     );
