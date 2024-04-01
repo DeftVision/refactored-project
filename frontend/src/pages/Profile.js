@@ -23,7 +23,6 @@ export default function Profile() {
                     <InputGroup.Text><FavIcons.FaScroll style={{color: "orange"}}/></InputGroup.Text>
                     <Form.Control type="text" readOnly value={user.role}/>
                 </InputGroup>
-
             </Form>
         </Container>
     );

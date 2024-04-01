@@ -1,4 +1,4 @@
-import {Card, Container, Form, Button, FloatingLabel, Row} from 'react-bootstrap';
+import {Card, Container, Form, Button, FloatingLabel} from 'react-bootstrap';
 import {useState, useContext} from "react";
 import UserContext from './UserContext';
 import {useNavigate} from 'react-router-dom';
@@ -69,17 +69,17 @@ export default function ResetPassword() {
                                 }}
                             />
                         </FloatingLabel>
-                        <Row>
+                        <div>
                             <Button variant={"btn"} onClick={handleSubmit} className="mt-4">
 
                                 update
                             </Button>
-                        </Row>
-                        <Row>
+                        </div>
+                        <div>
                             <Button onClick={redirectToHome} variant={"btn"} className="mt-4">
                                 Cancel
                             </Button>
-                        </Row>
+                        </div>
                     </Form>
                 </Card.Body>
             </Card>
