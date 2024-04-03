@@ -3,8 +3,14 @@ const evaluationModel = require("../models/evaluationModel");
 
 exports.getEvaluations = async (req, res) => {
     try {
-        const location = req.params;
-        const evaluations = await evaluationModel.find({location});
+        const location = req.query.location;
+        let evaluations;
+        if (location === "Head Quarters") {
+            evaluations = await evaluationModel.find({});
+        } else {
+            evaluations = await evaluationModel.find({location: location});
+        }
+
         if (!evaluations) {
             return res.send({
                 message: "evaluations not found."
@@ -13,7 +19,7 @@ exports.getEvaluations = async (req, res) => {
         if (evaluations) {
             return res.send({
                 evaluations,
-                location,
+
             })
         }
 
@@ -25,6 +31,7 @@ exports.getEvaluations = async (req, res) => {
         })
     }
 }
+
 
 exports.newEvaluation = async (req, res) => {
     try {
