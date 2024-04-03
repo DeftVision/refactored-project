@@ -172,6 +172,7 @@ export default function UserForm({newUser}) {
                             <option value="Spanish Fork">Spanish Fork</option>
                             <option value="St. George">St. George</option>
                             <option value="Head Quarters">Head Quarters</option>
+                            <option value="Shopper">Shopper</option>
 
 
                         </Form.Select>

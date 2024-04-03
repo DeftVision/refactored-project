@@ -11,7 +11,8 @@ export default function Announcements() {
 
     async function getAnnouncements() {
 
-        const response = await fetch(`http://localhost:8000/api/announce/announcements?role=${user.role}&&?display=${true}`, {
+
+        const response = await fetch(`http://localhost:8000/api/announce/announcements?role=${user.role}&display=${true}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -19,16 +20,17 @@ export default function Announcements() {
         })
         const _response = await response.json();
         if (response.ok && _response.announcements) {
-            setAnnouncements(_response.announcements);
+            setAnnouncements(_response.announcements)
+            
         } else {
             console.log(_response.error);
         }
+
     }
 
     useEffect(() => {
         getAnnouncements();
     }, []);
-
 
     const priorityColors = {
         "High": "darkred",
@@ -42,7 +44,7 @@ export default function Announcements() {
             <Container className="mt-5">
                 <h3 className="page-title">Announcements</h3>
                 {announcements.map((announcement) =>
-                    <Card key={announcements._id} className="mt-5 shadow">
+                    <Card key={announcement._id} className="mt-5 shadow">
                         <Card.Body>
                             <Card.Title>
                                 <Card.Subtitle>
