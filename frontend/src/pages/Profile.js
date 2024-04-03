@@ -12,7 +12,7 @@ export default function Profile() {
 
     return (
         <Container style={{width: "60%"}}>
-            <Card>
+            <Card className="shadow">
                 <Card.Body style={{padding: "20px"}}>
                     <Form>
                         <InputGroup className="mb-4">

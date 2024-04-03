@@ -3,18 +3,17 @@ import {Table, Container, Button, Col, Row} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import * as FaIcons from 'react-icons/fa';
 import {format} from 'date-fns';
-import UserContext from './UserContext';
-
+import UserContext from '../components/UserContext';
 
 export default function EvaluationData() {
     const [evaluations, setEvaluations] = useState([]);
-    const {user} = useContext(UserContext)
+    const {user} = useContext(UserContext);
+
 
     async function getEvaluations() {
         try {
-            const response = await fetch("http://localhost:8000/api/eval/evaluations", {
-                method: "POST",
-                body: JSON.stringify({location: user.location}),
+            const response = await fetch(`http://localhost:8000/api/eval/evaluations?location=${user.location}`, {
+                method: "GET",
                 headers: {
                     "Content-Type": "application/json"
                 }

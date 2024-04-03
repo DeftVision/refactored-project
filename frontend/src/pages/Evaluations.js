@@ -1,19 +1,20 @@
 import {Container, Table, Col, Row} from 'react-bootstrap';
-import {useState, useEffect} from "react";
+import {useState, useEffect, useContext} from "react";
 import {EvaluationDefault, EvaluationDetails} from "../components";
 import {format} from "date-fns";
-
+import UserContext from '../components/UserContext';
 
 const Evaluations = () => {
     const [evaluations, setEvaluations] = useState([])
     const [selectedEvaluation, setSelectedEvaluation] = useState(null)
+    const {user} = useContext(UserContext);
 
     async function getEvaluations() {
-        const response = await fetch("http://localhost:8000/api/eval/evaluations", {
+        const response = await fetch(`http://localhost:8000/api/eval/evaluations?location=${user.location}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-            }
+            },
         })
         const _response = await response.json();
         if (response.ok && _response.evaluations) {
@@ -47,7 +48,7 @@ const Evaluations = () => {
                     <Table style={{textAlign: "center", marginTop: "77px"}}>
                         <tbody>
                         {evaluations.map((evaluation) =>
-                            <tr key={evaluation._id} className="eval-date-table" style={{cursor: "pointer"}}>
+                            <tr key={evaluation.location} className="eval-date-table" style={{cursor: "pointer"}}>
                                 <td onClick={() => setSelectedEvaluation(evaluation)}>
 
                                     {format(new Date(evaluation.visitDateTime), "M dd yy")}
