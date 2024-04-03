@@ -32,7 +32,6 @@ exports.getEvaluations = async (req, res) => {
     }
 }
 
-
 exports.newEvaluation = async (req, res) => {
     try {
         const {

@@ -64,22 +64,20 @@ export default function EvaluationData() {
                         </tr>
                         </thead>
                         <tbody>
-                        {evaluations.map((evaluation) =>
+                        {evaluations.map((evaluation) => <tr key={evaluation._id}>
+                            <td>{format(new Date(evaluation.visitDateTime), "EEE, MMMM dd yyyy h:mm")}</td>
+                            <td>{evaluation.location}</td>
+                            <td>
+                                <Button as={Link} to={`/editevaluation/${evaluation._id}`} variant={"btn"}>
+                                    <FaIcons.FaEdit style={{color: "dodgerblue"}}/>
+                                </Button>
 
-                            <tr key={evaluation._id}>
-                                <td>{format(new Date(evaluation.visitDateTime), "EEE, MMMM dd yyyy h:mm")}</td>
-                                <td>{evaluation.location}</td>
-                                <td>
-                                    <Button as={Link} to={`/editevaluation/${evaluation._id}`} variant={"btn"}>
-                                        <FaIcons.FaEdit style={{color: "dodgerblue"}}/>
-                                    </Button>
-
-                                    <Button variant={"btn"} type="submit"
-                                            onClick={() => deleteEvaluation(evaluation._id)}>
-                                        <FaIcons.FaTrash style={{color: "#515151"}}/>
-                                    </Button>
-                                </td>
-                            </tr>)}
+                                <Button variant={"btn"} type="submit"
+                                        onClick={() => deleteEvaluation(evaluation._id)}>
+                                    <FaIcons.FaTrash style={{color: "dimgray"}}/>
+                                </Button>
+                            </td>
+                        </tr>)}
                         </tbody>
                     </Table>
                 </Row>

@@ -1,34 +1,15 @@
 const announcementModel = require("../models/announcementModel");
-const userModel = require("../models/userModel");
-
-exports.newAnnouncement = async (req, res) => {
-    try {
-        const {audience, subject, title, content, display, priority} = req.body;
-        if (!audience || !subject || !title || !content || !priority) {
-            return res.send({
-                message: "all fields are required.",
-            })
-        }
-
-        const announcement = new announcementModel({audience, subject, title, content, display, priority})
-        await announcement.save();
-        return res.send({
-            message: "announcement was created successfully.",
-            announcement,
-        })
-    } catch (error) {
-        console.log(error);
-        return res.send({
-            message: "creating an announcement callback error.",
-            error,
-        })
-    }
-}
-
 
 exports.getAnnouncements = async (req, res) => {
     try {
-        const announcements = await announcementModel.find({});
+        const role = req.query.role
+        let announcements;
+        if (role === "Admin") {
+            announcements = await announcementModel.find({});
+        } else {
+            announcements = await announcementModel.find({role: role, display: true});
+        }
+
         if (!announcements) {
             return res.send({
                 message: "no announcements were found.",
@@ -47,36 +28,29 @@ exports.getAnnouncements = async (req, res) => {
     }
 }
 
-
-exports.getQueryAnnouncements = async (req, res) => {
+exports.newAnnouncement = async (req, res) => {
     try {
+        const {role, subject, title, content, display, priority} = req.body;
+        if (!role || !subject || !title || !content || !priority) {
+            return res.send({
+                message: "all fields are required.",
+            })
+        }
 
-        const {id} = req.params;
-        const user = await userModel.findById(id);
-        console.log('User Id: ', id);
-        if (!user) {
-            return res.send({
-                message: "User not found."
-            })
-        }
-        const announcements = await announcementModel.findBy({display: true});
-        if (!announcements.length) {
-            return res.send({
-                message: "No announcements were found for this user.",
-            })
-        }
+        const announcement = new announcementModel({role, subject, title, content, display, priority})
+        await announcement.save();
         return res.send({
-            announcements,
+            message: "announcement was created successfully.",
+            announcement,
         })
     } catch (error) {
         console.log(error);
         return res.send({
-            message: "getting all announcements callback error",
+            message: "creating an announcement callback error.",
             error,
         })
     }
 }
-
 
 exports.getAnnouncement = async (req, res) => {
     try {
@@ -99,11 +73,10 @@ exports.getAnnouncement = async (req, res) => {
     }
 }
 
-
 exports.updateAnnouncement = async (req, res) => {
     try {
         const {id} = req.params;
-        const {title, subject, content, priority, audience, display} = req.body;
+        const {title, subject, content, priority, role, display} = req.body;
         const announcement = await announcementModel.findByIdAndUpdate(id, req.body, {new: true});
         if (!announcement) {
             return res.send({
@@ -123,7 +96,6 @@ exports.updateAnnouncement = async (req, res) => {
         })
     }
 }
-
 
 exports.deleteAnnouncement = async (req, res) => {
     try {

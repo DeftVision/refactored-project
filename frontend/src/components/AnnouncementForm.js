@@ -1,11 +1,11 @@
 import {useState, useEffect} from 'react';
-import {Container, Form, Button, FormText, FloatingLabel} from 'react-bootstrap';
+import {Container, Form, Button, FloatingLabel} from 'react-bootstrap';
 import {useParams, useNavigate} from 'react-router-dom';
 import Loading from '../pages/Loading';
 
 
 const form_default = {
-    audience: "",
+    role: "",
     subject: "",
     title: "",
     content: "",
@@ -36,8 +36,8 @@ export default function AnnouncementForm({newAnnouncement}) {
                 console.log(_response.error);
             }
             if (response.ok) {
-                const {title, subject, content, audience, priority, display} = _response.announcement;
-                setForm({title, subject, content, audience, priority, display});
+                const {title, subject, content, role, priority, display} = _response.announcement;
+                setForm({title, subject, content, role, priority, display});
             }
 
         }
@@ -148,13 +148,13 @@ export default function AnnouncementForm({newAnnouncement}) {
                     <Form.Select
                         type="text"
                         controlid="audience"
-                        autocomplete="audience"
-                        value={form.audience}
+                        autocomplete="role"
+                        value={form.role}
                         placeholder=''
                         onChange={(e) => {
                             setForm({
                                 ...form,
-                                audience: e.target.value,
+                                role: e.target.value,
                             });
                         }}
                         required
@@ -162,6 +162,7 @@ export default function AnnouncementForm({newAnnouncement}) {
                         <option></option>
                         <option value="Shopper">Shopper</option>
                         <option value="Manager">Manager</option>
+                        <option value="Manager">Admin</option>
                     </Form.Select>
                 </FloatingLabel>
 
