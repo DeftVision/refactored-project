@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const schema = mongoose.Schema;
 
 const announcementSchema = new schema({
-    audience: {
+    role: {
         type: String,
         require: true,
     },
@@ -10,7 +10,7 @@ const announcementSchema = new schema({
         type: String,
         require: true,
     },
-    title:{
+    title: {
         type: String,
         required: true,
     },

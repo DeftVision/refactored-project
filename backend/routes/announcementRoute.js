@@ -1,10 +1,16 @@
 const express = require("express");
 const router = express.Router();
 
-const { newAnnouncement, getAnnouncements, getAnnouncement, updateAnnouncement, deleteAnnouncement, getQueryAnnouncements } = require("../controllers/announcementController");
+const {
+    newAnnouncement,
+    getAnnouncements,
+    getAnnouncement,
+    updateAnnouncement,
+    deleteAnnouncement,
+} = require("../controllers/announcementController");
 
 router.get("/announcements", getAnnouncements);
-router.get("/resultsAnnouncements", getQueryAnnouncements);
+
 router.get("/announcement/:id", getAnnouncement);
 
 router.post("/newAnnouncement", newAnnouncement);
