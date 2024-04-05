@@ -18,6 +18,10 @@ const validateSchema = new schema({
         type: String,
         required: false,
     },
+    file: {
+        type: String,
+        required: true,
+    }
 })
 
 const validateModel = mongoose.model("Validate", validateSchema);

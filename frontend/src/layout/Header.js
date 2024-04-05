@@ -25,14 +25,15 @@ export default function Header() {
                             <Nav.Link as={Link} to="/announcements">Announcements</Nav.Link>
                             <Nav.Link as={Link} to="/evaluations">Evaluations</Nav.Link>
                             <Nav.Link as={Link} to="/documents">Documents</Nav.Link>
-                            {/*<Nav.Link as={Link} to="/validation">Validation</Nav.Link>*/}
                             <Nav.Link as={Link} to="/profile">Profile</Nav.Link>
 
                             {user && user.role === 'Admin' && (
-                                <Nav.Link as={Link} to="/admin">Admin</Nav.Link>)}
+                                <Nav.Link as={Link} to="/admin">Admin</Nav.Link>)
+                            }
 
                             {user &&
                                 <Nav.Link onClick={logout}>Logout</Nav.Link>}
+                            <Nav.Link as={Link} to="/validation">Testing</Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
 

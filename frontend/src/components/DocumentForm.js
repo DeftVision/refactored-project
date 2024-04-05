@@ -1,16 +1,13 @@
 import {useState, useEffect} from 'react';
-import {Container, Form, Button} from 'react-bootstrap';
+import {Container, Form, Button, FloatingLabel} from 'react-bootstrap';
 import {useNavigate, useParams} from 'react-router-dom';
 import Loading from '../pages/Loading';
 
 
 const form_default = {
-    audience: "",
-    subject: "",
-    title: "",
-    content: "",
-    display: false,
-    priority: "",
+    docName: "",
+    category: "",
+    docUpload: ""
 }
 
 
@@ -32,14 +29,15 @@ export default function DocumentForm({newDocument}) {
 
             const _response = await response.json();
             setValidated(true)
+
             if (!response.ok) {
                 console.log(_response.error);
+                alert(_response);
             }
             if (response.ok) {
                 const {docName, category, docUpload} = _response.document;
                 setForm({docName, category, docUpload});
             }
-
         }
 
         if (newDocument) {
@@ -74,7 +72,7 @@ export default function DocumentForm({newDocument}) {
         });
 
         const _response = await response.json();
-
+        setValidated(true)
         if (response.ok) {
             console.log(_response);
 
@@ -94,11 +92,11 @@ export default function DocumentForm({newDocument}) {
             <div className="mb-5"><h3 className="page-title">{newDocument ? "New Document" : "Edit Document"}</h3></div>
 
             <Form noValidate validated={validated} onSubmit={handleSubmit}>
-                <Form.Group className="mb-4">
-                    <Form.Label>Document Name</Form.Label>
+
+                <FloatingLabel label="Document Name" className="mb-4">
                     <Form.Control
                         type="text"
-                        controlid="doc-name"
+                        controlid="name"
                         autocomplete="docname"
                         value={form.docName}
                         placeholder=''
@@ -110,9 +108,8 @@ export default function DocumentForm({newDocument}) {
                         }}
                         required
                     />
-                </Form.Group>
-                <Form.Group className="mb-4">
-                    <Form.Label>Category</Form.Label>
+                </FloatingLabel>
+                <FloatingLabel label="Category" className="mb-4">
                     <Form.Control
                         type="text"
                         controlid="category"
@@ -127,15 +124,15 @@ export default function DocumentForm({newDocument}) {
                         }}
                         required
                     />
-                </Form.Group>
+                </FloatingLabel>
+
                 <Form.Group controlid="image" className="mb-4">
-                    <Form.Label>Document Upload</Form.Label>
                     <Form.Control
                         type="file"
                         onChange={(e) => {
                             setForm({
                                 ...form,
-                                docUpload: e.target.value,
+                                setDocUpload: (e.target.files[0]),
                             })
                         }}
                         required

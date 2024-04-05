@@ -3,11 +3,13 @@ import * as FaIcons from 'react-icons/fa';
 
 export default function AdminDefault() {
     return (
-        <Container className="col-8">
+        <Container>
             <Col>
                 <Row>
                     <h5 style={{textTransform: "uppercase"}} className="align-text-bottom">
-                        <FaIcons.FaAngleLeft style={{marginRight: "10px"}}/>select a data source
+                        <span className="admin-default-icon"> <FaIcons.FaAngleLeft
+                            style={{marginRight: "10px"}}/>
+                        </span>select a source
                     </h5>
                 </Row>
             </Col>

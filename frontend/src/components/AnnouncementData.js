@@ -48,7 +48,7 @@ export default function AnnouncementData() {
             <Col>
                 <Row>
                     <Button as={Link} to="/announcementform" variant={"btn btn-outline-primary"} className="mb-4">
-                        Add New Announcement
+                        Add Announcement
                     </Button>
                 </Row>
                 <Table responsive="sm" hover className="align-middle">

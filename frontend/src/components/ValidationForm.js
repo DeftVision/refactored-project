@@ -5,13 +5,16 @@ import {useState} from "react";
 const form_default = {
     firstName: "",
     selectField: "",
-    slider: 0,
+    slider: "0",
     funFact: "",
+    document: null,
 }
 
 export default function Validation() {
-    const [form, setForm] = useState({form_default});
+    const [form, setForm] = useState({slider: 0});
     const [validated, setValidated] = useState(false);
+
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -33,10 +36,9 @@ export default function Validation() {
 
     return (
         <Container style={{width: "60%"}}>
-            <h3 className="mt-4">Validation Test Page</h3>
-            <h5 style={{color: "red"}}></h5>
+            <h3 className="mt-4 mb-4">Test Page</h3>
             <Form noValidate validated={validated} onSubmit={handleSubmit}>
-                <FloatingLabel className="mb-4" label="first name" controlid="firstName">
+                <FloatingLabel className="mb-4" label="name" controlid="firstName">
                     <Form.Control
                         required
                         type="text"
@@ -78,7 +80,7 @@ export default function Validation() {
 
 
                 <Form.Group className="mt-4" controlid="slider">
-                    <Form.Label>Slider</Form.Label>
+                    <Form.Label>Score: {form.slider}</Form.Label>
                     <Form.Range
                         required
                         min={0}
@@ -110,6 +112,23 @@ export default function Validation() {
 
                     />
                 </FloatingLabel>
+
+
+                <Form.Control
+                    className="mt-4"
+                    type="file"
+                    autoComplete="file-upload"
+                    value={form.document}
+                    placeholder=''
+                    onChange={(e) => {
+                        setForm({
+                            ...form,
+                            document: e.target.value,
+                        })
+                    }}
+                    required
+                />
+
                 <Button onClick={handleSubmit}
                         type="submit"
                         className="mt-5"

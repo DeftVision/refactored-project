@@ -49,13 +49,14 @@ export default function UserData() {
         <Container className="col-8">
             <Col>
                 <Row>
-                    <Button as={Link} to="/userform" variant={"btn btn-outline-primary"} className="mb-4">Add New
-                        User</Button>
+                    <Button as={Link} to="/userform" variant={"btn btn-outline-primary"} className="mb-4">
+                        Add User
+                    </Button>
                 </Row>
-                <Table responsive="sm" hover className="align-middle">
+                <Table responsive="lg" hover className="align-middle">
                     <thead>
                     <tr>
-                        <th className="mobile">First</th>
+                        <th className="desktop">First</th>
                         <th className="mobile">Last</th>
                         <th className="desktop">Email</th>
                         <th></th>
@@ -63,7 +64,7 @@ export default function UserData() {
                     </thead>
                     <tbody>
                     {users.map((user) => <tr key={user._id}>
-                        <td className="mobile">{user.firstName}</td>
+                        <td className="desktop">{user.firstName}</td>
                         <td className="mobile">{user.lastName}</td>
                         <td className="desktop">{user.email}</td>
                         <td>

@@ -20,6 +20,18 @@ h3.page-title {
         display: none;
     }
 
+    .user-button-label {
+        content: "+ user";
+    }
+
+    .admin-default-icon {
+        display: none;
+    }
+
+    h5 {
+        text-align: center;
+    }
+
     .desktop {
         display: none;
     }
@@ -41,7 +53,7 @@ h3.page-title {
     }
 
     .mobile {
-        display: table-cell;
+        display: none;
     }
 }
 

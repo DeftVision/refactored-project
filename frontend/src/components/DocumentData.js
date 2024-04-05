@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
-import { Container, Table, Button, Row, Col } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import {useState, useEffect} from 'react';
+import {Container, Table, Button, Row, Col} from 'react-bootstrap';
+import {Link} from 'react-router-dom';
 import * as FaIcons from "react-icons/fa";
 
-export default function DocumentData () {
+export default function DocumentData() {
     const [documents, setDocuments] = useState([]);
 
 
@@ -40,42 +40,44 @@ export default function DocumentData () {
             if (response.ok) {
                 setDocuments(documents.filter(document => document._id !== documentId));
             }
-        }
-        catch (error) {
+        } catch (error) {
             console.log(error);
         }
     }
-    return(
-        <Container className="col-8" style={{display: "flex", flex: "30%", alignItems: "center"}}>
-            <Col>
-            <Row>
-                <Button as={Link} to="/documentform" variant={"btn btn-outline-primary"} className="mb-4">Add New File</Button>
-            </Row>
-            <Row>
-            <Table responsive="sm" hover className="align-middle">
-                <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Category</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                {documents.map((document) => <tr key={document._id}>
-                    <td>{document.docName}</td>
-                    <td>{document.category}</td>
-                    <td>
-                        {<Button as={Link} to={`/editdocument/${document._id}`} variant={"btn"}>
-                            <FaIcons.FaEdit style={{color: "dodgerblue"}} />
-                        </Button>}
 
-                        {<Button variant={"btn"} type="submit" onClick={() => deleteDocument(document._id)}>
-                            <FaIcons.FaTrash style={{color: "dimgray"}} />
-                        </Button>}</td>
-                </tr>)}
-                </tbody>
-            </Table>
-            </Row>
+    return (
+        <Container className="col-8">
+            <Col>
+                <Row>
+                    <Button as={Link} to="/documentform" variant={"btn btn-outline-primary"} className="mb-4">
+                        Add Document
+                    </Button>
+                </Row>
+                <Row>
+                    <Table responsive="sm" hover className="align-middle">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {documents.map((document) => <tr key={document._id}>
+                            <td>{document.docName}</td>
+                            <td>{document.category}</td>
+                            <td>
+                                {<Button as={Link} to={`/editdocument/${document._id}`} variant={"btn"}>
+                                    <FaIcons.FaEdit style={{color: "dodgerblue"}}/>
+                                </Button>}
+
+                                {<Button variant={"btn"} type="submit" onClick={() => deleteDocument(document._id)}>
+                                    <FaIcons.FaTrash style={{color: "dimgray"}}/>
+                                </Button>}</td>
+                        </tr>)}
+                        </tbody>
+                    </Table>
+                </Row>
             </Col>
         </Container>
     );

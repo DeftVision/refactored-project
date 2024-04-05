@@ -1,14 +1,14 @@
 const validateModel = require("../models/validationModel");
 
-exports.newValidate = async (req, res) => {
+exports.newValidationForm = async (req, res) => {
     try {
-        const {firstName, selectField, slider, funFact} = req.body;
-        if (!firstName || !selectField || !slider) {
+        const {firstName, selectField, slider, funFact, file} = req.body;
+        if (!firstName || !selectField || !slider || !file) {
             return res.send({
                 message: "oops something went wrong."
             })
         }
-        const validationField = new validateModel({firstName, selectField, slider, funFact});
+        const validationField = new validateModel({firstName, selectField, slider, funFact, file});
         await validationField.save();
         return res.send({
             message: `success`,
@@ -24,7 +24,7 @@ exports.newValidate = async (req, res) => {
     }
 }
 
-exports.getValidates = async (req, res) => {
+exports.getValidationForm = async (req, res) => {
     try {
         const validates = await validateModel.find({firstName});
         if (!validates) {

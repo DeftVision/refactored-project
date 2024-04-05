@@ -51,8 +51,9 @@ export default function EvaluationData() {
         <Container className="col-8">
             <Col>
                 <Row>
-                    <Button as={Link} to="/evaluationform" variant={"btn btn-outline-primary"} className="mb-4">Add New
-                        Evaluation</Button>
+                    <Button as={Link} to="/evaluationform" variant={"btn btn-outline-primary"} className="mb-4">
+                        Add Evaluation
+                    </Button>
                 </Row>
                 <Row>
                     <Table hover responsive="sm" className="align-middle">

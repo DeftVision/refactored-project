@@ -3,12 +3,8 @@ const announcementModel = require("../models/announcementModel");
 exports.getAnnouncements = async (req, res) => {
     try {
         const role = req.query.role
-        let announcements;
-        if (role === "Admin") {
-            announcements = await announcementModel.find({});
-        } else {
-            announcements = await announcementModel.find({role: role, display: true});
-        }
+        const filter = (role === "Admin") ? {} : {role: role, display: true};
+        const announcements = await announcementModel.find(filter);
 
         if (!announcements) {
             return res.send({
