@@ -3,7 +3,7 @@ import {Container, Table, Button, Row, Col} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import * as FaIcons from "react-icons/fa";
 
-export default function DocumentData() {
+const DocumentData = () => {
     const [documents, setDocuments] = useState([]);
 
 
@@ -82,3 +82,5 @@ export default function DocumentData() {
         </Container>
     );
 }
+
+export default DocumentData;

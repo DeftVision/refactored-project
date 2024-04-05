@@ -1,6 +1,6 @@
 import {Card, Container, Form, Button, FloatingLabel} from 'react-bootstrap';
 import {useState, useContext} from "react";
-import UserContext from './UserContext';
+import UserContext from '../components/UserContext';
 import {useNavigate} from 'react-router-dom';
 
 const form_default = {

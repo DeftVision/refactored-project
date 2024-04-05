@@ -1,11 +1,12 @@
 import {useState} from 'react';
 import {Container, Col, Row, ListGroup} from 'react-bootstrap';
 import {Link} from 'react-router-dom'
-import UserData from '../components/UserData';
-import EvaluationData from '../components/EvaluationData';
-import AnnouncementData from '../components/AnnouncementData';
-import DocumentData from '../components/DocumentData';
-import {AdminDefault} from "../components";
+import UserData from '../auth/UserData';
+import EvaluationData from '../evaluation/EvaluationData';
+import AnnouncementData from '../announcement/AnnouncementData';
+import DocumentData from '../document/DocumentData';
+import AdminDefault from "../admin/AdminDefault";
+
 
 const Admin = () => {
     const [componentShow, setComponentShow] = useState('default');

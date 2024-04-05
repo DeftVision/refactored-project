@@ -4,7 +4,7 @@ import UserContext from "../components/UserContext";
 import {Link} from 'react-router-dom';
 import * as FaIcons from 'react-icons/fa';
 
-export default function AnnouncementData() {
+const AnnouncementData = () => {
     const [announcements, setAnnouncements] = useState([])
     const {user} = useContext(UserContext)
 
@@ -85,3 +85,4 @@ export default function AnnouncementData() {
     )
 }
 
+export default AnnouncementData;

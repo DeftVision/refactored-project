@@ -1,7 +1,7 @@
 import {Container, Col, Row} from 'react-bootstrap';
 import * as FaIcons from 'react-icons/fa';
 
-export default function EvaluationDefault() {
+const EvaluationDefault = () => {
 
     return (
         <Container className="col-8">
@@ -17,3 +17,4 @@ export default function EvaluationDefault() {
     )
 }
 
+export default EvaluationDefault;

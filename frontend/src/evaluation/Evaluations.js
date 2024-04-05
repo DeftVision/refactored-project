@@ -1,6 +1,6 @@
 import {Container, Table, Col, Row} from 'react-bootstrap';
 import {useState, useEffect, useContext} from "react";
-import {EvaluationDefault, EvaluationDetails} from "../components";
+import {EvaluationDefault, EvaluationDetails} from "../evaluation";
 import {format} from "date-fns";
 import UserContext from '../components/UserContext';
 

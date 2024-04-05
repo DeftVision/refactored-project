@@ -10,7 +10,7 @@ const form_default = {
     document: null,
 }
 
-export default function Validation() {
+const TestForm = () => {
     const [form, setForm] = useState({slider: 0});
     const [validated, setValidated] = useState(false);
 
@@ -139,3 +139,5 @@ export default function Validation() {
         </Container>
     )
 }
+
+export default TestForm;

@@ -33,7 +33,7 @@ export default function Header() {
 
                             {user &&
                                 <Nav.Link onClick={logout}>Logout</Nav.Link>}
-                            <Nav.Link as={Link} to="/validation">Testing</Nav.Link>
+                            <Nav.Link as={Link} to="/test">Testing</Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
 

@@ -5,40 +5,22 @@ import {BrowserRouter as Router, Routes, Route, Navigate} from "react-router-dom
 import 'bootstrap/dist/css/bootstrap.min.css'
 import {Container} from 'react-bootstrap';
 import {Header, Footer} from './layout/index'
+import {Announcements, AnnouncementData, AnnouncementForm} from './announcement/index';
+import {Admin, AdminDefault} from './admin/index';
+import {UserForm, UserData, Login, Users, ForgotPassword, Profile, ResetPassword, LoginHelp} from './auth/index'
+import {TestPage, TestForm} from './test/index';
 import {
-    Admin,
-    Loading,
-    Error,
-    Users,
-    Dashboard,
-    Home,
-    Login,
-    Evaluations,
-    Documents,
-    Announcements,
-    DetailsPage,
-    Validation,
-    Profile
-} from "./pages/index";
-import {
-    UserContext,
-    PrivateRoutes,
-    UserForm,
-    EvaluationForm,
-    AnnouncementForm,
-    DocumentForm,
     EvaluationData,
     EvaluationDefault,
-    DocumentData,
-    AnnouncementData,
-    UserData,
-    AdminDefault,
     EvaluationDetails,
-    Notification,
-    ValidationForm,
-    ResetPassword,
-    ForgotPassword
-} from "./components/index";
+    EvaluationForm,
+    Evaluations,
+    DetailsPage
+} from './evaluation/index';
+import {DocumentData, DocumentForm, Documents} from './document/index'
+import {Dashboard} from "./dashboard/index";
+import {Loading, Error, Home,} from "./pages/index";
+import {UserContext, PrivateRoutes, Notification} from "./components/index";
 
 
 function App() {
@@ -83,44 +65,48 @@ function App() {
                             <Routes>
                                 <Route element={<PrivateRoutes/>}>
                                     <Route path="/" element={<Home/>}/>
-                                    <Route path="/users" element={<Users/>}/>
-                                    <Route path="/dashboard" element={<Dashboard/>}/>
+
                                     <Route path="/admin" element={<Admin/>}/>
                                     <Route path="/admindefault" element={<AdminDefault/>}/>
+
                                     <Route path="/announcements" element={<Announcements/>}/>
+                                    <Route path="/announcementform" element={<AnnouncementForm newAnnouncement/>}/>
+                                    <Route path="/announcementdata" element={<AnnouncementData/>}/>
+                                    <Route path="/editannouncement/:id" element={<AnnouncementForm/>}/>
+
+                                    <Route path="/dashboard" element={<Dashboard/>}/>
+
                                     <Route path="/documents" element={<Documents/>}/>
+                                    <Route path="/documentdata" element={<DocumentData/>}/>
+                                    <Route path="/documentform" element={<DocumentForm newDocument/>}/>
+                                    <Route path="/editdocument/:id" element={<DocumentForm/>}/>
+
                                     <Route path="/evaluations" element={<Evaluations/>}/>
                                     <Route path="/evaluationdefault" element={<EvaluationDefault/>}/>
                                     <Route path="/details" element={<DetailsPage/>}/>
-
-                                    <Route path="/validation" element={<Validation/>}/>
-                                    <Route path="/ValidationForm" element={<ValidationForm/>}/>
-
-                                    <Route path="/announcementform" element={<AnnouncementForm newAnnouncement/>}/>
-                                    <Route path="/editannouncement/:id" element={<AnnouncementForm/>}/>
-                                    <Route path="/announcementdata" element={<AnnouncementData/>}/>
-
-                                    <Route path="/documentform" element={<DocumentForm newDocument/>}/>
-                                    <Route path="/editdocument/:id" element={<DocumentForm/>}/>
-                                    <Route path="/documentdata" element={<DocumentData/>}/>
-
                                     <Route path="/evaluationform" element={<EvaluationForm newEvaluation/>}/>
                                     <Route path="/editevaluation/:id" element={<EvaluationForm/>}/>
                                     <Route path="/evaluationdata" element={<EvaluationData/>}/>
                                     <Route path="/evaluationdetails/:id" element={<EvaluationDetails/>}/>
 
+                                    <Route path="/users" element={<Users/>}/>
                                     <Route path="/userform" element={<UserForm newUser/>}/>
                                     <Route path="/edituser/:id" element={<UserForm/>}/>
                                     <Route path="/userdata" element={<UserData/>}/>
-
                                     <Route path="/resetpassword/:id" element={<ResetPassword/>}/>
                                     <Route path="/profile" element={<Profile/>}/>
+
+
+                                    <Route path="/test" element={<TestPage/>}/>
+                                    <Route path="/testForm" element={<TestForm/>}/>
                                 </Route>
                                 <Route path="/login" element={user ? <Navigate to="/"/> : <Login/>}/>
                                 <Route path="*" element={<Error/>}/>
                                 <Route path="/loading" element={<Loading/>}/>
                                 <Route path="/notification" element={<Notification/>}/>
                                 <Route path="/forgotpassword" element={<ForgotPassword/>}/>
+                                <Route path="/loginhelp" element={<LoginHelp/>}/>
+
 
                             </Routes>
                         </Container>
