@@ -6,7 +6,7 @@ const form_default = {
     email: "",
 }
 
-export default function ForgotPassword() {
+const ForgotPassword = () => {
     const [form, setForm] = useState(form_default);
     const [validated, setValidated] = useState(false);
     const navigate = useNavigate();
@@ -56,3 +56,5 @@ export default function ForgotPassword() {
         </Container>
     );
 }
+
+export default ForgotPassword;

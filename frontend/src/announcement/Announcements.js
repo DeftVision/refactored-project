@@ -4,7 +4,7 @@ import * as IoIcons from 'react-icons/io';
 import UserContext from "../components/UserContext";
 
 
-export default function Announcements() {
+const Announcements = () => {
     const [announcements, setAnnouncements] = useState([]);
     const {user} = useContext(UserContext);
 
@@ -21,7 +21,7 @@ export default function Announcements() {
         const _response = await response.json();
         if (response.ok && _response.announcements) {
             setAnnouncements(_response.announcements)
-            
+
         } else {
             console.log(_response.error);
         }
@@ -61,3 +61,5 @@ export default function Announcements() {
         </>
     )
 }
+
+export default Announcements;

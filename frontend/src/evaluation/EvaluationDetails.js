@@ -4,7 +4,7 @@ import {useParams} from 'react-router-dom';
 import {format} from 'date-fns';
 
 
-export default function EvaluationDetails({evaluation}) {
+const EvaluationDetails = ({evaluation}) => {
 
 
     async function getEvaluations() {
@@ -99,3 +99,5 @@ export default function EvaluationDetails({evaluation}) {
         </Container>
     );
 };
+
+export default EvaluationDetails;

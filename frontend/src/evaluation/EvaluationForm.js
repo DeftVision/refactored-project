@@ -2,7 +2,7 @@ import {Button, Container, Form, FloatingLabel} from 'react-bootstrap';
 import {useContext, useEffect, useState} from 'react';
 import Loading from '../pages/Loading';
 import {useNavigate, useParams} from "react-router-dom";
-import UserContext from "./UserContext";
+import UserContext from "../components/UserContext";
 
 
 const form_default = {
@@ -23,7 +23,7 @@ const form_default = {
     comments: ""
 }
 
-export default function EvaluationForm({newEvaluation}) {
+const EvaluationForm = ({newEvaluation}) => {
     const [loading, setLoading] = useState(true);
     const [form, setForm] = useState(form_default);
     const {user} = useContext(UserContext);
@@ -384,3 +384,5 @@ export default function EvaluationForm({newEvaluation}) {
         </>
     );
 }
+
+export default EvaluationForm;
