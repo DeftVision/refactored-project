@@ -110,7 +110,7 @@ export default function DocumentForm({newDocument}) {
                     />
                 </FloatingLabel>
                 <FloatingLabel label="Category" className="mb-4">
-                    <Form.Control
+                    <Form.Select
                         type="text"
                         controlid="category"
                         autocomplete="category"
@@ -123,7 +123,15 @@ export default function DocumentForm({newDocument}) {
                             });
                         }}
                         required
-                    />
+                    >
+                        <option></option>
+                        <option value="Menu">Menu</option>
+                        <option value="Safety">Safety</option>
+                        <option value="Training">Training</option>
+                        <option value="Process">Process</option>
+                        <option value="Forms">Forms</option>
+
+                    </Form.Select>
                 </FloatingLabel>
 
                 <Form.Group controlid="image" className="mb-4">

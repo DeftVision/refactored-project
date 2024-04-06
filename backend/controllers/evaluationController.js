@@ -8,8 +8,6 @@ exports.getEvaluations = async (req, res) => {
         } else {
             evaluations = await evaluationModel.find({location: location});
         }
-
-
         if (!evaluations) {
             return res.send({
                 message: "evaluations not found."
@@ -21,7 +19,6 @@ exports.getEvaluations = async (req, res) => {
 
             })
         }
-
     } catch (error) {
         console.log(error);
         return res.send({
