@@ -8,7 +8,7 @@ exports.getAnnouncements = async (req, res) => {
 
         if (!announcements) {
             return res.send({
-                message: "no announcements were found.",
+                message: "announcements not found.",
             })
         }
         return res.send({

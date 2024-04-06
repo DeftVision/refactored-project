@@ -27,9 +27,6 @@ const EvaluationForm = ({newEvaluation}) => {
     const [loading, setLoading] = useState(true);
     const [form, setForm] = useState(form_default);
     const {user} = useContext(UserContext);
-    const [foodSlider, setFoodSlider] = useState(0);
-    const [serviceSlider, setServiceSlider] = useState(0);
-    const [appearanceSlider, setAppearanceSlider] = useState(0);
     const [validated, setValidated] = useState(false);
 
 
@@ -300,7 +297,7 @@ const EvaluationForm = ({newEvaluation}) => {
                             }}/>
                     </Form.Group>
                     <Form.Group controlid="foodScore" className="mb-4">
-                        <Form.Label>Food [1 low-10 high]: {foodSlider}</Form.Label>
+                        <Form.Label>Food Score: [ {form.foodScore} ]</Form.Label>
                         <Form.Range
                             type="number"
                             min={0}
@@ -315,7 +312,7 @@ const EvaluationForm = ({newEvaluation}) => {
                         />
                     </Form.Group>
                     <Form.Group controlid="appearanceScore" className="mb-4">
-                        <Form.Label>Appearance [1 low-10 high]: {appearanceSlider}</Form.Label>
+                        <Form.Label>Appearance Score: [ {form.appearanceScore} ]</Form.Label>
                         <Form.Range
                             type="number"
                             min={0}
@@ -330,7 +327,7 @@ const EvaluationForm = ({newEvaluation}) => {
                         />
                     </Form.Group>
                     <Form.Group controlid="serviceScore" className="mb-4">
-                        <Form.Label>Service [1 low-10 high]: {serviceSlider}</Form.Label>
+                        <Form.Label>Service Score: [ {form.serviceScore} ]</Form.Label>
                         <Form.Range
                             type="number"
                             min={0}

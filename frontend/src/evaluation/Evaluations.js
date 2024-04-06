@@ -28,7 +28,6 @@ const Evaluations = () => {
         getEvaluations();
     }, [])
 
-
     /*function getScoreColors(grade) {
         if (grade >= 4.5 && grade <= 5) {
             return "rgba(54, 158, 84, .7)";
@@ -39,7 +38,6 @@ const Evaluations = () => {
         } else {
             return "score out of range";
         }
-
     }*/
     return (
         <Container className="mt-5" style={{maxWidth: "100vw"}}>

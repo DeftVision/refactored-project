@@ -6,7 +6,7 @@ const {
     newEvaluation,
     getEvaluation,
     deleteEvaluation,
-    updateEvaluation
+    updateEvaluation,
 } = require("../controllers/evaluationController");
 
 

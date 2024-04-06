@@ -1,11 +1,13 @@
 const evaluationModel = require("../models/evaluationModel");
-
-
 exports.getEvaluations = async (req, res) => {
     try {
         const location = req.query.location;
-        const filter = (location === "Head Quarters") ? {} : {location: location}
-        const evaluations = await evaluationModel.find({filter});
+        let evaluations;
+        if (location === "Head Quarters") {
+            evaluations = await evaluationModel.find({})
+        } else {
+            evaluations = await evaluationModel.find({location: location});
+        }
 
 
         if (!evaluations) {
