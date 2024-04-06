@@ -25,11 +25,6 @@ const Documents = () => {
                    className=" mt-5 shadow m-4"
             />
             <Image as={Link} to="/"
-                   src={"https://fakeimg.pl/200x200?text=form"}
-                   style={{cursor: "pointer", borderRadius: "8px"}}
-                   className=" mt-5 shadow m-4"
-            />
-            <Image as={Link} to="/"
                    src={"https://fakeimg.pl/200x200?text=training"}
                    style={{cursor: "pointer", borderRadius: "8px"}}
                    className=" mt-5 shadow m-4"
