@@ -1,7 +1,9 @@
 import {useState, useEffect} from 'react';
 import {Container, Form, Button, FloatingLabel} from 'react-bootstrap';
-import {useNavigate, useParams} from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 import Loading from '../pages/Loading';
+import {getStorage, ref, uploadBytesResumable, getDownloadURL} from "firebase/storage";
+import {app} from "../components/firebase";
 
 
 const form_default = {
@@ -18,72 +20,64 @@ export default function DocumentForm({newDocument}) {
     const {id} = useParams();
 
 
-    useEffect(() => {
-        async function editDocument() {
-            const response = await fetch(`http://localhost:8000/api/docs/document/${id}`, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            });
-
-            const _response = await response.json();
-            setValidated(true)
-
-            if (!response.ok) {
-                console.log(_response.error);
-                alert(_response);
-            }
-            if (response.ok) {
-                const {docName, category, docUpload} = _response.document;
-                setForm({docName, category, docUpload});
-            }
-        }
-
-        if (newDocument) {
-            setLoading(true);
-        }
-        if (!newDocument) {
-            editDocument();
-        }
-        setLoading(false);
-    }, []);
-
-    if (loading) {
-        <Loading/>
-    }
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        let url = "http://localhost:8000/api/docs/newDocument";
-        let method = "POST";
-
-        if (!newDocument) {
-            url = `http://localhost:8000/api/docs/update/${id}`;
-            method = "PATCH";
+        console.log(form);
+        if (!form.docUpload) {
+            alert("Please select a file to upload.");
+            return;
         }
 
-        const response = await fetch(url, {
-            method: method,
-            body: JSON.stringify(form),
-            headers: {
-                "Content-Type": "application/json",
-            }
-        });
+        const storage = getStorage(app);
+        const storageRef = ref(storage, `${form.docName}`)
 
-        const _response = await response.json();
-        setValidated(true)
-        if (response.ok) {
-            console.log(_response);
+        const uploadTask = uploadBytesResumable(storageRef, form.docUpload);
 
-        } else {
-            console.log(_response.error);
-        }
-    }
+        uploadTask.on(`state_changed`,
+            (snapshot) => {
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                console.log(`Upload is ` + progress + `% done`);
+            },
+            (error) => {
+                console.log(error);
+            },
+            async () => {
+                getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+                    console.log(`file available at`, downloadURL);
+                    // Update form with downloadURL
+                    setForm({
+                        ...form,
+                        docUpload: downloadURL,
+                    });
 
-    const navigate = useNavigate();
-    const redirectToAdmin = () => {
-        navigate(`/admin`);
+                    let url = "http://localhost:8000/api/docs/newDocument";
+                    let method = "POST";
+
+                    if (!newDocument) {
+                        url = `http://localhost:8000/api/docs/update/${id}`;
+                        method = "PATCH";
+                    }
+
+                    const formData = new FormData();
+                    Object.keys(form).forEach(key => {
+                        formData.append(key, form[key]);
+                    });
+
+                    const response = await fetch(url, {
+                        method: method,
+                        body: formData,
+                    });
+
+                    const _response = await response.json();
+                    setValidated(true)
+                    if (response.ok) {
+                        console.log(_response);
+                    } else {
+                        console.log(_response.error);
+                    }
+                })
+            })
+
     }
 
     return (
@@ -140,7 +134,7 @@ export default function DocumentForm({newDocument}) {
                         onChange={(e) => {
                             setForm({
                                 ...form,
-                                setDocUpload: (e.target.files[0]),
+                                docUpload: e.target.files[0],
                             })
                         }}
                         required
@@ -150,8 +144,8 @@ export default function DocumentForm({newDocument}) {
                 <Button variant={"btn btn-outline-success"} type='submit' onClick={handleSubmit}>
                     {newDocument ? "+ new" : "update"}
                 </Button>
-                <Button onClick={redirectToAdmin} variant={"btn btn-outline-secondary"} style={{marginLeft: "15px"}}
-                        type="submit">Cancel</Button>
+                <Button as={Link} to="/admin" variant={"btn btn-outline-secondary"}
+                        style={{marginLeft: "15px"}}>Cancel</Button>
             </Form>
 
         </Container>

@@ -8,6 +8,8 @@ const announcementRoute = require("./routes/announcementRoute");
 const documentRoute = require("./routes/documentRoute");
 const notificationRoute = require("./routes/notificationRoute");
 const validateRoute = require("./routes/validationRoute");
+const multer = require("multer");
+const upload = multer({dest: "uploads/"});
 
 const port = process.env.PORT;
 connectDB();
@@ -22,6 +24,9 @@ app.use("/api/announce", announcementRoute);
 app.use("/api/docs", documentRoute);
 app.use("/api/notification", notificationRoute);
 app.use("/api/valid", validateRoute);
+app.post('/api/docs', upload.single('docUpload'), (req, res) => {
+    
+});
 
 app.listen(port, () => {
     console.log(`Using port: ${port}`);
