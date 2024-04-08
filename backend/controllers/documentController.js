@@ -1,27 +1,28 @@
 const documentModel = require("../models/documentModel");
+const multer = require('multer');
+const upload = multer({dest: "./uploads/"});
 
 exports.getDocuments = async (req, res) => {
     try {
         const documents = await documentModel.find({});
-        if(!documents) {
+        if (!documents) {
             return res.send({
                 message: "Documents not found"
             })
         }
-        if(documents) {
+        if (documents) {
             return res.send({
                 documentCount: documents.length,
                 documents,
             })
 
         }
-    }
-    catch (error) {
-     console.log(error);
-     return res.send({
-         message: "getting documents callback error",
-         error,
-     })
+    } catch (error) {
+        console.log(error);
+        return res.send({
+            message: "getting documents callback error",
+            error,
+        })
     }
 }
 
@@ -29,18 +30,17 @@ exports.getDocument = async (req, res) => {
     try {
         const {id} = req.params;
         const document = await documentModel.findById(id);
-        if(!document) {
+        if (!document) {
             return res.send({
                 message: "Document not found",
             })
         }
-        if(document) {
+        if (document) {
             return res.send({
                 document,
             })
         }
-    }
-    catch (error) {
+    } catch (error) {
         console.log(error);
         return res.send({
             message: "getting document callback error",
@@ -50,9 +50,11 @@ exports.getDocument = async (req, res) => {
 }
 
 exports.newDocument = async (req, res) => {
+
     try {
+        console.log(req);
         const {docName, category, docUpload} = req.body;
-        if(!docName || !category || !docUpload) {
+        if (!docName || !category || !docUpload) {
             return res.send({
                 message: "All fields are required."
             })
@@ -62,8 +64,7 @@ exports.newDocument = async (req, res) => {
         return res.send({
             message: "File uploaded successfully"
         })
-    }
-    catch (error) {
+    } catch (error) {
         console.log(error);
         return res.send({
             message: "creating document callback error",
@@ -77,19 +78,18 @@ exports.updateDocument = async (req, res) => {
         const {id} = req.params;
         const {docName, category, docUpload} = req.body;
         const document = await documentModel.findByIdAndUpdate(id, req.body, {new: true});
-        if(!document) {
+        if (!document) {
             return res.send({
                 message: "File wasn't saved"
             })
         }
-        if(document) {
+        if (document) {
             return res.send({
                 message: "File was saved successfully.",
                 document,
             })
         }
-    }
-    catch (error) {
+    } catch (error) {
         console.log(error);
         return res.send({
             message: "updating document callback error",
@@ -102,7 +102,7 @@ exports.deleteDocument = async (req, res) => {
     try {
         const {id} = req.params;
         const document = await documentModel.findByIdAndDelete(id);
-        if(document) {
+        if (document) {
             return res.send({
                 message: "File was deleted successfully",
             })
@@ -111,8 +111,7 @@ exports.deleteDocument = async (req, res) => {
                 message: "Deleting file failed."
             })
         }
-    }
-    catch (error) {
+    } catch (error) {
         console.log(error);
         return res.send({
             message: "deleting document callback error",

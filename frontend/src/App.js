@@ -9,6 +9,7 @@ import {Announcements, AnnouncementData, AnnouncementForm} from './announcement/
 import {Admin, AdminDefault} from './admin/index';
 import {UserForm, UserData, Login, Users, ForgotPassword, Profile, ResetPassword, LoginHelp} from './auth/index'
 import {TestPage, TestForm} from './test/index';
+import {FirebaseConfig} from './components/firebase';
 import {
     EvaluationData,
     EvaluationDefault,
@@ -20,7 +21,7 @@ import {
 import {DocumentData, DocumentForm, Documents} from './document/index'
 import {Dashboard} from "./dashboard/index";
 import {Loading, Error, Home,} from "./pages/index";
-import {UserContext, PrivateRoutes, Notification} from "./components/index";
+import {UserContext, PrivateRoutes, Notification, firebase} from "./components/index";
 
 
 function App() {
