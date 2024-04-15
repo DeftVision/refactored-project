@@ -9,7 +9,7 @@ import {Announcements, AnnouncementData, AnnouncementForm} from './announcement/
 import {Admin, AdminDefault} from './admin/index';
 import {UserForm, UserData, Login, Users, ForgotPassword, Profile, ResetPassword, LoginHelp} from './auth/index'
 import {TestPage, TestForm} from './test/index';
-import {FirebaseConfig} from './components/firebase';
+
 import {
     EvaluationData,
     EvaluationDefault,

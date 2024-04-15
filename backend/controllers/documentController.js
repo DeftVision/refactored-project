@@ -1,6 +1,5 @@
 const documentModel = require("../models/documentModel");
-const multer = require('multer');
-const upload = multer({dest: "./uploads/"});
+
 
 exports.getDocuments = async (req, res) => {
     try {
@@ -50,20 +49,21 @@ exports.getDocument = async (req, res) => {
 }
 
 exports.newDocument = async (req, res) => {
-
     try {
-        console.log(req);
         const {docName, category, docUpload} = req.body;
         if (!docName || !category || !docUpload) {
             return res.send({
-                message: "All fields are required."
+                message: "All fields are required"
             })
         }
         const document = new documentModel({docName, category, docUpload});
         await document.save();
         return res.send({
-            message: "File uploaded successfully"
+
+            message: "File uploaded successfully",
+            document,
         })
+
     } catch (error) {
         console.log(error);
         return res.send({
@@ -71,6 +71,7 @@ exports.newDocument = async (req, res) => {
             error,
         })
     }
+
 }
 
 exports.updateDocument = async (req, res) => {

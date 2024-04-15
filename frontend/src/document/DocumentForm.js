@@ -1,7 +1,6 @@
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 import {Container, Form, Button, FloatingLabel} from 'react-bootstrap';
 import {Link, useParams} from 'react-router-dom';
-import Loading from '../pages/Loading';
 import {getStorage, ref, uploadBytesResumable, getDownloadURL} from "firebase/storage";
 import {app} from "../components/firebase";
 
@@ -15,7 +14,6 @@ const form_default = {
 
 export default function DocumentForm({newDocument}) {
     const [form, setForm] = useState(form_default);
-    const [loading, setLoading] = useState(true);
     const [validated, setValidated] = useState(false)
     const {id} = useParams();
 
@@ -23,11 +21,11 @@ export default function DocumentForm({newDocument}) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(form);
-        if (!form.docUpload) {
-            alert("Please select a file to upload.");
-            return;
-        }
-
+        /* if (!form.docUpload) {
+             alert("Please select a file to upload.");
+             return;
+         }
+ */
         const storage = getStorage(app);
         const storageRef = ref(storage, `${form.docName}`)
 
@@ -45,11 +43,11 @@ export default function DocumentForm({newDocument}) {
                 getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
                     console.log(`file available at`, downloadURL);
                     // Update form with downloadURL
-                    setForm({
+                    const _form = {
                         ...form,
-                        docUpload: downloadURL,
-                    });
-
+                        docUpload: downloadURL
+                    };
+                    console.log(_form);
                     let url = "http://localhost:8000/api/docs/newDocument";
                     let method = "POST";
 
@@ -58,14 +56,12 @@ export default function DocumentForm({newDocument}) {
                         method = "PATCH";
                     }
 
-                    const formData = new FormData();
-                    Object.keys(form).forEach(key => {
-                        formData.append(key, form[key]);
-                    });
-
                     const response = await fetch(url, {
                         method: method,
-                        body: formData,
+                        body: JSON.stringify(_form),
+                        headers: {
+                            "Content-Type": "application/json"
+                        }
                     });
 
                     const _response = await response.json();
