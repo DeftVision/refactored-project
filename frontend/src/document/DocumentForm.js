@@ -1,8 +1,9 @@
 import {useState, useEffect} from 'react';
 import {Container, Form, Button, FloatingLabel} from 'react-bootstrap';
-import {Link, useParams} from 'react-router-dom';
+import {Link, useParams, useNavigate} from 'react-router-dom';
 import {getStorage, ref, uploadBytesResumable, getDownloadURL} from "firebase/storage";
 import {app} from "../components/firebase";
+import {Loading} from "../pages";
 
 
 const form_default = {
@@ -50,14 +51,17 @@ export default function DocumentForm({newDocument}) {
         }
     }, [])
 
+    const navigate = useNavigate();
+    const redirectToAdmin = () => {
+        navigate(`/admin`)
+    }
+
+    if (loading) {
+        return <Loading/>;
+    }
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(form);
-        /* if (!form.docUpload) {
-             alert("Please select a file to upload.");
-             return;
-         }
- */
+
         const storage = getStorage(app);
         const storageRef = ref(storage, `${form.docName}`)
 
@@ -169,10 +173,14 @@ export default function DocumentForm({newDocument}) {
                     />
                 </Form.Group>
 
+                <p className="mt-4 mb-4">
+                    File Name: <Link to={`${form.docUpload}`}>{form.docName}</Link>
+                </p>
+
                 <Button variant={"btn btn-outline-success"} type='submit' onClick={handleSubmit}>
                     {newDocument ? "+ new" : "update"}
                 </Button>
-                <Button as={Link} to="/admin" variant={"btn btn-outline-secondary"}
+                <Button onClick={redirectToAdmin} variant={"btn btn-outline-secondary"}
                         style={{marginLeft: "15px"}}>Cancel</Button>
             </Form>
 
