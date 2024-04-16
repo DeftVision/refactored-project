@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import {Container, Form, Button, FloatingLabel} from 'react-bootstrap';
 import {Link, useParams} from 'react-router-dom';
 import {getStorage, ref, uploadBytesResumable, getDownloadURL} from "firebase/storage";
@@ -14,9 +14,41 @@ const form_default = {
 
 export default function DocumentForm({newDocument}) {
     const [form, setForm] = useState(form_default);
+    const [loading, setLoading] = useState(false);
     const [validated, setValidated] = useState(false)
     const {id} = useParams();
 
+
+    /*
+    *   edit document solution
+    */
+
+    useEffect(() => {
+        async function editDocument() {
+            const response = await fetch(`http://localhost:8000/api/docs/document/${id}`, {
+                method: 'GET',
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+            const _response = await response.json();
+
+            if (!response.ok) {
+                console.log(_response.error);
+            }
+            if (response.ok) {
+                const {docName, category, docUpload} = _response.document;
+                setForm({docName, category, docUpload});
+            }
+        }
+
+        if (newDocument) {
+            setLoading(true);
+        }
+        if (!newDocument) {
+            editDocument();
+        }
+    }, [])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -47,7 +79,7 @@ export default function DocumentForm({newDocument}) {
                         ...form,
                         docUpload: downloadURL
                     };
-                    console.log(_form);
+
                     let url = "http://localhost:8000/api/docs/newDocument";
                     let method = "POST";
 
