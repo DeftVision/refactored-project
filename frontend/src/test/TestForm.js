@@ -13,7 +13,9 @@ const form_default = {
 const TestForm = () => {
     const [form, setForm] = useState({slider: 0});
     const [validated, setValidated] = useState(false);
-
+    const [newDocument, setNewDocument] = useState(false
+    )
+    const [currentFile, setCurrentFile] = useState('')
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -128,6 +130,20 @@ const TestForm = () => {
                     }}
                     required
                 />
+                <hr/>
+
+                <Form.Group className="mt-4"
+                            style={{border: "1px solid black", margin: "24px 0px 0px", padding: "6px 12px"}}>
+                    <Button variant={"btn"}>Choose File</Button>
+                    <input type="text" style={{border: "none", height: "100%"}}/>
+                </Form.Group>
+                <hr/>
+
+
+                <Button>{newDocument ? "choose file" : "update file"}</Button>
+
+
+                <hr/>
 
                 <Button onClick={handleSubmit}
                         type="submit"

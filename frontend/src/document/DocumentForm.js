@@ -1,9 +1,10 @@
 import {useState, useEffect} from 'react';
 import {Container, Form, Button, FloatingLabel} from 'react-bootstrap';
 import {Link, useParams, useNavigate} from 'react-router-dom';
-import {getStorage, ref, uploadBytesResumable, getDownloadURL} from "firebase/storage";
+import {getStorage, ref, uploadBytesResumable, getDownloadURL, getMetadata} from "firebase/storage";
 import {app} from "../components/firebase";
 import {Loading} from "../pages";
+import {v4 as uuid} from 'uuid';
 
 
 const form_default = {
@@ -18,11 +19,6 @@ export default function DocumentForm({newDocument}) {
     const [loading, setLoading] = useState(false);
     const [validated, setValidated] = useState(false)
     const {id} = useParams();
-
-
-    /*
-    *   edit document solution
-    */
 
     useEffect(() => {
         async function editDocument() {
@@ -40,11 +36,13 @@ export default function DocumentForm({newDocument}) {
             if (response.ok) {
                 const {docName, category, docUpload} = _response.document;
                 setForm({docName, category, docUpload});
+                const currentDocURL = _response.document;
+                console.log(currentDocURL);
             }
         }
 
         if (newDocument) {
-            setLoading(true);
+            setLoading(false);
         }
         if (!newDocument) {
             editDocument();
@@ -63,9 +61,37 @@ export default function DocumentForm({newDocument}) {
         e.preventDefault();
 
         const storage = getStorage(app);
-        const storageRef = ref(storage, `${form.docName}`)
+        const storageRef = ref(storage, uuid())
+        const fileExtension = form.docUpload.name.split(".").pop().toLowerCase();
 
-        const uploadTask = uploadBytesResumable(storageRef, form.docUpload);
+        let mimeType;
+        switch (fileExtension) {
+            case 'png':
+                mimeType = 'image/png';
+                break;
+            case 'jpeg':
+                mimeType = 'image/jpeg';
+                break;
+            /* case 'pdf':
+                 mimeType = 'application/pdf';
+                 break;
+             case 'xlsx':
+                 mimeType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+                 break;
+             case 'docx':
+                 mimeType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+                 break;*/
+            default:
+                throw new Error(`Unsupported extension "${fileExtension}"`);
+        }
+        const metadata = {
+            contentType: mimeType,
+            customMetadata: {
+                'originalExtension': fileExtension,
+            }
+        }
+
+        const uploadTask = uploadBytesResumable(storageRef, form.docUpload, metadata);
 
         uploadTask.on(`state_changed`,
             (snapshot) => {
@@ -76,14 +102,16 @@ export default function DocumentForm({newDocument}) {
                 console.log(error);
             },
             async () => {
-                getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-                    console.log(`file available at`, downloadURL);
-                    // Update form with downloadURL
+                try {
+                    const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+                    const metadata = await getMetadata(uploadTask.snapshot.ref);
+                    const urlWithExtension = `${downloadURL}.${metadata.customMetadata.originalExtension}`
+
+                    console.log('file available at', urlWithExtension);
                     const _form = {
                         ...form,
-                        docUpload: downloadURL
+                        docUpload: urlWithExtension
                     };
-
                     let url = "http://localhost:8000/api/docs/newDocument";
                     let method = "POST";
 
@@ -107,8 +135,44 @@ export default function DocumentForm({newDocument}) {
                     } else {
                         console.log(_response.error);
                     }
-                })
+                } catch (error) {
+                    console.error(`error getting download URL: ${error}`, error);
+                }
             })
+
+
+        /*getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+            console.log(`file available at`, downloadURL);
+            const _form = {
+                ...form,
+                docUpload: downloadURL
+            };
+
+            let url = "http://localhost:8000/api/docs/newDocument";
+            let method = "POST";
+
+            if (!newDocument) {
+                url = `http://localhost:8000/api/docs/update/${id}`;
+                method = "PATCH";
+            }
+
+            const response = await fetch(url, {
+                method: method,
+                body: JSON.stringify(_form),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+
+            const _response = await response.json();
+            setValidated(true)
+            if (response.ok) {
+                console.log(_response);
+            } else {
+                console.log(_response.error);
+            }
+        })
+    })*/
 
     }
 
@@ -156,7 +220,6 @@ export default function DocumentForm({newDocument}) {
                         <option value="Training">Training</option>
                         <option value="Process">Process</option>
                         <option value="Forms">Forms</option>
-
                     </Form.Select>
                 </FloatingLabel>
 
@@ -174,7 +237,7 @@ export default function DocumentForm({newDocument}) {
                 </Form.Group>
 
                 <p className="mt-4 mb-4">
-                    File Name: <Link to={`${form.docUpload}`}>{form.docName}</Link>
+                    File Name: <Link to={`_blank,${form.docUpload}`}>{form.docName}</Link>
                 </p>
 
                 <Button variant={"btn btn-outline-success"} type='submit' onClick={handleSubmit}>

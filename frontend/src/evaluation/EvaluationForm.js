@@ -1,8 +1,11 @@
 import {Button, Container, Form, FloatingLabel} from 'react-bootstrap';
 import {useContext, useEffect, useState} from 'react';
-import Loading from '../pages/Loading';
+import {Loading} from '../pages';
 import {useNavigate, useParams} from "react-router-dom";
 import UserContext from "../components/UserContext";
+import {getStorage, ref, uploadBytesResumable, getDownloadURL, getMetadata} from "firebase/storage";
+import {app} from '../components/firebase';
+import {v4 as uuid} from 'uuid';
 
 
 const form_default = {
@@ -85,9 +88,9 @@ const EvaluationForm = ({newEvaluation}) => {
                     identifyManager,
                     comments,
                     evaluator
-                })
-                console.log(_response.message);
-
+                });
+                const currentImage = _response.evaluation;
+                console.log(currentImage);
             }
         }
 
