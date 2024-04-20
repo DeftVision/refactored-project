@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const {
+    getAllEvaluations,
     getEvaluations,
     newEvaluation,
     getEvaluation,
@@ -9,7 +10,7 @@ const {
     updateEvaluation,
 } = require("../controllers/evaluationController");
 
-
+router.get("/allEvaluations", getAllEvaluations);
 router.get("/evaluations", getEvaluations);
 router.get("/evaluation/:id", getEvaluation);
 router.post("/newEvaluation", newEvaluation);

@@ -104,7 +104,7 @@ const EvaluationForm = ({newEvaluation}) => {
         } else {
             setForm({
                 ...form,
-                evaluator: user.firstName + " " + user.lastName,
+                evaluator: `${user.firstName} ${user.lastName}`,
                 foodScore: 0,
                 serviceScore: 0,
                 appearanceScore: 0
@@ -123,6 +123,7 @@ const EvaluationForm = ({newEvaluation}) => {
         const storage = getStorage(app);
         const storageRef = ref(storage, uuid());
         const fileExtension = form.image.name.split(".").pop().toLowerCase();
+
 
         let mimeType;
         switch (fileExtension) {
@@ -166,7 +167,7 @@ const EvaluationForm = ({newEvaluation}) => {
                         ...form,
                         image: urlWithExtension
                     };
-                    let url = "http://localhost:8000/api/eval/newEvaluation`;"
+                    let url = "http://localhost:8000/api/eval/newEvaluation";
                     let method = "POST"
 
                     if (!newEvaluation) {

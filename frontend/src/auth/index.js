@@ -1,8 +1,5 @@
 export {default as UserForm} from './UserForm'
 export {default as UserData} from './UserData'
 export {default as Login} from './Login'
-export {default as LoginHelp} from './LoginHelp'
 export {default as Users} from './Users'
-export {default as ForgotPassword} from './ForgotPassword'
 export {default as Profile} from './Profile'
-export {default as ResetPassword} from './ResetPassword'

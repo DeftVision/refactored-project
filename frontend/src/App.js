@@ -7,7 +7,7 @@ import {Container} from 'react-bootstrap';
 import {Header, Footer} from './layout/index'
 import {Announcements, AnnouncementData, AnnouncementForm} from './announcement/index';
 import {Admin, AdminDefault} from './admin/index';
-import {UserForm, UserData, Login, Users, ForgotPassword, Profile, ResetPassword, LoginHelp} from './auth/index'
+import {UserForm, UserData, Login, Users, Profile} from './auth/index'
 import {TestPage, TestForm} from './test/index';
 
 import {
@@ -94,7 +94,7 @@ function App() {
                                     <Route path="/userform" element={<UserForm newUser/>}/>
                                     <Route path="/edituser/:id" element={<UserForm/>}/>
                                     <Route path="/userdata" element={<UserData/>}/>
-                                    <Route path="/resetpassword/:id" element={<ResetPassword/>}/>
+
                                     <Route path="/profile" element={<Profile/>}/>
 
 
@@ -105,8 +105,6 @@ function App() {
                                 <Route path="*" element={<Error/>}/>
                                 <Route path="/loading" element={<Loading/>}/>
                                 <Route path="/notification" element={<Notification/>}/>
-                                <Route path="/forgotpassword" element={<ForgotPassword/>}/>
-                                <Route path="/loginhelp" element={<LoginHelp/>}/>
 
 
                             </Routes>
