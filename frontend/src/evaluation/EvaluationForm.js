@@ -420,7 +420,7 @@ const EvaluationForm = ({newEvaluation}) => {
                                     image: e.target.files[0],
                                 })
                             }}
-                            required
+                            required={newEvaluation}
                         />
                     </Form.Group>
                     <Button variant={"btn btn-outline-success"} type='submit' onClick={handleSubmit}>
