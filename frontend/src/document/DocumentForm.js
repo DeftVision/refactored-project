@@ -72,17 +72,11 @@ export default function DocumentForm({newDocument}) {
             case 'jpeg':
                 mimeType = 'image/jpeg';
                 break;
-            /* case 'pdf':
-                 mimeType = 'application/pdf';
-                 break;
-             case 'xlsx':
-                 mimeType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
-                 break;
-             case 'docx':
-                 mimeType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
-                 break;*/
+            case 'jpg':
+                mimeType = 'image/jpeg';
+                break;
             default:
-                throw new Error(`Unsupported extension "${fileExtension}"`);
+                throw new Error(`Unsupported extension ${fileExtension}`);
         }
         const metadata = {
             contentType: mimeType,
@@ -237,7 +231,7 @@ export default function DocumentForm({newDocument}) {
                 </Form.Group>
 
                 <p className="mt-4 mb-4">
-                    File Name: <Link to={`_blank,${form.docUpload}`}>{form.docName}</Link>
+                    File Name: <Link target='_blank' to={`${form.docUpload}`}>{form.docName}</Link>
                 </p>
 
                 <Button variant={"btn btn-outline-success"} type='submit' onClick={handleSubmit}>

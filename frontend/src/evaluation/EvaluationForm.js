@@ -113,36 +113,83 @@ const EvaluationForm = ({newEvaluation}) => {
         <Loading/>
     }
 
-    const handleSubmit = async (e) => {
+    /*const handleSubmit = async (e) => {
         e.preventDefault();
-        let url = "http://localhost:8000/api/eval/newEvaluation";
-        let method = "POST";
 
-        if (!newEvaluation) {
-            url = `http://localhost:8000/api/eval/update/${id}`;
-            method = "PATCH";
+        const storage = getStorage(app);
+        const storageRef = ref(storage, uuid());
+        const fileExtension = form.image.name.split(".").pop().toLowerCase();
+
+        let mimeType;
+        switch (fileExtension) {
+            case 'png':
+                mimeType = 'image/png';
+                break;
+            case 'jpg':
+                mimeType = 'image/jpeg';
+                break;
+            case 'jpeg':
+                mimeType = 'image/jpeg';
+                break;
+            default:
+                throw new Error(`Unsupported extension ${fileExtension}`);
         }
-        setValidated(true);
-        const response = await fetch(url, {
-            method: method,
-            body: JSON.stringify(form),
-            headers: {
-                "Content-Type": "application/json",
+
+        const metadata = {
+            contentType: mimeType,
+            customMetadata: {
+                'originalExtension': fileExtension,
             }
-        });
-
-        const _response = await response.json();
-
-        if (response.ok) {
-            console.log(_response.message);
-
-
-        } else {
-            console.log(_response.error);
-
         }
-    }
 
+        const uploadTask = uploadBytesResumable(storageRef, form.docUpload, metadata);
+
+        uploadTask.on(`state_changed`,
+            (snapshot) => {
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                console.log(`upload is ` + progress + `% done`);
+            },
+            (error) => {
+            console.log(error);
+            },
+            async () => {
+                const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+                const metadata = await getMetadata(uploadTask.snapshot.ref);
+                const urlWithExtension = `${downloadURL}.${metadata.customMetadata.originalExtension}`;
+
+                console.log(`file available at`, urlWithExtension);
+                const _form = {
+                    ...form,
+                    image: urlWithExtension
+                };
+
+
+                let url = "http://localhost:8000/api/eval/newEvaluation";
+                let method = "POST";
+
+                if (!newEvaluation) {
+                    url = `http://localhost:8000/api/eval/update/${id}`;
+                    method = "PATCH";
+                }
+                setValidated(true);
+                const response = await fetch(url, {
+                    method: method,
+                    body: JSON.stringify(form),
+                    headers: {
+                        "Content-Type": "application/json",
+                    }
+                });
+                const _response = await response.json();
+
+                if (response.ok) {
+                    console.log(_response.message);
+
+
+                } else {
+                    console.log(_response.error);
+
+                }
+            }*/
     return (
         <>
             <Container style={{width: "60%"}}>
@@ -365,7 +412,7 @@ const EvaluationForm = ({newEvaluation}) => {
                             onChange={(e) => {
                                 setForm({
                                     ...form,
-                                    image: e.target.value,
+                                    image: e.target.files[0],
                                 })
                             }}
                             required
@@ -375,7 +422,8 @@ const EvaluationForm = ({newEvaluation}) => {
                         {newEvaluation ? "+ new" : "update"}
                     </Button>
 
-                    <Button onClick={redirectToAdmin} variant={"btn btn-outline-secondary"} style={{marginLeft: "15px"}}
+                    <Button onClick={redirectToAdmin} variant={"btn btn-outline-secondary"}
+                            style={{marginLeft: "15px"}}
                             type="submit">Cancel
                     </Button>
 
@@ -384,5 +432,4 @@ const EvaluationForm = ({newEvaluation}) => {
         </>
     );
 }
-
 export default EvaluationForm;
