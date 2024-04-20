@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react';
 import {Container, Form, Button, FloatingLabel} from 'react-bootstrap';
-import {Link, useParams, useNavigate} from 'react-router-dom';
+import {useParams, useNavigate} from 'react-router-dom';
 import {getStorage, ref, uploadBytesResumable, getDownloadURL, getMetadata} from "firebase/storage";
 import {app} from "../components/firebase";
 import {Loading} from "../pages";
@@ -121,7 +121,6 @@ export default function DocumentForm({newDocument}) {
                             "Content-Type": "application/json"
                         }
                     });
-
                     const _response = await response.json();
                     setValidated(true)
                     if (response.ok) {
@@ -132,7 +131,8 @@ export default function DocumentForm({newDocument}) {
                 } catch (error) {
                     console.error(`error getting download URL: ${error}`, error);
                 }
-            })
+            }
+        )
 
 
         /*getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
@@ -229,10 +229,6 @@ export default function DocumentForm({newDocument}) {
                         required
                     />
                 </Form.Group>
-
-                <p className="mt-4 mb-4">
-                    File Name: <Link target='_blank' to={`${form.docUpload}`}>{form.docName}</Link>
-                </p>
 
                 <Button variant={"btn btn-outline-success"} type='submit' onClick={handleSubmit}>
                     {newDocument ? "+ new" : "update"}

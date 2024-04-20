@@ -1,11 +1,13 @@
 import {Col, Container, Table} from 'react-bootstrap';
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
+import UserContext from '../components/UserContext'
 import {useParams} from 'react-router-dom';
 import {format} from 'date-fns';
 
 
 const EvaluationDetails = ({evaluation}) => {
-
+    const {id} = useParams();
+    const [shopperImage, setShopperImage] = useState(UserContext);
 
     async function getEvaluations() {
         try {
@@ -14,6 +16,7 @@ const EvaluationDetails = ({evaluation}) => {
             });
             const _response = await response.json();
             if (response.ok && _response.evaluation) {
+                setShopperImage(_response.image)
 
             } else {
                 console.log(_response.error);
@@ -25,6 +28,7 @@ const EvaluationDetails = ({evaluation}) => {
 
     useEffect(() => {
         getEvaluations();
+
     }, []);
 
     return (
@@ -88,8 +92,7 @@ const EvaluationDetails = ({evaluation}) => {
 
                     <tr>
                         <td colSpan={2}>
-                            <img alt="image-placeholder" src={"https://fakeimg.pl/600x400?text=image"}
-                                 style={{width: "200px", height: "150px"}}/>
+                            <image source={shopperImage} style={{width: "200px", height: "150px"}}/>
                         </td>
                     </tr>
                     </tbody>
