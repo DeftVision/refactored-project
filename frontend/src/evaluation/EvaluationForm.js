@@ -41,56 +41,60 @@ const EvaluationForm = ({newEvaluation}) => {
 
     useEffect(() => {
         async function editEvaluation() {
-            const response = await fetch(`http://localhost:8000/api/eval/evaluation/${id}`, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            });
-
-            const _response = await response.json();
-            if (!response.ok) {
-                console.log(_response.message)
-            }
-            if (response.ok) {
-                const {
-                    visitDateTime,
-                    location,
-                    cashier,
-                    greeting,
-                    repeatOrder,
-                    upsell,
-                    patio,
-                    wait,
-                    foodScore,
-                    appearanceScore,
-                    serviceScore,
-                    image,
-                    identifyManager,
-                    comments,
-                    evaluator
-                } = _response.evaluation;
-                const visitDate = new Date(visitDateTime);
-                const formattedVisitDateTime = visitDate.toISOString().substring(0, 16);
-                setForm({
-                    visitDateTime: formattedVisitDateTime,
-                    location,
-                    cashier,
-                    greeting,
-                    repeatOrder,
-                    upsell,
-                    patio,
-                    wait,
-                    foodScore,
-                    appearanceScore,
-                    serviceScore,
-                    image,
-                    identifyManager,
-                    comments,
-                    evaluator
+            try {
+                const response = await fetch(`http://localhost:8000/api/eval/evaluation/${id}`, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
                 });
-                const currentImage = _response.evaluation;
-                console.log(currentImage);
+
+                const _response = await response.json();
+                if (!response.ok) {
+                    console.log(_response.message)
+                }
+                if (response.ok) {
+                    const {
+                        visitDateTime,
+                        location,
+                        cashier,
+                        greeting,
+                        repeatOrder,
+                        upsell,
+                        patio,
+                        wait,
+                        foodScore,
+                        appearanceScore,
+                        serviceScore,
+                        image,
+                        identifyManager,
+                        comments,
+                        evaluator
+                    } = _response.evaluation;
+                    const visitDate = new Date(visitDateTime);
+                    const formattedVisitDateTime = visitDate.toISOString().substring(0, 16);
+                    setForm({
+                        visitDateTime: formattedVisitDateTime,
+                        location,
+                        cashier,
+                        greeting,
+                        repeatOrder,
+                        upsell,
+                        patio,
+                        wait,
+                        foodScore,
+                        appearanceScore,
+                        serviceScore,
+                        image,
+                        identifyManager,
+                        comments,
+                        evaluator
+                    });
+                    const currentImageUrl = _response.evaluation;
+                    console.log(currentImageUrl);
+                }
+            } catch (error) {
+                console.error(`error loading evaluation ${error}`, error);
             }
         }
 
@@ -113,7 +117,7 @@ const EvaluationForm = ({newEvaluation}) => {
         <Loading/>
     }
 
-    /*const handleSubmit = async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         const storage = getStorage(app);
@@ -142,54 +146,55 @@ const EvaluationForm = ({newEvaluation}) => {
             }
         }
 
-        const uploadTask = uploadBytesResumable(storageRef, form.docUpload, metadata);
-
+        const uploadTask = uploadBytesResumable(storageRef, form.image, metadata);
         uploadTask.on(`state_changed`,
             (snapshot) => {
                 const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                console.log(`upload is ` + progress + `% done`);
+                console.log(`Upload is ` + progress + `% done`);
             },
             (error) => {
-            console.log(error);
+                console.log(error);
             },
             async () => {
-                const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-                const metadata = await getMetadata(uploadTask.snapshot.ref);
-                const urlWithExtension = `${downloadURL}.${metadata.customMetadata.originalExtension}`;
+                try {
+                    const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+                    const metadata = await getMetadata(uploadTask.snapshot.ref);
+                    const urlWithExtension = `${downloadURL}.${metadata.customMetadata.originalExtension}`
 
-                console.log(`file available at`, urlWithExtension);
-                const _form = {
-                    ...form,
-                    image: urlWithExtension
-                };
+                    console.log(`file available at ${urlWithExtension}`);
+                    const _form = {
+                        ...form,
+                        image: urlWithExtension
+                    };
+                    let url = "http://localhost:8000/api/eval/newEvaluation`;"
+                    let method = "POST"
 
-
-                let url = "http://localhost:8000/api/eval/newEvaluation";
-                let method = "POST";
-
-                if (!newEvaluation) {
-                    url = `http://localhost:8000/api/eval/update/${id}`;
-                    method = "PATCH";
-                }
-                setValidated(true);
-                const response = await fetch(url, {
-                    method: method,
-                    body: JSON.stringify(form),
-                    headers: {
-                        "Content-Type": "application/json",
+                    if (!newEvaluation) {
+                        url = `http://localhost:8000/api/eval/update/${id}`;
+                        method = "PATCH";
                     }
-                });
-                const _response = await response.json();
 
-                if (response.ok) {
-                    console.log(_response.message);
+                    const response = await fetch(url, {
+                        method: method,
+                        body: JSON.stringify(_form),
+                        headers: {
+                            "Content-Type": "application/json"
+                        }
+                    });
 
-
-                } else {
-                    console.log(_response.error);
-
+                    const _response = await response.json();
+                    setValidated(true)
+                    if (response.ok) {
+                        console.log(_response);
+                    } else {
+                        console.log(_response.error);
+                    }
+                } catch (error) {
+                    console.log(`error getting download URL: ${error}.`, error);
                 }
-            }*/
+            }
+        )
+    }
     return (
         <>
             <Container style={{width: "60%"}}>
