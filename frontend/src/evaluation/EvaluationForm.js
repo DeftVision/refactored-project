@@ -6,6 +6,7 @@ import UserContext from "../components/UserContext";
 import {getStorage, ref, uploadBytesResumable, getDownloadURL, getMetadata} from "firebase/storage";
 import {app} from '../components/firebase';
 import {v4 as uuid} from 'uuid';
+import evaluations from "./Evaluations";
 
 
 const form_default = {
@@ -55,6 +56,7 @@ const EvaluationForm = ({newEvaluation}) => {
                 }
                 if (response.ok) {
                     const {
+                        evaluator,
                         visitDateTime,
                         location,
                         cashier,
@@ -66,14 +68,14 @@ const EvaluationForm = ({newEvaluation}) => {
                         foodScore,
                         appearanceScore,
                         serviceScore,
-                        image,
                         identifyManager,
-                        comments,
-                        evaluator
+                        image,
+                        comments
                     } = _response.evaluation;
                     const visitDate = new Date(visitDateTime);
                     const formattedVisitDateTime = visitDate.toISOString().substring(0, 16);
                     setForm({
+                        evaluator,
                         visitDateTime: formattedVisitDateTime,
                         location,
                         cashier,
@@ -85,10 +87,9 @@ const EvaluationForm = ({newEvaluation}) => {
                         foodScore,
                         appearanceScore,
                         serviceScore,
-                        image,
                         identifyManager,
-                        comments,
-                        evaluator
+                        image,
+                        comments
                     });
                     const currentImageUrl = _response.evaluation;
                     console.log(currentImageUrl);
@@ -119,12 +120,10 @@ const EvaluationForm = ({newEvaluation}) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        let urlWithExtension = form.image;
         const storage = getStorage(app);
         const storageRef = ref(storage, uuid());
         const fileExtension = form.image.name.split(".").pop().toLowerCase();
-
-
         let mimeType;
         switch (fileExtension) {
             case 'png':
@@ -139,14 +138,12 @@ const EvaluationForm = ({newEvaluation}) => {
             default:
                 throw new Error(`Unsupported extension ${fileExtension}`);
         }
-
         const metadata = {
             contentType: mimeType,
             customMetadata: {
                 'originalExtension': fileExtension,
             }
         }
-
         const uploadTask = uploadBytesResumable(storageRef, form.image, metadata);
         uploadTask.on(`state_changed`,
             (snapshot) => {
@@ -160,7 +157,7 @@ const EvaluationForm = ({newEvaluation}) => {
                 try {
                     const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
                     const metadata = await getMetadata(uploadTask.snapshot.ref);
-                    const urlWithExtension = `${downloadURL}.${metadata.customMetadata.originalExtension}`
+                    urlWithExtension = `${downloadURL}.${metadata.customMetadata.originalExtension}`
 
                     console.log(`file available at ${urlWithExtension}`);
                     const _form = {
@@ -195,6 +192,7 @@ const EvaluationForm = ({newEvaluation}) => {
                 }
             }
         )
+
     }
     return (
         <>

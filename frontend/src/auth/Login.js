@@ -95,11 +95,7 @@ export default function Login() {
                                     login
                                 </Button>
                             </div>
-                            <div>
-                                <Button as={Link} to="/forgotpassword" variant={"btn btn-outline-secondary"}>
-                                    Need help signing in?
-                                </Button>
-                            </div>
+                           
                         </Form>
                     </Col>
                 </Card.Body>

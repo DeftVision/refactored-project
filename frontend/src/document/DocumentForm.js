@@ -62,30 +62,9 @@ export default function DocumentForm({newDocument}) {
 
         const storage = getStorage(app);
         const storageRef = ref(storage, uuid())
-        const fileExtension = form.docUpload.name.split(".").pop().toLowerCase();
 
-        let mimeType;
-        switch (fileExtension) {
-            case 'png':
-                mimeType = 'image/png';
-                break;
-            case 'jpeg':
-                mimeType = 'image/jpeg';
-                break;
-            case 'jpg':
-                mimeType = 'image/jpeg';
-                break;
-            default:
-                throw new Error(`Unsupported extension ${fileExtension}`);
-        }
-        const metadata = {
-            contentType: mimeType,
-            customMetadata: {
-                'originalExtension': fileExtension,
-            }
-        }
 
-        const uploadTask = uploadBytesResumable(storageRef, form.docUpload, metadata);
+        const uploadTask = uploadBytesResumable(storageRef, form.docUpload);
 
         uploadTask.on(`state_changed`,
             (snapshot) => {
@@ -98,13 +77,11 @@ export default function DocumentForm({newDocument}) {
             async () => {
                 try {
                     const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-                    const metadata = await getMetadata(uploadTask.snapshot.ref);
-                    const urlWithExtension = `${downloadURL}.${metadata.customMetadata.originalExtension}`
 
-                    console.log('file available at', urlWithExtension);
+                    console.log('file available at', downloadURL);
                     const _form = {
                         ...form,
-                        docUpload: urlWithExtension
+                        docUpload: downloadURL
                     };
                     let url = "http://localhost:8000/api/docs/newDocument";
                     let method = "POST";
@@ -133,40 +110,6 @@ export default function DocumentForm({newDocument}) {
                 }
             }
         )
-
-
-        /*getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-            console.log(`file available at`, downloadURL);
-            const _form = {
-                ...form,
-                docUpload: downloadURL
-            };
-
-            let url = "http://localhost:8000/api/docs/newDocument";
-            let method = "POST";
-
-            if (!newDocument) {
-                url = `http://localhost:8000/api/docs/update/${id}`;
-                method = "PATCH";
-            }
-
-            const response = await fetch(url, {
-                method: method,
-                body: JSON.stringify(_form),
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            });
-
-            const _response = await response.json();
-            setValidated(true)
-            if (response.ok) {
-                console.log(_response);
-            } else {
-                console.log(_response.error);
-            }
-        })
-    })*/
 
     }
 
@@ -226,7 +169,7 @@ export default function DocumentForm({newDocument}) {
                                 docUpload: e.target.files[0],
                             })
                         }}
-                        required
+                        required={newDocument}
                     />
                 </Form.Group>
 
