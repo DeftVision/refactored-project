@@ -10,9 +10,9 @@ const EvaluationDetails = ({evaluation}) => {
     const [shopperImage, setShopperImage] = useState(UserContext);
 
     async function getEvaluations() {
-        
+
         try {
-            const response = await fetch(`http://localhost:8000/api/eval/evaluation/${_id}`, {
+            const response = await fetch(`http://localhost:8000/api/eval/evaluation/${id}`, {
                 method: "GET",
             });
             const _response = await response.json();
