@@ -21,7 +21,7 @@ import {
 import {DocumentData, DocumentForm, Documents} from './document/index'
 import {Dashboard} from "./dashboard/index";
 import {Loading, Error, Home,} from "./pages/index";
-import {UserContext, PrivateRoutes, Notification, firebase} from "./components/index";
+import {UserContext, PrivateRoutes, Notification} from "./components/index";
 
 
 function App() {

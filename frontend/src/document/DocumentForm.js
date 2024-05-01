@@ -43,8 +43,7 @@ export default function DocumentForm({newDocument}) {
 
         if (newDocument) {
             setLoading(false);
-        }
-        if (!newDocument) {
+        } else {
             editDocument();
         }
     }, [])
@@ -54,65 +53,69 @@ export default function DocumentForm({newDocument}) {
         navigate(`/admin`)
     }
 
-    if (loading) {
-        return <Loading/>;
-    }
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const storage = getStorage(app);
-        const storageRef = ref(storage, uuid())
 
+        function uploadFileToFirebase() {
+            const storage = getStorage(app);
+            const storageRef = ref(storage, uuid())
+            const uploadTask = uploadBytesResumable(storageRef, form.docUpload);
 
-        const uploadTask = uploadBytesResumable(storageRef, form.docUpload);
-
-        uploadTask.on(`state_changed`,
-            (snapshot) => {
-                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                console.log(`Upload is ` + progress + `% done`);
-            },
-            (error) => {
-                console.log(error);
-            },
-            async () => {
-                try {
+            uploadTask.on(`state_changed`,
+                (snapshot) => {
+                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    console.log(`Upload is ` + progress + `% done`);
+                },
+                (error) => {
+                    console.log(error);
+                }, async () => {
                     const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-
-                    console.log('file available at', downloadURL);
-                    const _form = {
-                        ...form,
-                        docUpload: downloadURL
-                    };
-                    let url = "http://localhost:8000/api/docs/newDocument";
-                    let method = "POST";
-
-                    if (!newDocument) {
-                        url = `http://localhost:8000/api/docs/update/${id}`;
-                        method = "PATCH";
-                    }
-
-                    const response = await fetch(url, {
-                        method: method,
-                        body: JSON.stringify(_form),
-                        headers: {
-                            "Content-Type": "application/json"
-                        }
-                    });
-                    const _response = await response.json();
-                    setValidated(true)
-                    if (response.ok) {
-                        console.log(_response);
-                    } else {
-                        console.log(_response.error);
-                    }
-                } catch (error) {
-                    console.error(`error getting download URL: ${error}`, error);
                 }
+            )
+        }
+
+        async function uploadEvaluation() {
+            try {
+                const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+
+                console.log('file available at', downloadURL);
+                const _form = {
+                    ...form,
+                    docUpload: downloadURL
+                };
+                let url = "http://localhost:8000/api/docs/newDocument";
+                let method = "POST";
+
+                if (!newDocument) {
+                    url = `http://localhost:8000/api/docs/update/${id}`;
+                    method = "PATCH";
+                }
+
+                const response = await fetch(url, {
+                    method: method,
+                    body: JSON.stringify(_form),
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                });
+                const _response = await response.json();
+                setValidated(true)
+                if (response.ok) {
+                    console.log(_response);
+                } else {
+                    console.log(_response.error);
+                }
+            } catch (error) {
+                console.error(`error getting download URL: ${error}`, error);
             }
-        )
+        }
+
 
     }
-
+    if (loading) {
+        return <Loading/>;
+    }
     return (
         <Container style={{width: "60%"}}>
 
