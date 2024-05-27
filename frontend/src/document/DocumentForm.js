@@ -57,11 +57,11 @@ export default function DocumentForm({newDocument}) {
         e.preventDefault();
 
 
-        function uploadFileToFirebase() {
+        async function uploadFileToFirebase() {
             const storage = getStorage(app);
             const storageRef = ref(storage, uuid())
             const uploadTask = uploadBytesResumable(storageRef, form.docUpload);
-
+            let downloadURL;
             uploadTask.on(`state_changed`,
                 (snapshot) => {
                     const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
@@ -70,15 +70,16 @@ export default function DocumentForm({newDocument}) {
                 (error) => {
                     console.log(error);
                 }, async () => {
-                    const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+                    downloadURL = getDownloadURL(uploadTask.snapshot.ref);
                 }
             )
+
+            await saveDocumentToDb(downloadURL)
         }
 
-        async function uploadEvaluation() {
-            try {
-                const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
 
+        async function saveDocumentToDb() {
+            try {
                 console.log('file available at', downloadURL);
                 const _form = {
                     ...form,
@@ -110,6 +111,21 @@ export default function DocumentForm({newDocument}) {
                 console.error(`error getting download URL: ${error}`, error);
             }
         }
+
+
+        /*
+        *
+        *   save to db  - upload to firebase
+        *   - response of download URL
+        *
+        *   get return value or argument
+        *
+        *
+        *
+        * */
+
+        let downloadURL = uploadFileToFirebase();
+        return downloadURL;
 
 
     }
